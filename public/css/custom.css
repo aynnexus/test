@@ -1,0 +1,47 @@
+.dn{
+	display: none;
+}
+
+ul.app-menu li{
+		display:inline-block;
+		width:23%;
+		text-align:center;
+		margin-bottom: 10px;
+	}
+	ul.app-menu{
+		margin-top:10px;
+		border-bottom: 2px solid green;
+	}
+	ul.app-menu li a .menu-tab{
+		width:60px;
+		height:60px;
+		border-radius:60%;
+		-moz-border-radius:60%;
+		-webkit-border-radius:60%;
+		background-color:#ededed;
+		color:#fff;
+		margin:0 auto;
+		font-weight:bold;
+		text-align:center;
+		padding-top:15px;
+		color:#9b9b9b
+
+	}
+	ul.app-menu li a.active .menu-tab,
+	
+	ul.app-menu li a:hover .menu-tab{
+		background-color:#f39c12;
+		color:#fff;
+	}
+	ul.app-menu li a.done .menu-tab{
+		background-color:#00a65a;
+		color:#fff;
+	}
+	
+	ul.app-menu li a.done span{
+		color: #6d6d6d
+	}
+
+	ul.app-menu li a span{		
+		color: red;
+	}
