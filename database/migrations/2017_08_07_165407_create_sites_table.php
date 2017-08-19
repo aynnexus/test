@@ -19,16 +19,9 @@ class CreateSitesTable extends Migration
             $table->string('site_location')->nullable();
             $table->integer('data_limit')->default(0);
             $table->integer('time_limit')->default(0);
-            $table->text('site_image_1')->nullable();
-            $table->text('site_image_2')->nullable();
-            $table->integer('site_qlt_1')->nullable();
-            $table->integer('site_qlt_2')->nullable();
-            $table->text('ads')->nullable();
-            $table->integer('ads_time')->default(0);
-            $table->integer('ads_qlt_2')->nullable();
-            $table->text('required_field');
+            $table->integer('timeout_limit')->default(0);
+            $table->integer('speed_limit')->default(0);
             $table->integer('status');
-            $table->integer('step')->default(0);
             $table->timestamps();
         });
     }

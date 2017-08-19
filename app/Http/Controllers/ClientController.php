@@ -18,7 +18,7 @@ class ClientController extends Controller
 
     public function create()
     {	
-    	$sites = Site::pluck('site_name','site_id');
+    	$sites = Site::active()->pluck('site_name','site_id');
     	return view('backend.client.create',compact('sites'));
     }
 
@@ -33,7 +33,7 @@ class ClientController extends Controller
     {	
     	$client = ($id>0)?Client::find($id):new Client;
     	$client->name = $request->name;
-    	$client->site_id = $request->site_id;
+    	$client->site_id = json_encode($request->site_id);
     	$client->email = $request->email;
     	$client->password = bcrypt($request->password);
     	$client->status = ACTIVE;

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+Route::group(['prefix'=>'guest'],function(){
+	Route::get('/{site?}','GuestController@index');
+});
+
 Route::get('/member', function () {
     return view('auth.member_login');
 });
@@ -24,16 +28,26 @@ Auth::routes();
 Route::group(['prefix'=>'dashboard'],function(){
 	Route::get('/', 'HomeController@index')->name('home');
 	Route::group(['prefix'=>'sites'],function(){
-		Route::get('/','SiteController@index');
+		Route::get('/','SiteController@index');		
+		Route::post('/store/{id?}','SiteController@storeSite');
+		Route::get('/remove/{id?}','SiteController@remove');
+		Route::get('/status/{status?}/{id?}','SiteController@changeStatusSite');
+	});
+	Route::group(['prefix'=>'template'],function(){
+		Route::get('/','SiteController@indexTemplate');
 		Route::get('/step_one/{id?}','SiteController@getSiteImform');
 		Route::post('/step_one/{id?}','SiteController@postSiteImform');
 		Route::get('/step_two/{id?}','SiteController@getSiteField');
 		Route::post('/step_two/{id?}','SiteController@postSiteField');
 		Route::get('/step_three/{id?}','SiteController@getSitePhoto');
 		Route::post('/step_three/{id?}','SiteController@postSitePhoto');
-		Route::get('/step_four/{id?}','SiteController@showPreview');
+		Route::get('/step_four/{id?}','SiteController@getFeedback');
+		Route::post('/step_four/{id?}','SiteController@postFeedback');
+		Route::get('/step_five/{id?}','SiteController@getAds');
+		Route::get('/preview/{id?}','SiteController@showPreview');
 		Route::post('/action/{step}/{id?}','SiteController@store');
-		Route::get('/remove/{id?}','SiteController@remove');
+		Route::get('/remove/{id?}','SiteController@removeTemplate');
+		Route::get('/status/{status?}/{id?}','SiteController@changeStatusTemplate');
 	});
 	Route::group(['prefix'=>'clients'],function(){
 		Route::get('/','ClientController@index');
@@ -46,5 +60,11 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/images','SettingController@indexImg');
 		Route::post('images/create/{id?}','SettingController@storeImg');
 		Route::get('images/remove/{id?}','SettingController@removeImg');
+		Route::get('/lookup','SettingController@indexLookup');
+		Route::post('/lookup/{id?}','SettingController@storeLookup');
+		Route::get('lookup/remove/{id?}','SettingController@removeLookup');
+		Route::get('/lookup/{status?}/{id?}','SettingController@changeStatusLookup');
 	});
+	Route::post('rate/store/{id?}','SiteController@storeRate');
+	Route::post('rate/add/{id?}','SiteController@addRate');	
 });

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
-	@include('backend.site.tab')
+	@include('backend.client.tab')
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12">
@@ -27,7 +27,7 @@
 											<th>#</th>
 											<th>Client Name</th>
 											<th>Client Email</th>
-											<th>Site Name</th>
+											<th>Site Code</th>
 											<th>Status</th>
 											<th>Created</th>
 											<th>Action</th>
@@ -46,7 +46,10 @@
 												{{$row->email}}
 											</td>									
 											<td>
-												{{$row->site->site_name}}
+												@foreach($row->site($row->site_id) as $site_name)
+													<p>{{$site_name}}</p>
+												@endforeach
+												
 											</td>
 											
 											<td>

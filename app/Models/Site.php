@@ -8,8 +8,6 @@ class Site extends Model
 {
     protected $primaryKey = 'site_id';  
 
-    protected $fillable = ['step']; 
-
     public function Field()
     {
     	return $this->hasOne(SiteField::class,'site_id');
@@ -18,5 +16,15 @@ class Site extends Model
     public function Profile()
     {
     	return $this->hasOne(SiteProfile::class,'site_id');
+    }
+
+    public function scopeInactive()
+    {
+        return $this->where('status',INACTIVE);
+    }
+
+    public function scopeActive()
+    {
+        return $this->where('status',ACTIVE);
     }
 }

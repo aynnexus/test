@@ -8,8 +8,9 @@ class Client extends Model
 {
     protected $primaryKey = 'client_id';
 
-    public function site()
-    {
-    	return $this->hasOne(Site::class,'site_id','site_id');
+    public function site($id)
+    {	
+    	return Site::whereIn('site_id',json_decode($id))->pluck('site_name','site_id');    	
     }
+    
 }

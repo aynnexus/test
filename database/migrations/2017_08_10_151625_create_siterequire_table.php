@@ -15,9 +15,10 @@ class CreateSiterequireTable extends Migration
     {
         Schema::create('landing_fields', function(Blueprint $table){
             $table->increments('field_id');
-            $table->integer('site_id');
-            $table->text('social_login');
-            $table->text('form_login');
+            $table->integer('template_id');
+            $table->text('social_login')->nullable();
+            $table->text('form_login')->nullable();
+            $table->text('feedback_fields')->nullable();
             $table->timestamps();
         });
     }

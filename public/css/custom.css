@@ -4,7 +4,7 @@
 
 ul.app-menu li{
 		display:inline-block;
-		width:23%;
+		width:16%;
 		text-align:center;
 		margin-bottom: 10px;
 	}
@@ -44,4 +44,12 @@ ul.app-menu li{
 
 	ul.app-menu li a span{		
 		color: red;
+	}
+	.form-control{
+		border-radius: 5px
+	}
+	img.logo-template{
+		position: absolute;
+		top: 20%;
+		left: 43%;
 	}

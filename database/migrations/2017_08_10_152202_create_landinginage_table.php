@@ -19,7 +19,7 @@ class CreateLandinginageTable extends Migration
             $table->string('background_image')->nullable();
             $table->string('footer_image')->nullable();
             $table->string('background_color')->nullable();
-            $table->integer('site_id');
+            $table->integer('template_id');
             $table->timestamps();
         });
     }
