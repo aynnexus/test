@@ -24,7 +24,7 @@
         <!-- Scripts -->
         {!! Html::script('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js') !!}
         {!! Html::script('assets/bootstrap/js/bootstrap.min.js') !!}
-
+        {!! Html::script('js/ajax.js') !!}
     </head>
     <div id="app">
             @yield('content')  

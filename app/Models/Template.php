@@ -38,4 +38,14 @@ class Template extends Model
     {   
         return Site::whereIn('site_id',json_decode($id))->get();     
     }
+
+    public function Rating()
+    {
+        return $this->hasMany(Rating::class,'template_id');
+    }
+
+    public function Surveying()
+    {
+        return $this->hasMany(Surveying::class,'template_id');
+    }
 }

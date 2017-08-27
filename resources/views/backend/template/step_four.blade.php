@@ -66,11 +66,20 @@
 												<input type="radio" {{($fdb!=null && $fdb->survey==1)?'checked':''}} value="1" name="survey"> Yes
 												<input type="radio" {{($fdb!=null && $fdb->survey==0)?'checked':''}} value="0" name="survey"> No
 											</div>
-											<div class="col-md-2">
+											<!-- <div class="col-md-2">
 												<label><input type="checkbox" {{($fdb!=null && $fdb->s_require==1)?'checked':''}} value="1" name="s_require"> Require</label>
+											</div> -->
+										</div><hr>
+										<div class="row" id="select_open">
+											<div class="col-md-12">
+												<div class="col-md-6">	
+													{!! Form::select('survey_id[]',$survey,$surveyings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
+												</div>											
+												<div class="col-md-4">
+													<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#surveryPopUp"><i class="fa fa-plus"></i> Add New Servey</button>
+												</div>
 											</div>
 										</div><hr>
-										
 										<div class="row">
 											<div class="col-md-3">
 												<label>Rate</label>
@@ -80,9 +89,9 @@
 												<input type="radio" id="Yes" {{($fdb!=null && $fdb->rate==1)?'checked':''}} value="1" name="rate"> Yes
 												<input type="radio" id="No" {{($fdb!=null && $fdb->rate==0)?'checked':''}} value="0" name="rate"> No
 											</div>
-											<div class="col-md-2">
+											<!-- <div class="col-md-2">
 												<label><input type="checkbox" {{($fdb!=null && $fdb->r_require==1)?'checked':''}} value="1" name="r_require"> Require</label>
-											</div>
+											</div> -->
 
 										</div>
 										<br>
@@ -110,7 +119,7 @@
 				</div>
 			</div>
 		</div>
-		 <!-- Modal -->
+		<!-- Modal -->
 		<div class="modal fade" id="viewDetailPopUp" role="dialog">
 		 	<div class="modal-dialog modal-sm">
 		 		<div class="modal-content">
@@ -123,6 +132,30 @@
 		 					<div class="form-group">
 		 						<label class="form-label">Rate Label</label>
 		 						<input type="text" name="rate_title" class="form-control" required placeholder="Hash">
+		 					</div>
+		 					<button type="submit" class="btn btn-primary">Submit</button>
+		 				</form>
+		 			</div>
+
+		 			<div class="modal-footer">
+		 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		 			</div>
+		 		</div>
+		 	</div>
+		</div>
+
+		<div class="modal fade" id="surveryPopUp" role="dialog">
+		 	<div class="modal-dialog modal-md">
+		 		<div class="modal-content">
+		 			<div class="modal-header"> 				
+		 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		 				<h3>Add New Suvery</h3>
+		 				<!-- <h4 class="modal-title">Modal Header</h4> -->
+		 				<form class="form" action="{{url('dashboard/survey/add')}}" method="POST">
+		 					{{csrf_field()}}
+		 					<div class="form-group">
+		 						<label class="form-label">Suvery Label</label>
+		 						<input type="text" name="survey_title" class="form-control" required placeholder="Hash">
 		 					</div>
 		 					<button type="submit" class="btn btn-primary">Submit</button>
 		 				</form>

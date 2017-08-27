@@ -23,7 +23,8 @@
             "App\\": "app/"
         },
         "files": [
-                   "app/Helpers/common_helper.php"
+                   "app/Helpers/common_helper.php",
+                   "app/Helpers/UnifiApi.php"
        ]
     },
     "autoload-dev": {

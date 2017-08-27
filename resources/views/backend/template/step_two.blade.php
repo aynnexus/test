@@ -79,6 +79,21 @@
 												<label><input type="checkbox" {{($field_2!=null && $field_2->e_req==1)?'checked':''}} value="1" name="email_require"> Require</label>
 											</div>
 										</div><hr>
+
+										<div class="row">
+											<div class="col-md-3">
+												<label>Gender</label>
+											</div>
+											<div class="col-md-1">:</div>
+											<div class="col-md-2">
+												<input type="radio" {{($field_2!=null && $field_2->gender==1)?'checked':''}} value="1" name="gender"> Yes
+												<input type="radio" value="0" {{($field_2!=null && $field_2->gender==0)?'checked':''}} name="gender"> No
+											</div>
+											<div class="col-md-2">
+												<label><input type="checkbox" {{($field_2!=null && $field_2->g_req==1)?'checked':''}} value="1" name="gender_require"> Require</label>
+											</div>
+										</div><hr>
+
 										<div class="row">
 											<div class="col-md-3">
 												<label>Age Group</label>

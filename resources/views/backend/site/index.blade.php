@@ -68,7 +68,7 @@
 												<a href="{{url('/dashboard/sites/remove/'.$row->site_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
-										 <!-- edit Modal -->
+										<!-- edit Modal -->
 											 <div class="modal fade" id="viewDetailPopUp{{$row->site_id}}" role="dialog">
 											 	<div class="modal-dialog modal-md">
 											 		<div class="modal-content">

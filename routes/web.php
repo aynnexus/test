@@ -16,7 +16,10 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=>'guest'],function(){
-	Route::get('/{site?}','GuestController@index');
+	Route::get('s/{site?}','GuestController@index');
+	Route::post('/login','GuestController@loginUser');
+	Route::get('feedback/{id?}','GuestController@getFeedback');
+	Route::post('feedback/{id?}','GuestController@postFeedback');
 });
 
 Route::get('/member', function () {
@@ -65,6 +68,20 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('lookup/remove/{id?}','SettingController@removeLookup');
 		Route::get('/lookup/{status?}/{id?}','SettingController@changeStatusLookup');
 	});
+
+	Route::group(['prefix'=>'guests'],function(){
+		Route::get('/','GuestController@indexLists');
+		Route::get('/remove/{id?}','GuestController@removeGuest');
+		Route::get('/detail/{id?}','GuestController@detail');
+	});
+	Route::group(['prefix'=>'admin'],function(){
+		Route::get('/','AdminController@index');
+		Route::get('/remove/{id?}','AdminController@remove');
+		Route::post('/update/{id?}','AdminController@update');
+	});
+
 	Route::post('rate/store/{id?}','SiteController@storeRate');
-	Route::post('rate/add/{id?}','SiteController@addRate');	
+	Route::post('rate/add/{id?}','SiteController@addRate');
+	Route::post('survey/store/{id?}','SiteController@storeSurvey');
+	Route::post('survey/add/{id?}','SiteController@addSurvey');	
 });

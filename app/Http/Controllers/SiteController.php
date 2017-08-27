@@ -9,6 +9,8 @@ use App\Models\SiteProfile;
 use App\Models\Template;
 use App\Models\Rate;
 use App\Models\Rating;
+use App\Models\Survey;
+use App\Models\Surveying;
 use Flash,Auth;
 
 class SiteController extends Controller
@@ -63,18 +65,25 @@ class SiteController extends Controller
         if ($id==0) {
             return redirect('dashboard/template/step_one/0');
         }
-        $ratings=[];
+        $ratings=$surveyings=[];
         $feedback = SiteField::where('template_id',$id)->first();
         $step = Template::where('template_id',$id)->value('step');
         $rate = Rate::pluck('label','rate_id');
+        $survey = Survey::pluck('label','survey_id');
         $rating = Rating::where('template_id',$id)->get();
+        $surveying = Surveying::where('template_id',$id)->get();
         if (!$rating->isEmpty()) {
             foreach ($rating->toArray() as $key => $value) {
                $ratings[] = $value['rate_id'];
             }
         }
-
-        return view('backend.template.step_four',compact('id','step','feedback','rate','ratings'));
+        if (!$surveying->isEmpty()) {
+            foreach ($surveying->toArray() as $key => $value) {
+               $surveyings[] = $value['survey_id'];
+            }
+        }
+            
+        return view('backend.template.step_four',compact('id','step','feedback','rate','ratings','surveyings','survey'));
     }
 
     public function getAds($id)
@@ -143,6 +152,8 @@ class SiteController extends Controller
                     'email'=>$request->email,
                     'e_req'=>$request->email_require,
                     'age'=>$request->age,
+                    'gender'=>$request->gender,
+                    'g_req' => $request->gender_require,
                     'a_req'=>$request->age_require,
                     'phone'=>$request->phone,
                     'p_req'=>$request->phone_requird,
@@ -216,6 +227,16 @@ class SiteController extends Controller
             }
 
         }
+        if ($request->has('survey_id')) {
+            Surveying::where('template_id',$id)->delete();
+            for ($i=0; $i < count($request->survey_id); $i++) {                 
+                $rate = new Surveying;
+                $rate->template_id = $id;
+                $rate->survey_id = $request->survey_id[$i];
+                $rate->save();
+            }
+
+        }
         $feedback = SiteField::UpdateOrCreate(['template_id'=>$id],[
                 'feedback_fields'=>json_encode($feedback_field,true)
             ]);
@@ -261,7 +282,17 @@ class SiteController extends Controller
     public function addRate(Request $request,$id=0)
     {
         $rate = Rate::UpdateOrCreate(['rate_id'=>$id],[
-            'label'=>$request->rate_title,
+            'label'=>strtolower($request->rate_title),
+            'created_by'=>Auth::id(),
+            'status'=>ACTIVE
+            ]);
+        return back();
+    }
+
+    public function addSurvey(Request $request,$id=0)
+    {   
+        $rate = Survey::UpdateOrCreate(['survey_id'=>$id],[
+            'label'=>strtolower($request->survey_title),
             'created_by'=>Auth::id(),
             'status'=>ACTIVE
             ]);

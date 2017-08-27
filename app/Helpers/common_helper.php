@@ -55,3 +55,8 @@ function fileUpload($file,$name)
     }
 	return $result;
 }
+
+function authorizeGuest()
+{
+	echo 'hi';
+}

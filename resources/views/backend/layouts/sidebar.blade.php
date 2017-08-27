@@ -14,7 +14,7 @@
         </a>
       </li>
 
-      <li><a href="{{url('dashboard/category')}}"><i class="fa fa-users"></i> <span>Guest Info</span></a></li>
+      <li class="{{ Request::is('dashboard/guests')?'active':''}}"><a href="{{url('dashboard/guests')}}"><i class="fa fa-users"></i> <span>Guest Info</span></a></li>
       
       <li class="{{ Request::is('dashboard/admins')?'active':'' || Request::is('dashboard/admins/*')?'active':'' }}">
         <a href="{{url('dashboard/admin')}}"><i class="fa fa-diamond"></i> Admins</a>

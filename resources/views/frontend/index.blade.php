@@ -14,7 +14,7 @@
                 <?php   $social = json_decode($temp->Field->social_login);
                         $form = json_decode($temp->Field->form_login);
                          ?>
-                {!! Form::open(['url'=>'/']) !!}
+                {!! Form::open(['url'=>'guest/login','id'=>'login']) !!}
                     @if(isset($form) && $form->name==1)
                     <div class="form-group has-feedback">
                         {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'Full name',($form->n_req==1)?'required':'']) !!}
@@ -33,9 +33,24 @@
                         <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
                     </div>
                     @endif
+                     @if(isset($form) && $form->gender==1)
+                    <div class="form-group has-feedback">
+                        {!! Form::select('gender',$look_gender,null,['class'=>'form-control','placeholder'=>'Select gender group',($form->g_req==1)?'required':'']) !!}
+                    </div>
+                    @endif
                     @if(isset($form) && $form->age==1)
                     <div class="form-group has-feedback">
                         {!! Form::select('age',$look_age,null,['class'=>'form-control','placeholder'=>'Select age group',($form->a_req==1)?'required':'']) !!}
+                    </div>
+                    @endif
+                    @if(isset($form) && $form->field_1==1)
+                    <div class="form-group has-feedback">
+                        {!! Form::text('custom_1',null,['class'=>'form-control','placeholder'=>'Select age group',($form->f1_req==1)?'required':'']) !!}
+                    </div>
+                    @endif
+                    @if(isset($form) && $form->field_2==1)
+                    <div class="form-group has-feedback">
+                        {!! Form::text('custom_2',null,['class'=>'form-control','placeholder'=>'Select age group',($form->f2_req==1)?'required':'']) !!}
                     </div>
                     @endif
                     <div class="row">
@@ -44,7 +59,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-success btn-block">Connect</button>
+                            <button type="submit" id="login" class="btn btn-success btn-block">Connect</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -66,4 +81,9 @@
         </div>
     <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
 </body>
+<script type="text/javascript">
+    // $('button#login').click(function(){
+    //     submitForm($('form#login'))
+    // })
+</script>
 @endsection

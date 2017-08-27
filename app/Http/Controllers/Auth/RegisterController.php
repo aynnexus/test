@@ -36,7 +36,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -61,10 +61,12 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
+    {   
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'role'=>$data['role'],
+            'status'=>$data['status'],
             'password' => bcrypt($data['password']),
         ]);
     }
