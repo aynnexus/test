@@ -60,3 +60,12 @@ function authorizeGuest()
 {
 	echo 'hi';
 }
+
+function datetime_convert($timestamp,$second)
+{	
+	$minute = $second*60;
+	$format = strtotime($timestamp) + $minute;
+	$result = date('Y-m-d H:i:s', $format);
+
+	return $result;
+}

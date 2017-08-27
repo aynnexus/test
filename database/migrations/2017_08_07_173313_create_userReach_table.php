@@ -21,7 +21,7 @@ class CreateUserReachTable extends Migration
             $table->string('phone')->nullable();
             $table->string('custom_1')->nullable();
             $table->string('custom_2')->nullable();
-            $table->string('site_name');
+            $table->integer('site_id');
             $table->integer('rating')->default(0);
             $table->string('comment',255)->nullable();
             $table->integer('status');

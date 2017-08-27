@@ -27,7 +27,7 @@
 											<th>#</th>
 											<th>Client Name</th>
 											<th>Client Email</th>
-											<th>Site Code</th>
+											<th>Site Name</th>
 											<th>Status</th>
 											<th>Created</th>
 											<th>Action</th>

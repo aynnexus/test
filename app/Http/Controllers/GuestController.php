@@ -7,16 +7,31 @@ use App\Models\Site;
 use App\Models\Template;
 use App\Models\Guest;
 use App\Models\Lookup;
-use Unifi,Session,Flash;
+use Unifi,Session,Flash,DateTime,Socialite;
 
 class GuestController extends Controller
 {
     public function index(Request $request,$id)
     {	
+        $date_time = new DateTime();
+        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');
+        $user_ap = $request->ap;
         if (isset($request->id)) {
             $url = explode('/', $_SERVER['REDIRECT_URL']);
             Session::put('ap',$request->id);
             Session::put('site',$url[3]);
+            $guest = Guest::where('user_ap',$request->ap)->value('created_at');
+            $site_info = Site::where('site_code',$url[3])->first();
+            $define_minute = $site_info->time_limit+$site_info->timeout_limit;
+            
+            if ($guest!=null) {
+                $guest_created_format = $guest->format('Y-m-d H:i:s');
+                $format_1 = datetime_convert($curr_datetime_format,$site_info->time_limit);
+                $format_2 = datetime_convert($guest_created_format,$define_minute);
+                if ($format_1 <= $format_2) {
+                    return redirect('404');
+                }                
+            }                 
         }
 
         $site=null;$temp=[];
@@ -28,7 +43,7 @@ class GuestController extends Controller
             foreach ($temps as $key => $value) {
                 $sit = $value->AllSite($value->site_id);
                 foreach ($sit as $tem) {
-                    if ($tem->site_name==$id) {
+                    if ($tem->site_code==$id) {
                         $site = $tem;
                         $temp = $value;
                     }
@@ -40,7 +55,7 @@ class GuestController extends Controller
         }
         Session::put('template',$temp->template_id);
 
-        return view('frontend.index',compact('site','temp','look_age','look_gender'));
+        return view('frontend.index',compact('site','temp','look_age','look_gender','user_ap'));
     }
 
     public function indexLists()
@@ -69,16 +84,17 @@ class GuestController extends Controller
         $guest->gender = $request->gender;
         $guest->custom_1 = $request->custom_1;
         $guest->custom_2 = $request->custom_2;
-        $guest->site_name = $site;
+        $guest->site_id = Site::where('site_code',$site)->value('site_id');
+        $guest->user_ap = $request->user_ap;
         $guest->status = INACTIVE;
         $guest->save();
+        $site_data = Site::where('site_code',$site)->first();
+        
+        if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
 
-        if($this->authorizeGuest($site,FIRST_AUTH,$ap)==true){
-            //return response()->json(['meta'=>true,'status'=>200]);
             return redirect('guest/feedback/'.$guest->guest_id);
-        }
+        }        
         return back();
-        //return response()->json(['meta'=>false,'status'=>500]);
     }
 
     public function getFeedback($id=0)
@@ -100,12 +116,11 @@ class GuestController extends Controller
 
     public function postFeedback(Request $request,$id)
     {   
-        //$result=[];
         $ap = Session::get('ap');
         $site = Session::get('site');
         $temp_id = Session::get('template');
         $temp = Template::find($temp_id);
-        $site_data = Site::where('site_name',$site)->first();
+        $site_data = Site::where('site_code',$site)->first();
         foreach ($temp->Rating as $key => $value) {
             $values[] = $request[$value->Rate->label.'_'];
             $keys[] = $value->Rate->label;
@@ -113,10 +128,11 @@ class GuestController extends Controller
         
         Guest::find($id)->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values)]);
 
-        if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
+        //if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
             header('Location: http://www.google.com');exit();
-        }
-        return back();
+        //}
+
+        //return back();
     }
 
     public static function authorizeGuest($id,$minutes,$ap_mac,$up=NULL,$down=NULL,$mb=NULL)
@@ -130,6 +146,59 @@ class GuestController extends Controller
             return true;
         }        
         return false;
+    }
+
+    public function getSiteInGuest(Request $request,$id)
+    {           
+        if ($request->get('name')) {
+            $results = Site::search($request->all())->first();
+            return view('backend.guest.index',compact('results'));
+        }
+        $site = Site::find($id);
+        return view('backend.guest.site_guests',compact('site'));
+    }
+
+    public function redirectToProvider($provider)
+    {   
+        $ap = Session::get('ap');
+        $site = Session::get('site');
+        if($this->authorizeGuest($site,FIRST_AUTH,$ap)==true){
+            return Socialite::driver($provider)->redirect();
+        }
+        
+    }
+
+    public function handleProviderCallback($provider)
+    {    
+
+        try {
+            $social_user = Socialite::driver($provider)->user();
+        } catch (Exception $e) {
+            return redirect('/');
+        }
+        dd($social_user);
+        $guest = new Guest;
+        $guest->name = $social_user->getName();
+        $guest->email = $social_user->getEmail();
+        $guest->gender = ($social_user->getEmail()=='male')?1:2;
+        $guest->status = ACTIVE;
+        $guest->save();
+
+        return redirect('guest/feedback/'.$guest->guest_id);
+        // $user = User::where('social_id',$social_user->getId())->first();
+        // $user = (!$user)?new User:$user;
+        // $user->social_id = $social_user->getId();
+        // $user->name = $social_user->getName();
+        // $user->email = $social_user->getEmail();
+        // $user->role_id = 3;
+        // $user->status=ACTIVE;
+        // $user->save();
+        // $detail = UserDetail::where('user_id',$user->id)->first();
+        // $detail = (!$detail)?new UserDetail:$detail;
+        // $detail->user_id = $user->id;
+        // $detail->photo_path = $social_user->getAvatar();
+        // $detail->status = ACTIVE;
+        // $detail->save();
     }
 
 }

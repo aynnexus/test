@@ -108,12 +108,10 @@ class SiteController extends Controller
     }
 
     public function storeSite(Request $request, $id)
-    {
-        $location = ['lag'=>$request->lag,'lat'=>$request->lat];
-
+    {   
         $site = ($id>0)?Site::find($id):new Site;
         $site->site_name = $request->site_name;
-        $site->site_location = json_encode($location,true);
+        $site->site_code = $request->site_code;
         $site->data_limit = $request->limit_data;
         $site->time_limit = $request->limit_time;   
         $site->timeout_limit = $request->timeout_limit;    

@@ -21,6 +21,6 @@ class Guest extends Model
 
     public function Site()
     {
-    	return $this->hasOne(Site::class,'site_name','site_name');
+    	return $this->hasOne(Site::class,'site_id','site_id');
     }
 }

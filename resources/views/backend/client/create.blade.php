@@ -29,7 +29,7 @@
 											<input type="password" name="password" class="form-control" {{isset($client)?'':'required'}} placeholder=".....">
 										</div>
 										<div class="form-group">
-											<label class="form-label">Site Code</label>
+											<label class="form-label">Site Name</label>
 											<?php $site = isset($client)?array_map('intval', json_decode($client->site_id,true)):null;  ?>
 											{!! Form::select('site_id[]',$sites,$site,['class'=>'form-control select2','multiple data-placeholder'=>'Select One', 'required']) !!}
 										</div>

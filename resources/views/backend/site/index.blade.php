@@ -33,7 +33,6 @@
 										<tr>
 											<th>#</th>
 											<th>Site Name</th>
-											<th>Location (Lag/Lat)</th>
 											<th>Data Limitation</th>
 											<th>Status</th>
 											<th>Created</th>
@@ -48,11 +47,7 @@
 												<div>
 													<a id="" value="" href="#">{{$row->site_name}}</a>
 												</div>	
-											</td>									
-											<td>
-												<?php $loc = json_decode($row->site_location); ?>
-												{{$loc->lag.' / '.$loc->lat}}
-											</td>
+											</td>	
 											<td>
 												{{$row->data_limit}} Kbs /
 												{{$row->time_limit}} Minite
@@ -77,21 +72,16 @@
 											 				<h3>Edit Site</h3>
 											 				<!-- <h4 class="modal-title">Modal Header</h4> -->
 											 				<form class="form" action="{{url('dashboard/sites/store/'.$row->site_id)}}" method="POST">
-											 					{{csrf_field()}}
-											 					<div class="form-group">
-											 						<label class="form-label">Site Code</label>
-											 						<input type="text" value="{{$row->site_name}}" name="site_name" class="form-control" required placeholder="Hash">
-											 					</div>
-											 					<div class="form-group">											
+											 					{{csrf_field()}}				
+											 					<div class="form-group">		
 											 						<div class="row">
 											 							<div class="col-md-6">
-											 								<label class="form-label">Site Location (Lag)</label>
-											 								<?php $loc = isset($row)?json_decode($row->site_location):null; ?>
-											 								<input type="text" value="{{$loc!=null?$loc->lag:$loc}}" name="lag" class="form-control" required placeholder="09.9445445">
+											 								<label class="form-label">Site Name</label>
+											 								<input type="text" value="{{$row->site_name}}" name="site_name" class="form-control" required placeholder="Hash">
 											 							</div>
 											 							<div class="col-md-6">
-											 								<label class="form-label">Site Location (Lat)</label>
-											 								<input type="text" value="{{$loc!=null?$loc->lat:$loc}}" name="lat" class="form-control" required placeholder="09.9445445">
+											 								<label class="form-label">Site Code</label>
+											 								<input type="text" value="{{$row->site_code}}" name="site_code" class="form-control" required placeholder="Hash">
 											 							</div>
 											 						</div>
 											 					</div>
@@ -173,19 +163,15 @@
 	 				<form class="form" action="{{url('dashboard/sites/store/0')}}" method="POST">
 	 					{{csrf_field()}}
 	 					<div class="form-group">
-	 						<label class="form-label">Site Code</label>
-	 						<input type="text" name="site_name" class="form-control" required placeholder="Hash">
-	 					</div>
-	 					<div class="form-group">											
 	 						<div class="row">
-	 							<div class="col-md-6">
-	 								<label class="form-label">Site Location (Lag)</label>
-	 								<input type="text" name="lag" class="form-control" required placeholder="09.9445445">
+	 							<div class="col-md-6">	 							
+	 								<label class="form-label">Site Name</label>
+	 								<input type="text" name="site_name" class="form-control" required placeholder="Hash">
 	 							</div>
-	 							<div class="col-md-6">
-	 								<label class="form-label">Site Location (Lat)</label>
-	 								<input type="text" name="lat" class="form-control" required placeholder="09.9445445">
-	 							</div>
+		 						<div class="col-md-6">
+		 							<label class="form-label">Site Code</label>
+		 							<input type="text" name="site_code" class="form-control" required placeholder="Hash">
+		 						</div>
 	 						</div>
 	 					</div>
 	 					<div class="form-group">

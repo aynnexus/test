@@ -16,6 +16,7 @@
                          ?>
                 {!! Form::open(['url'=>'guest/login','id'=>'login']) !!}
                     @if(isset($form) && $form->name==1)
+                    <input type="hidden" name="user_ap" value="{{$user_ap}}">
                     <div class="form-group has-feedback">
                         {!! Form::text('name',null,['class'=>'form-control','placeholder'=>'Full name',($form->n_req==1)?'required':'']) !!}
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -68,11 +69,11 @@
                 <div class="social-auth-links text-center">
                     <p>- OR -</p>
                     @if(isset($social) && $social->fb==1)
-                        <a href="#" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i> Sign in using
+                        <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i> Sign in using
                     Facebook</a>
                     @endif
                     @if(isset($social) && $social->gmail==1)
-                        <a href="#" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
+                        <a href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
                         Gmail</a>
                     @endif
                 </div>

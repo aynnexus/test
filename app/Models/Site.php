@@ -27,4 +27,15 @@ class Site extends Model
     {
         return $this->where('status',ACTIVE);
     }
+
+    public function Guests()
+    {
+        return $this->hasMany(Guest::class,'site_id');
+    }
+    
+    public function scopeSearch($query,$request)
+    {
+    
+        return $query->where('site_name', 'like','%'.$request['name'].'%');
+    }
 }

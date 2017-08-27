@@ -18,8 +18,9 @@
 								<div class="col-md-6">
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<form action="{{url('dashboard/guests/search?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="name" placeholder="Search Site Name">
+									<form action="{{url('dashboad/guests/data/response?')}}" class="" method="get" accept-charset="utf-8">
+					                  <input type="search" class="" name="category_search" placeholder="Search Name">
+					                  <input type="hidden" class="" name="type" value="">
 					                </form> 
 								</div>
 						</div>	
@@ -38,10 +39,10 @@
 											<th>Action</th>
 										</tr>
 									</thead>
-									@if(isset($guests))
+									@if(isset($site->Guests))
 									<tbody>
 
-										@foreach($guests as $key=>$row)
+										@foreach($site->Guests as $key=>$row)
 										 
 										<tr>
 											<td>{{$key+1}}.</td>

@@ -20,10 +20,15 @@ Route::group(['prefix'=>'guest'],function(){
 	Route::post('/login','GuestController@loginUser');
 	Route::get('feedback/{id?}','GuestController@getFeedback');
 	Route::post('feedback/{id?}','GuestController@postFeedback');
+	Route::get('login/{provider}', 'GuestController@redirectToProvider');
+	Route::get('login/{provider}/callback', 'GuestController@handleProviderCallback');
 });
 
 Route::get('/member', function () {
     return view('auth.member_login');
+});
+Route::get('404',function(){
+	return view('frontend.block');
 });
 
 Auth::routes();
@@ -71,6 +76,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 
 	Route::group(['prefix'=>'guests'],function(){
 		Route::get('/','GuestController@indexLists');
+		Route::get('/{id?}','GuestController@getSiteInGuest');
 		Route::get('/remove/{id?}','GuestController@removeGuest');
 		Route::get('/detail/{id?}','GuestController@detail');
 	});

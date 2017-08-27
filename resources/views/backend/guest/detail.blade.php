@@ -19,7 +19,7 @@
 						
 						<div class="row">
 							<div class="col-md-offset-3">
-								<h4>Site Code : {{$guest->site_name}}</h4><br>
+								<h4>Site Name : {{$guest->Site['site_name']}}</h4><br>
 								<div class="col-md-3">
 									<div class="form-group">
 										<label class="form-label">
