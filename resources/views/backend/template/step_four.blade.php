@@ -74,10 +74,7 @@
 											<div class="col-md-12">
 												<div class="col-md-6">	
 													{!! Form::select('survey_id[]',$survey,$surveyings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
-												</div>											
-												<div class="col-md-4">
-													<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#surveryPopUp"><i class="fa fa-plus"></i> Add New Servey</button>
-												</div>
+												</div>	
 											</div>
 										</div><hr>
 										<div class="row">
@@ -154,9 +151,14 @@
 		 				<form class="form" action="{{url('dashboard/survey/add')}}" method="POST">
 		 					{{csrf_field()}}
 		 					<div class="form-group">
+		 						<label class="form-label">Slug</label>
+		 						<input type="text" name="slug" class="form-control" required placeholder="Hash">
+		 					</div>
+		 					<div class="form-group">
 		 						<label class="form-label">Suvery Label</label>
 		 						<input type="text" name="survey_title" class="form-control" required placeholder="Hash">
 		 					</div>
+		 					
 		 					<button type="submit" class="btn btn-primary">Submit</button>
 		 				</form>
 		 			</div>

@@ -11,3 +11,5 @@ define('unifiServer', 'https://192.168.43.181:8443');
 define('unifiUser', 'fiberno');
 define('unifiPass', 'Fiberno89');
 define('unifiSite', 'detault');
+define('REGISTER', 1);
+define('SOCIAL', 2);

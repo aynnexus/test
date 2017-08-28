@@ -55,19 +55,14 @@
 	 				<form class="form" action="{{url('dashboard/sites/store/0')}}" method="POST">
 	 					{{csrf_field()}}
 	 					<div class="form-group">
-	 						<label class="form-label">Site Code</label>
-	 						<input type="text" name="site_name" class="form-control" required placeholder="Hash">
-	 					</div>
-	 					<div class="form-group">											
 	 						<div class="row">
 	 							<div class="col-md-6">
-	 								<label class="form-label">Site Location (Lag)</label>
-	 								<?php $loc = isset($site)?json_decode($site->site_location):null; ?>
-	 								<input type="text" value="{{$loc!=null?$loc->lag:$loc}}" name="lag" class="form-control" required placeholder="09.9445445">
+	 								<label class="form-label">Site Code</label>
+	 								<input type="text" name="site_code" class="form-control" required placeholder="Hash">
 	 							</div>
 	 							<div class="col-md-6">
-	 								<label class="form-label">Site Location (Lat)</label>
-	 								<input type="text" value="{{$loc!=null?$loc->lat:$loc}}" name="lat" class="form-control" required placeholder="09.9445445">
+	 								<label class="form-label">Site Name</label>
+	 								<input type="text" name="site_name" class="form-control" required placeholder="Hash">
 	 							</div>
 	 						</div>
 	 					</div>

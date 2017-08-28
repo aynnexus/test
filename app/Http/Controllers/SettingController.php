@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Image;
 use App\Models\Lookup;
+use App\Models\Servey;
+use App\Models\Question;
+use App\Models\Answer;
 use Flash,Auth;
 
 class SettingController extends Controller
@@ -72,4 +75,39 @@ class SettingController extends Controller
 
         return back();
     }
+
+    public function getServey($type)
+    {
+        if ($type=='questions') {
+            $datas = Question::orderBy('question_id','desc')->paginate(20);
+        }else
+        {
+            $datas = Answer::orderBy('answer_id','desc')->paginate(20);
+        }
+        $question = Question::all();
+
+        return view('backend.setting.servey',compact('datas','type','question'));
+    }
+
+    public function postServey(Request $request,$type,$id=0)
+    {
+        if ($type=='questions') {
+            $question = ($id>0)?Question::find($id):new Question;
+            $question->label = $request->label;
+            $question->slug = $request->slug;
+            $question->created_by = Auth::id();
+            $question->save();
+        }else
+        {
+            $answer = ($id>0)?Answer::find($id):new Answer;
+            $answer->label = $request->label;
+            $answer->slug = $request->slug;
+            $answer->created_by = Auth::id();
+            $answer->question_id = $request->question_id;
+            $answer->save();
+        }
+        Flash::success('Successfully saving servey');
+        return back();
+    }
 }
+

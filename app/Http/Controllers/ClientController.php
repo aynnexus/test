@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Site;
-use Flash;
+use App\User;
+use Flash,Validator;
 
 class ClientController extends Controller
 {
@@ -29,23 +30,72 @@ class ClientController extends Controller
     	return view('backend.client.create',compact('client','sites'));
     }
 
-    public function store(Request $request,$id=0)
+    public function store(Request $request)
     {	
-    	$client = ($id>0)?Client::find($id):new Client;
-    	$client->name = $request->name;
-    	$client->site_id = json_encode($request->site_id);
-    	$client->email = $request->email;
-    	$client->password = bcrypt($request->password);
-    	$client->status = ACTIVE;
-    	$client->save();
+        
+        $rule = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:6',
+        'site_id' =>'required'
+        ];
+        $valid =  Validator::make($request->all(), $rule);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
 
+        $user =  User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'role'=>2,
+            'status'=>INACTIVE,
+            'password' => bcrypt($request['password']),
+        ]);
+
+    	$client = Client::where('user_id',$user->id)->first()==null?new Client:$client;
+        $client->site_id = json_encode($request->site_id);
+        $client->user_id = $user->id;
+        $client->status = ACTIVE;
+        $client->save();
+       
     	Flash::success('Successfully Client Add');
     	return redirect('dashboard/clients');
     }
 
+    public function update(Request $request,$id)
+    {   
+        $rule = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string',
+            'site_id' =>'required'
+        ];
+        $valid =  Validator::make($request->all(), $rule);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+        $client = Client::find($id);
+        $client->site_id = json_encode($request->site_id);
+        $client->status = ACTIVE;
+        $client->save();
+
+        $user = User::find($client->user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->get('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        Flash::success('Successfully Client update');
+        return redirect('dashboard/clients');
+    }
+
     public function remove($id)
     {
-    	Client::destroy($id);
+    	$client = Client::find($id);
+        User::destroy($client->user_id);
+        $client->delete();
+
     	Flash::success('Successfully Client Removing');
 
     	return back();

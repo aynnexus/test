@@ -36,6 +36,12 @@ class Site extends Model
     public function scopeSearch($query,$request)
     {
     
+        return $query->where('site_id', 'like','%'.$request['site_name'].'%');
+    }
+
+    public function scopeNameSearch($query,$request)
+    {
+    
         return $query->where('site_name', 'like','%'.$request['name'].'%');
     }
 }

@@ -18,9 +18,16 @@
 								<div class="col-md-6">
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<form action="{{url('dashboad/guests/data/response?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="category_search" placeholder="Search Name">
-					                  <input type="hidden" class="" name="type" value="">
+									<form action="{{url('dashboard/guests/data/search?')}}" class="" method="get" accept-charset="utf-8">
+										<select name="site_name">
+											<option>Current Site</option>
+											@if(isset($sites))
+												@foreach($sites as $site)
+													<option value="{{$site->site_id}}">{{$site->site_name}}</option>
+												@endforeach
+											@endif
+										</select>
+					                  <input type="search" class="" name="guest_name" placeholder="Search Guest Name">
 					                </form> 
 								</div>
 						</div>	
@@ -66,6 +73,7 @@
 										</tr>
 										
                     					@endforeach
+                    					
 									</tbody>
 									@endif	
 								</table>

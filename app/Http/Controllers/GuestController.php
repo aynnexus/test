@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Site;
 use App\Models\Template;
 use App\Models\Guest;
+use App\Models\Client;
 use App\Models\Lookup;
-use Unifi,Session,Flash,DateTime,Socialite;
+use Unifi,Session,Flash,DateTime,Socialite,Auth;
 
 class GuestController extends Controller
 {
@@ -60,8 +61,12 @@ class GuestController extends Controller
 
     public function indexLists()
     {
-        $guests = Guest::orderBy('guest_id','desc')->paginate(20);
-        return view('backend.guest.index',compact('guests'));
+        if(Auth::user()->role==1)
+        {
+            $guests = Guest::orderBy('guest_id','desc')->paginate(20);
+            return view('backend.guest.index',compact('guests'));
+        }
+        return back();
     }
 
     public function removeGuest($id)
@@ -86,6 +91,7 @@ class GuestController extends Controller
         $guest->custom_2 = $request->custom_2;
         $guest->site_id = Site::where('site_code',$site)->value('site_id');
         $guest->user_ap = $request->user_ap;
+        $guest->type = REGISTER;
         $guest->status = INACTIVE;
         $guest->save();
         $site_data = Site::where('site_code',$site)->first();
@@ -150,11 +156,29 @@ class GuestController extends Controller
 
     public function getSiteInGuest(Request $request,$id)
     {           
-        if ($request->get('name')) {
+        if ($request->get('guest_name') || $request->get('site_name')) {
             $results = Site::search($request->all())->first();
             return view('backend.guest.index',compact('results'));
         }
-        $site = Site::find($id);
+        $client = Client::find($id)->value('site_id');
+        $sites = Site::whereIn('site_id',json_decode($client))->get();
+
+        return view('backend.guest.site_guests',compact('sites'));
+    }
+
+    public function searchSiteName(Request $request,$id)
+    {
+        if ($request->get('name')) {
+            $site = Site::search($request->all())->first();
+            return view('backend.guest.index',compact('site'));
+        }
+    }
+
+    public function searchDate(Request $request)
+    {   
+        if ($request->get('site_name')) {
+            $site = Site::search($request->all())->first();
+        }
         return view('backend.guest.site_guests',compact('site'));
     }
 
@@ -170,7 +194,6 @@ class GuestController extends Controller
 
     public function handleProviderCallback($provider)
     {    
-
         try {
             $social_user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
@@ -179,9 +202,12 @@ class GuestController extends Controller
         dd($social_user);
         $guest = new Guest;
         $guest->name = $social_user->getName();
+        $guest->social_id = $social_user->getId();
         $guest->email = $social_user->getEmail();
-        $guest->gender = ($social_user->getEmail()=='male')?1:2;
+        $guest->profile_photo = $social_user->getAvatar();
+        $guest->gender = ($social_user->getGender()=='male')?1:2;
         $guest->status = ACTIVE;
+        $guest->type = SOCIAL;
         $guest->save();
 
         return redirect('guest/feedback/'.$guest->guest_id);

@@ -24,9 +24,8 @@ Route::group(['prefix'=>'guest'],function(){
 	Route::get('login/{provider}/callback', 'GuestController@handleProviderCallback');
 });
 
-Route::get('/member', function () {
-    return view('auth.member_login');
-});
+Route::get('/member','MemberController@getlogin');
+Route::post('/member','MemberController@postlogin');
 Route::get('404',function(){
 	return view('frontend.block');
 });
@@ -35,7 +34,7 @@ Auth::routes();
 
 Route::group(['prefix'=>'dashboard'],function(){
 	Route::get('/', 'HomeController@index')->name('home');
-	Route::group(['prefix'=>'sites'],function(){
+	Route::group(['middleware'=>'admin','prefix'=>'sites'],function(){
 		Route::get('/','SiteController@index');		
 		Route::post('/store/{id?}','SiteController@storeSite');
 		Route::get('/remove/{id?}','SiteController@remove');
@@ -57,14 +56,15 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/remove/{id?}','SiteController@removeTemplate');
 		Route::get('/status/{status?}/{id?}','SiteController@changeStatusTemplate');
 	});
-	Route::group(['prefix'=>'clients'],function(){
+	Route::group(['middleware'=>'admin','prefix'=>'clients'],function(){
 		Route::get('/','ClientController@index');
 		Route::get('/create','ClientController@create');
 		Route::get('/edit/{id?}','ClientController@edit');
 		Route::post('/create/{id?}','ClientController@store');
+		Route::post('/update/{id?}','ClientController@update');
 		Route::get('/remove/{id?}','ClientController@remove');
 	});
-	Route::group(['prefix'=>'settings'],function(){
+	Route::group(['middleware'=>'admin','prefix'=>'settings'],function(){
 		Route::get('/images','SettingController@indexImg');
 		Route::post('images/create/{id?}','SettingController@storeImg');
 		Route::get('images/remove/{id?}','SettingController@removeImg');
@@ -72,6 +72,8 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::post('/lookup/{id?}','SettingController@storeLookup');
 		Route::get('lookup/remove/{id?}','SettingController@removeLookup');
 		Route::get('/lookup/{status?}/{id?}','SettingController@changeStatusLookup');
+		Route::get('/serveys/{type?}','SettingController@getServey');
+		Route::post('/serveys/{type?}/{id?}','SettingController@postServey');
 	});
 
 	Route::group(['prefix'=>'guests'],function(){
@@ -79,8 +81,9 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/{id?}','GuestController@getSiteInGuest');
 		Route::get('/remove/{id?}','GuestController@removeGuest');
 		Route::get('/detail/{id?}','GuestController@detail');
+		Route::get('data/{search?}','GuestController@searchDate');
 	});
-	Route::group(['prefix'=>'admin'],function(){
+	Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::get('/','AdminController@index');
 		Route::get('/remove/{id?}','AdminController@remove');
 		Route::post('/update/{id?}','AdminController@update');

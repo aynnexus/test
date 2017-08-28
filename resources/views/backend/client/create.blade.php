@@ -11,22 +11,37 @@
 							<div class="row">
 								<div class="col-md-6">
 								@if(isset($client))
-									<form class="form" action="{{url('dashboard/clients/create/'.$client->client_id)}}" method="POST" >
+									<form class="form" action="{{url('dashboard/clients/update/'.$client->client_id)}}" method="POST" >
 								@else
 									<form class="form" action="{{url('dashboard/clients/create')}}" method="POST">
 								@endif
 										{{csrf_field()}}
 										<div class="form-group">
 											<label class="form-label">Client Name</label>
-											<input type="text" value="{{isset($client)?$client->name:null}}" name="name" class="form-control" required placeholder="TERLLE">
+											<input type="text" value="{{isset($client)?$client->User->name:null}}" name="name" class="form-control" required placeholder="TERLLE">
+											@if ($errors->has('name'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('name') }}</strong>
+			                                    </span>
+			                                @endif
 										</div>
 										<div class="form-group">
 											<label class="form-label">Client Email</label>
-											<input type="text" value="{{isset($client)?$client->email:null}}" name="email" class="form-control" required placeholder="TERLLE@gamilc.com">
+											<input type="text" value="{{isset($client)?$client->User->email:null}}" name="email" class="form-control" required placeholder="TERLLE@gamilc.com">
+											@if ($errors->has('email'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('email') }}</strong>
+			                                    </span>
+			                                @endif
 										</div>
 										<div class="form-group">
 											<label class="form-label">Client Password</label>
 											<input type="password" name="password" class="form-control" {{isset($client)?'':'required'}} placeholder=".....">
+											@if ($errors->has('password'))
+			                                    <span class="help-block">
+			                                        <strong>{{ $errors->first('password') }}</strong>
+			                                    </span>
+			                                @endif
 										</div>
 										<div class="form-group">
 											<label class="form-label">Site Name</label>

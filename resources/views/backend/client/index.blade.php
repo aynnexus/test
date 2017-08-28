@@ -39,11 +39,11 @@
 											<td>{{$key+1}}.</td>
 											<td>
 												<div>
-													<a id="" value="" href="#">{{$row->name}}</a>
+													<a id="" value="" href="#">{{$row->User->name}}</a>
 												</div>	
 											</td>
 											<td>
-												{{$row->email}}
+												{{$row->User->email}}
 											</td>									
 											<td>
 												@foreach($row->site($row->site_id) as $site_name)
