@@ -35,7 +35,7 @@ Auth::routes();
 Route::group(['prefix'=>'dashboard'],function(){
 	Route::get('/', 'HomeController@index')->name('home');
 	Route::group(['middleware'=>'admin','prefix'=>'sites'],function(){
-		Route::get('/','SiteController@index');		
+		Route::get('/{search?}','SiteController@index');		
 		Route::post('/store/{id?}','SiteController@storeSite');
 		Route::get('/remove/{id?}','SiteController@remove');
 		Route::get('/status/{status?}/{id?}','SiteController@changeStatusSite');
@@ -58,6 +58,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'clients'],function(){
 		Route::get('/','ClientController@index');
+		Route::get('/search/{data?}','ClientController@searchData');
 		Route::get('/create','ClientController@create');
 		Route::get('/edit/{id?}','ClientController@edit');
 		Route::post('/create/{id?}','ClientController@store');
@@ -77,11 +78,11 @@ Route::group(['prefix'=>'dashboard'],function(){
 	});
 
 	Route::group(['prefix'=>'guests'],function(){
-		Route::get('/','GuestController@indexLists');
+		Route::get('/{type?}','GuestController@indexLists');
 		Route::get('/{id?}','GuestController@getSiteInGuest');
 		Route::get('/remove/{id?}','GuestController@removeGuest');
 		Route::get('/detail/{id?}','GuestController@detail');
-		Route::get('data/{search?}','GuestController@searchDate');
+		Route::get('data/{search?}','GuestController@searchData');
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::get('/','AdminController@index');

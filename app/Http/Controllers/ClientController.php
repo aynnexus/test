@@ -13,8 +13,19 @@ class ClientController extends Controller
     public function index()
     {	
     	$clients = Client::orderBy('client_id','desc')->paginate(15);
-
+        
     	return view('backend.client.index',compact('clients'));
+    }
+
+    public function searchData(Request $request)
+    {   
+        $clients=[];
+        $user = User::Search($request->all())->get();
+        foreach ($user as $value) {
+            $clients[] = $value->Client;
+        }
+        
+        return view('backend.client.index',compact('clients'));
     }
 
     public function create()

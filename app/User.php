@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Client','user_id');
     }
+
+    public function scopeSearch($query,$request)
+    {   
+        return $query->where('name', 'like','%'.$request['name'].'%');
+    }
 }

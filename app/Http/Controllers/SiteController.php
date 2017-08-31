@@ -16,18 +16,24 @@ use Flash,Auth;
 
 class SiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {	
-    	$sites = Site::orderBy('site_id','desc')->paginate(15);
+        $sites = Site::orderBy('site_id','desc')->paginate(15);
+        if ($request->get('name')) {
+            $sites = Site::Search($request->all())->orderBy('site_id','desc')->paginate(15);
+        }
     	return view('backend.site.index',compact('sites'));
     }
 
-    public function indexTemplate()
+    public function indexTemplate(Request $request)
     {   
         if(Auth::user()->role==1)
-        {
+        {   
             $templates = Template::orderBy('site_id','desc')->paginate(15);
-            return view('backend.template.index',compact('templates'));
+            if ($request->get('name')) {
+                $templates = Template::Search($request->all())->orderBy('site_id','desc')->paginate(15);
+            }
+                return view('backend.template.index',compact('templates'));
         }
         return back();
     }

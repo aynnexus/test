@@ -9,8 +9,8 @@ class Surveying extends Model
 	protected $table = 'surveying';
     protected $primaryKey = 'surveying_id';
 
-   	public function Survey()
+   	public function Question()
    	{
-   		return $this->hasOne(Survey::class,'survey_id','survey_id');
+   		return $this->hasOne(Question::class,'question_id','survey_id');
    	}
 }

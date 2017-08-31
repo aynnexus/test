@@ -8,21 +8,62 @@
 		<li class="active"> Action</li>
 	</ol>
 </section>
+
 	<section class="content">
+
 		<div class="row">
+
 			<div class="col-xs-12">
 				
-				<div class="box">				
+				<div class="box">	
+					<div class="box-header">
+						<form action="{{url('dashboard/guests/search?')}}" class="" method="get" accept-charset="utf-8">
+				            	<div class="col-sm-2">
+				            		<div class="form-group">
+				            			<select name="site_id" class="form-control select2">
+											<option>Current Site</option>
+											@if(isset($sites))
+												@foreach($sites as $key=>$value)
+													<option value="{{$value}}">{{$key}}</option>
+												@endforeach
+											@endif
+										</select>
+				            		</div>
+				            	</div>
+				            	<div class="col-sm-2">
+				            		<div class="form-group">
+				            			<input type="search" class="form-control" class="" name="name" placeholder="Search Name">
+				            		</div>
+				            	</div>
+				                <div class="col-sm-2">
+				                    <div class="input-group date">
+				                        <input type="text" name="from_date" class="form-control datetimepicker" placeholder="From">
+				                        <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                    </div>
+				                </div>
+
+				                <div class="col-sm-2">
+				                    <div class="input-group date">
+				                        <input type="text" name="to_date" class="form-control datetimepicker" placeholder="To">
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                    </div>
+				                </div>
+				                <div class="col-sm-2">
+				                    <button type="submit" class="btn btn-primary btn-mgma mt0">Search</button>
+				                    <a href="{{url('dashboard/guests')}}" class="btn btn-warning">Reset</a>
+				                </div>
+
+				        </form>
+					</div>			
 					<div class="box-body">
-						<div class="row">
-								<div class="col-md-6">
-								</div>
-								<div class="col-md-6" style="text-align: right">
-									<form action="{{url('dashboard/guests/search?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="name" placeholder="Search Site Name">
-					                </form> 
-								</div>
-						</div>	
+						<ul class="nav nav-tabs pull-right">
+						  <li role="presentation" class="{{Request::is('dashboard/guests/register')?'active':''}}"><a href="{{url('dashboard/guests/register')}}">Register Users</a></li>
+						  <li role="presentation" class="{{Request::is('dashboard/guests/social')?'active':''}}"><a href="{{url('dashboard/guests/social')}}">Social Users</a></li>
+						</ul>	
 						<div class="row">
 							<div class="col-sm-12">
 								<table class="table table-bordered table-striped dataTable">
@@ -34,7 +75,7 @@
 											<th>Email/Phone</th>
 											<th>Gender/Age Group</th>
 											<th>Site Name</th>
-											<th>Created</th>
+											<th>Login Time</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -44,8 +85,8 @@
 										@foreach($guests as $key=>$row)
 										 
 										<tr>
-											<td>{{$key+1}}.</td>
-											<td>
+											<td>{{$key+1}}. </td>
+											<td><img src="{{$row->profile_photo==null?asset('img/user-pic-01.jpg'):'-'}}" width="40px" height="40px;" class="img-circle">
 												<div>
 													<a id="" value="" href="#">{{$row->name}}</a>
 												</div>	
@@ -56,10 +97,10 @@
 												{{$row->Site['site_name']}}
 											</td>
 											<td>
-												{{date('M d, Y',strtotime($row->created_at))}}
+												{{date('d M, Y H:m:s',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Check</a>
+												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
 												<a href="{{url('/dashboard/guests/remove/'.$row->guest_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
@@ -83,4 +124,7 @@
 		</div>
 		
 	</section>
+<script>
+	$( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
+</script>
 @stop

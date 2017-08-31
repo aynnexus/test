@@ -23,4 +23,21 @@ class Guest extends Model
     {
     	return $this->hasOne(Site::class,'site_id','site_id');
     }
+
+    public function scopeSearch($query,$request)
+    {   
+        if ($request['name']) {
+            $query->where('name', 'like','%'.$request['name'].'%');
+        }
+        if($request['from_date']){
+            $query->whereBetween('created_at',[$request['from_date'],$request['to_date']]);
+        }
+
+        return $query->where('site_id',$request['site_id']);                     
+    }
+
+    public function Surveys()
+    {
+        return $this->hasMany(Survey::class,'guest_id');
+    }
 }

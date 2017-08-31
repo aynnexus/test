@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
     <!-- Styles -->
     {!! Html::style('assets/bootstrap/css/bootstrap.css') !!}
     {!! Html::style('css/custom.css') !!}
@@ -17,8 +17,8 @@
     {!! Html::style('assets/adminlte/plugins/select2/select2.min.css') !!}
     {!! Html::style('assets/adminlte/css/AdminLTE.min.css') !!}
     {!! Html::style('assets/adminlte/css/skins/_all-skins.min.css') !!}
-    {!! Html::style('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}    
-    
+    {!! Html::style('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}  
+    {!! Html::style('css/bootstrap-datetimepicker.css') !!}  
     <!-- Scripts -->
     {!! Html::script('js/custom.js') !!}
     {!! Html::script('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js') !!}
@@ -26,6 +26,7 @@
     {!! Html::script('assets/adminlte/js/app.js') !!}
     {!! Html::script('assets/adminlte/plugins/select2/select2.full.min.js') !!}
     {!! Html::script('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}
+    {!! Html::script('js/bootstrap-datetimepicker.js') !!}
     
     <!-- Scripts -->
     <script>

@@ -8,6 +8,8 @@ use App\Models\Template;
 use App\Models\Guest;
 use App\Models\Client;
 use App\Models\Lookup;
+use App\Models\Answer;
+use App\Models\Survey;
 use Unifi,Session,Flash,DateTime,Socialite,Auth;
 
 class GuestController extends Controller
@@ -59,12 +61,21 @@ class GuestController extends Controller
         return view('frontend.index',compact('site','temp','look_age','look_gender','user_ap'));
     }
 
-    public function indexLists()
-    {
+    public function indexLists(Request $request,$type='register')
+    {   
+        $type = ($type=='register')?1:2;
         if(Auth::user()->role==1)
-        {
-            $guests = Guest::orderBy('guest_id','desc')->paginate(20);
-            return view('backend.guest.index',compact('guests'));
+        {   
+            $sites = Site::active()->pluck('site_id','site_name');
+            
+            if ($request->get('site_id')) {
+                $guests = Guest::search($request->all())->orderBy('guest_id','desc')->paginate(20);
+
+            }else{
+                $guests = Guest::where('type',$type)->orderBy('guest_id','desc')->paginate(20);
+            }
+
+            return view('backend.guest.index',compact('guests','sites'));
         }
         return back();
     }
@@ -121,7 +132,7 @@ class GuestController extends Controller
     }
 
     public function postFeedback(Request $request,$id)
-    {   
+    {   //dd($request->all());
         $ap = Session::get('ap');
         $site = Session::get('site');
         $temp_id = Session::get('template');
@@ -133,7 +144,16 @@ class GuestController extends Controller
         }
         
         Guest::find($id)->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values)]);
-
+        for ($i=0; $i < count($temp->Surveying); $i++) { 
+            $ans = Answer::find($request['answer'.$i]);
+            $survey = new Survey;
+            $survey->guest_id = $id;
+            $survey->answer = $ans->label;
+            $survey->question = $temp->Surveying[$i]->Question->label;
+            $survey->status = ACTIVE;
+            $survey->save();
+        }
+        
         //if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
             header('Location: http://www.google.com');exit();
         //}
@@ -156,9 +176,10 @@ class GuestController extends Controller
 
     public function getSiteInGuest(Request $request,$id)
     {           
-        if ($request->get('guest_name') || $request->get('site_name')) {
-            $results = Site::search($request->all())->first();
-            return view('backend.guest.index',compact('results'));
+        if ($request->get('site_name')) {
+            $guests = Guest::search($request->all())->paginate(10);
+            $sites = Site::active()->pluck('site_id','site_name');
+            return view('backend.guest.index',compact('guests','sites'));
         }
         $client = Client::find($id)->value('site_id');
         $sites = Site::whereIn('site_id',json_decode($client))->get();
@@ -167,14 +188,14 @@ class GuestController extends Controller
     }
 
     public function searchSiteName(Request $request,$id)
-    {
+    {   
         if ($request->get('name')) {
             $site = Site::search($request->all())->first();
             return view('backend.guest.index',compact('site'));
         }
     }
 
-    public function searchDate(Request $request)
+    public function searchData(Request $request)
     {   
         if ($request->get('site_name')) {
             $site = Site::search($request->all())->first();

@@ -19,9 +19,8 @@
 									<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp0"><i class="fa fa-plus"></i> Add New Site</button>
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<form action="{{url('admin/category/data/response?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="category_search" placeholder="Search Name">
-					                  <input type="hidden" class="" name="type" value="">
+									<form action="{{url('dashboard/sites/search?')}}" class="" method="get" accept-charset="utf-8">
+					                  <input type="search" class="" name="name" placeholder="Search Name">
 					                </form> 
 								</div>
 						</div>	

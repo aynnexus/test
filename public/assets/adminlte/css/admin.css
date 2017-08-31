@@ -112,3 +112,7 @@
 .user-header .img-circle{
     border-width: 0px !important;
 }
+.clr{
+    clear: both;   
+    margin:10px;
+}

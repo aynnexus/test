@@ -45,10 +45,12 @@
                     @endif
 
                     @if(isset($feedback) && $feedback->survey==1)
-                    @foreach($temp->Surveying as $surveying)
+                    @foreach($temp->Surveying as $key=>$surveying)
                         <div class="form-group has-feedback">
-                            <label>{{$surveying->Survey->label}}</label>
-                            <input type="text" name="{{$surveying->Survey->label}}" class="form-control">
+                            <label>{{$key+1}}. {{$surveying->Question->label}}</label>
+                            @foreach($surveying->Question->Answers as $answer)
+                                <p><input type="radio" name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
+                            @endforeach
                         </div>
                     @endforeach
                     @endif

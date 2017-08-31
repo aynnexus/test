@@ -13,9 +13,9 @@
 									<a href="{{url('dashboard/clients/create')}}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Client</a>
 								</div>
 								<div class="col-md-6" style="text-align: right">
-									<label>Search
-										<input type="search" class="form-control input-sm" name="site_search">
-									</label>
+									<form action="{{url('dashboard/clients/search?')}}" class="" method="get" accept-charset="utf-8">
+					                  <input type="search" class="" name="name" placeholder="Search client name">
+					                </form> 
 								</div>
 							</div>	
 							<div class="row">
