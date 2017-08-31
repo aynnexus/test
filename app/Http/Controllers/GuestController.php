@@ -22,17 +22,19 @@ class GuestController extends Controller
         if (isset($request->id)) {
             $url = explode('/', $_SERVER['REDIRECT_URL']);
             Session::put('ap',$request->id);
-            Session::put('site',$url[3]);
-            $guest = Guest::where('user_ap',$request->ap)->value('created_at');
+            Session::put('site',$url[3]);            
+            Session::put('user_ap',$request->ap);
+            $guest = Guest::where('user_ap',$request->ap)->get()->last();
             $site_info = Site::where('site_code',$url[3])->first();
             $define_minute = $site_info->time_limit+$site_info->timeout_limit;
             
             if ($guest!=null) {
-                $guest_created_format = $guest->format('Y-m-d H:i:s');
+                $guest_created_format = $guest->created_at->format('Y-m-d H:i:s');
                 $format_1 = datetime_convert($curr_datetime_format,$site_info->time_limit);
                 $format_2 = datetime_convert($guest_created_format,$define_minute);
+                
                 if ($format_1 <= $format_2) {
-                    return redirect('404');
+                    return redirect('500');
                 }                
             }                 
         }
@@ -91,25 +93,21 @@ class GuestController extends Controller
     {   
         $ap = Session::get('ap');
         $site = Session::get('site');
+        $guestId = $this->firstCreated();
 
-        $guest = new Guest;
-        $guest->name = $request->name;
-        $guest->email = $request->email;
-        $guest->age = $request->age;
-        $guest->phone = $request->phone;
-        $guest->gender = $request->gender;
-        $guest->custom_1 = $request->custom_1;
-        $guest->custom_2 = $request->custom_2;
-        $guest->site_id = Site::where('site_code',$site)->value('site_id');
-        $guest->user_ap = $request->user_ap;
-        $guest->type = REGISTER;
-        $guest->status = INACTIVE;
-        $guest->save();
+        $guest = Guest::find($guestId)->update([
+            'name'=>$request->name,'email'=>$request->email,
+            'age'=>$request->age,'phone'=>$request->phone,
+            'gender' => $request->gender,
+            'custom_1' => $request->custom_1,
+            'custom_2' => $request->custom_2,
+            'type' => REGISTER
+        ]);
         $site_data = Site::where('site_code',$site)->first();
         
         if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
-
-            return redirect('guest/feedback/'.$guest->guest_id);
+            
+            return redirect('guest/feedback/'.$guestId);
         }        
         return back();
     }
@@ -132,7 +130,7 @@ class GuestController extends Controller
     }
 
     public function postFeedback(Request $request,$id)
-    {   //dd($request->all());
+    {   
         $ap = Session::get('ap');
         $site = Session::get('site');
         $temp_id = Session::get('template');
@@ -143,7 +141,7 @@ class GuestController extends Controller
             $keys[] = $value->Rate->label;
         }
         
-        Guest::find($id)->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values)]);
+        Guest::find($id)->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values),'status'=>ACTIVE]);
         for ($i=0; $i < count($temp->Surveying); $i++) { 
             $ans = Answer::find($request['answer'.$i]);
             $survey = new Survey;
@@ -169,8 +167,10 @@ class GuestController extends Controller
         $api->baseurl = unifiServer;        
         $api->site = $id;
         if ($api->login($ap_mac,$minutes,$up,$down,$mb)==true) {
+            $api->logout();
             return true;
         }        
+
         return false;
     }
 
@@ -220,18 +220,20 @@ class GuestController extends Controller
         } catch (Exception $e) {
             return redirect('/');
         }
-        dd($social_user);
-        $guest = new Guest;
-        $guest->name = $social_user->getName();
-        $guest->social_id = $social_user->getId();
-        $guest->email = $social_user->getEmail();
-        $guest->profile_photo = $social_user->getAvatar();
-        $guest->gender = ($social_user->getGender()=='male')?1:2;
-        $guest->status = ACTIVE;
-        $guest->type = SOCIAL;
-        $guest->save();
+        
+        $guestId = $this->firstCreated();
+        $guest = Guest::find($guestId)->update([
+            'name'=>$social_user->getName(),
+            'email'=>$social_user->getEmail(),
+            'social_id'=>$social_user->getId(),
+            //'phone'=>$request->phone,
+            'gender' => $social_user->user['gender']=='male'?1:2,
+            'profile_photo' => $social_user->getAvatar(),
+            'type' => SOCIAL,
+            'status'=>INACTIVE,
+        ]);
 
-        return redirect('guest/feedback/'.$guest->guest_id);
+        return redirect('guest/feedback/'.$guestId);
         // $user = User::where('social_id',$social_user->getId())->first();
         // $user = (!$user)?new User:$user;
         // $user->social_id = $social_user->getId();
@@ -248,4 +250,19 @@ class GuestController extends Controller
         // $detail->save();
     }
 
+    public static function firstCreated()
+    {
+        
+        $site = Session::get('site');
+        $user_ap = Session::get('user_ap');
+
+        $guest = new Guest;
+        $guest->site_id = Site::where('site_code',$site)->value('site_id');
+        $guest->user_ap = $user_ap;
+        $guest->status = ACTIVE;
+        $guest->save();
+        $id =$guest->guest_id;
+
+        return $id;
+    }
 }
