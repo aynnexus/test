@@ -26,7 +26,7 @@ Route::group(['prefix'=>'guest'],function(){
 
 Route::get('/member','MemberController@getlogin');
 Route::post('/member','MemberController@postlogin');
-Route::get('404',function(){
+Route::get('500',function(){
 	return view('frontend.block');
 });
 

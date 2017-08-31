@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Guest extends Model
 {	
 	protected $primaryKey = 'guest_id';
-    protected $fillable = ['comment','rating_key','rating_value'];
+    protected $fillable = ['comment','rating_key','rating_value','status','profile_photo','social_ap','type','type','custom_1','custom_2','phone','age','name','email','gender'];
 
     public function Gender($value)
     {

@@ -86,7 +86,7 @@
 										 
 										<tr>
 											<td>{{$key+1}}. </td>
-											<td><img src="{{$row->profile_photo==null?asset('img/user-pic-01.jpg'):'-'}}" width="40px" height="40px;" class="img-circle">
+											<td><img src="{{$row->profile_photo==null?asset('img/user-pic-01.jpg'):$row->profile_photo}}" width="40px" height="40px;" class="img-circle">
 												<div>
 													<a id="" value="" href="#">{{$row->name}}</a>
 												</div>	
@@ -97,7 +97,7 @@
 												{{$row->Site['site_name']}}
 											</td>
 											<td>
-												{{date('d M, Y H:m:s',strtotime($row->created_at))}}
+												{{date('d M, Y g:i:s',strtotime($row->created_at))}}
 											</td>
 											<td>
 												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
