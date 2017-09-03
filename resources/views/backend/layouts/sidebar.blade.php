@@ -33,8 +33,8 @@
         <ul class="treeview-menu"> 
           <li><a href="{{url('dashboard/settings/serveys/questions')}}"><i class="fa fa-circle-o"></i> Servey</a></li>
           <li><a href="{{url('dashboard/settings/lookup')}}"><i class="fa fa-circle-o"></i> LookUp</a></li>    
-          <li><a href="{{url('dashboard/settings/images')}}"><i class="fa fa-circle-o"></i> Image</a></li>          
-          <li><a href="{{url('dashboard/permission')}}"><i class="fa fa-circle-o"></i> Permission</a></li>         
+          <!-- <li><a href="{{url('dashboard/settings/images')}}"><i class="fa fa-circle-o"></i> Image</a></li>          
+          <li><a href="{{url('dashboard/permission')}}"><i class="fa fa-circle-o"></i> Permission</a></li> -->         
         </ul>
       </li>
       @endif

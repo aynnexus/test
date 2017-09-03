@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Lookup;
 use App\Models\Answer;
 use App\Models\Survey;
+use App\Models\Movement;
 use Unifi,Session,Flash,DateTime,Socialite,Auth;
 
 class GuestController extends Controller
@@ -27,12 +28,13 @@ class GuestController extends Controller
             $guest = Guest::where('user_ap',$request->ap)->get()->last();
             $site_info = Site::where('site_code',$url[3])->first();
             $define_minute = $site_info->time_limit+$site_info->timeout_limit;
+            Movement::MovementStore($site_info->site_id);
             
             if ($guest!=null) {
                 $guest_created_format = $guest->created_at->format('Y-m-d H:i:s');
                 $format_1 = datetime_convert($curr_datetime_format,$site_info->time_limit);
                 $format_2 = datetime_convert($guest_created_format,$define_minute);
-                
+                //dd($format_1);
                 if ($format_1 <= $format_2) {
                     return redirect('500');
                 }                
@@ -105,7 +107,7 @@ class GuestController extends Controller
         ]);
         $site_data = Site::where('site_code',$site)->first();
         
-        if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
+        if($this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
             
             return redirect('guest/feedback/'.$guestId);
         }        
@@ -141,17 +143,24 @@ class GuestController extends Controller
             $keys[] = $value->Rate->label;
         }
         
-        Guest::find($id)->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values),'status'=>ACTIVE]);
+        $guest = Guest::find($id);
+        $guest->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values),'status'=>ACTIVE]);
+
         for ($i=0; $i < count($temp->Surveying); $i++) { 
-            $ans = Answer::find($request['answer'.$i]);
-            $survey = new Survey;
-            $survey->guest_id = $id;
-            $survey->answer = $ans->label;
-            $survey->question = $temp->Surveying[$i]->Question->label;
-            $survey->status = ACTIVE;
-            $survey->save();
+            if($request['answer'.$i]!=null){
+                $ans = Answer::find($request['answer'.$i]);
+                $survey = new Survey;
+                $survey->guest_id = $id;
+                $survey->answer = $ans->label;
+                $survey->question = $temp->Surveying[$i]->Question->label;
+                $survey->status = ACTIVE;
+                $survey->save();
+            }
         }
         
+        if ($guest->type==2) {
+            $this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit);
+        }
         //if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
             header('Location: http://www.google.com');exit();
         //}
@@ -234,20 +243,6 @@ class GuestController extends Controller
         ]);
 
         return redirect('guest/feedback/'.$guestId);
-        // $user = User::where('social_id',$social_user->getId())->first();
-        // $user = (!$user)?new User:$user;
-        // $user->social_id = $social_user->getId();
-        // $user->name = $social_user->getName();
-        // $user->email = $social_user->getEmail();
-        // $user->role_id = 3;
-        // $user->status=ACTIVE;
-        // $user->save();
-        // $detail = UserDetail::where('user_id',$user->id)->first();
-        // $detail = (!$detail)?new UserDetail:$detail;
-        // $detail->user_id = $user->id;
-        // $detail->photo_path = $social_user->getAvatar();
-        // $detail->status = ACTIVE;
-        // $detail->save();
     }
 
     public static function firstCreated()

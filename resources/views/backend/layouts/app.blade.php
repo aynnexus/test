@@ -18,8 +18,11 @@
     {!! Html::style('assets/adminlte/css/AdminLTE.min.css') !!}
     {!! Html::style('assets/adminlte/css/skins/_all-skins.min.css') !!}
     {!! Html::style('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}  
-    {!! Html::style('css/bootstrap-datetimepicker.css') !!}  
+    {!! Html::style('css/bootstrap-datetimepicker.css') !!} 
+    {!! Html::style('assets/adminlte/plugins/daterangepicker/daterangepicker-bs3.css') !!}
+ 
     <!-- Scripts -->
+    
     {!! Html::script('js/custom.js') !!}
     {!! Html::script('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js') !!}
     {!! Html::script('assets/bootstrap/js/bootstrap.min.js') !!}
@@ -27,6 +30,7 @@
     {!! Html::script('assets/adminlte/plugins/select2/select2.full.min.js') !!}
     {!! Html::script('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}
     {!! Html::script('js/bootstrap-datetimepicker.js') !!}
+    {!! Html::script('assets/adminlte/plugins/daterangepicker/daterangepicker.js') !!}
     
     <!-- Scripts -->
     <script>

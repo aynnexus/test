@@ -34,6 +34,7 @@ Auth::routes();
 
 Route::group(['prefix'=>'dashboard'],function(){
 	Route::get('/', 'HomeController@index')->name('home');
+	Route::get('/json_index', 'HomeController@jsonIndex');
 	Route::group(['middleware'=>'admin','prefix'=>'sites'],function(){
 		Route::get('/{search?}','SiteController@index');		
 		Route::post('/store/{id?}','SiteController@storeSite');

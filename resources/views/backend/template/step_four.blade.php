@@ -40,8 +40,14 @@
 												<input type="radio" {{($fdb!=null && $fdb->like==1)?'checked':''}} value="1" name="like"> Yes
 												
 												<input type="radio" {{($fdb!=null && $fdb->like==0)?'checked':''}} value="0" name="like"> No
-											</div>										
+												
+											</div>	
+
 										</div>										
+										<hr>
+										<div class="row" id="iframe">
+											<div class="col-md-3"><label>Facebook Iframe Link</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
+										</div>	
 										<hr>
 										<div class="row">
 											<div class="col-md-3">
@@ -171,14 +177,14 @@
 		</div>
 	 	<!-- model end -->
 	</section>
-<!-- <script type="text/javascript">
-	$('input#Yes').on('click',function(){
-		$('#select_open').show();
-		$('select#rating').attr('required',true);
-	})
-	$('input#No').on('click',function(){
-		$('#select_open').hide();
-		$('select#rating').attr('required',false);
-	})
-</script> -->
+<script type="text/javascript">
+	// $('input#Yes').on('click',function(){
+	// 	$('#select_open').show();
+	// 	$('select#rating').attr('required',true);
+	// })
+	// $('input#No').on('click',function(){
+	// 	$('#select_open').hide();
+	// 	$('select#rating').attr('required',false);
+	// })
+</script>
 @stop
