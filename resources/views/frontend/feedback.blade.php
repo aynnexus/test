@@ -69,7 +69,9 @@
             </div>
             <!-- /.form-box --> 
             <div class="row">
-                <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&width=450&layout=standard&action=like&size=small&show_faces=true" width="450" height="80" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            @if($temp->iframe_link)
+                <iframe src="{{$temp->iframe_link}}" width="450" height="80" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            @endif
             </div>
     
         </div>

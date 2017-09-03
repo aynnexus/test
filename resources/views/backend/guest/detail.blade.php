@@ -76,7 +76,7 @@
 				                    	<label class="col-lg-1 control-label">:</label>
 				                    	<div class="col-lg-7">                      
 					                      	<label class="form-label">
-												{{date('d M, Y H:m:s',strtotime($guest->created_at))}}
+												{{date('d M, Y g:i:s',strtotime($guest->created_at))}}
 											</label>	
 				                      		<div class="clr"></div>
 				                    	</div><br>                   

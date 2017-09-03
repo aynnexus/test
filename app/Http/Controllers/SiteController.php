@@ -247,9 +247,10 @@ class SiteController extends Controller
             }
         }
         $feedback = SiteField::UpdateOrCreate(['template_id'=>$id],[
-                'feedback_fields'=>json_encode($feedback_field,true)
+                'feedback_fields'=>json_encode($feedback_field,true),
+                'iframe_link' => $request->iframe
             ]);
-
+        
         Template::find($id)->update(['step'=>4]);
 
         Flash::success('Successfully Feedback Add');

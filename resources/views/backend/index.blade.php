@@ -1,88 +1,107 @@
 @extends('backend.layouts.app')
 @section('content')
+  <section class="content-header">
+    <h1 class="pull-left">Dashboard <small>control panal</small></h1>
+    <form>   
+      <div class="form-group pull-right">
+        <div class="input-group">
+          <div class="input-group date">
+            <input type="text" name="from_date" class="form-control datetimepicker" placeholder="From">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+            <input type="text" name="to_date" class="form-control datetimepicker" placeholder="To">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
 
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        ChartJS
-        <small>Preview sample</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Charts</a></li>
-        <li class="active">ChartJS</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
-              </div>
-            </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-
-          <!-- DONUT CHART -->
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Donut Chart</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-              <canvas id="pieChart" style="height:250px"></canvas>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
 
         </div>
-        <!-- /.col (LEFT) -->
-        <div class="col-md-6">
-          <!-- LINE CHART -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Line Chart</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+      </div>
+      <button type="button" class="btn btn-primary pull-right">
+        search
+      </button> 
+    </form>
+    <br>
+  </section>
+    <br>
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{$data['sites']}}</h3>
+
+              <p>Sites</p>
             </div>
-            <div class="box-body">
-              <div class="chart">
-                <canvas id="lineChart" style="height:250px"></canvas>
-              </div>
+            <div class="icon">
+              <i class="fa fa-file"></i>
             </div>
-            <!-- /.box-body -->
+            <a href="{{url('dashboard/sites')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-          <!-- /.box -->
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{$data['guests']}}</h3>
+
+              <p>Guest Login</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{$data['visit']}}</h3>
+
+              <p>Guest Visits</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{$data['clients']}}</h3>
+
+              <p>Clients</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-filter"></i>
+            </div>
+            <a href="{{url('dashboard/clients')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <!-- /.col (LEFT) -->
+        <div class="col-md-12">
+          
 
           <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Bar Chart</h3>
+              <h3 class="box-title">Activity <small>Male <button class="btn bnt-xs btn-default"></button> Female <button class="btn bnt-xs btn-success"></button></small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -102,246 +121,115 @@
         </div>
         <!-- /.col (RIGHT) -->
       </div>
+      <div class="row">
+        <div class="col-md-6">
+          <!-- DONUT CHART -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Login Type <small>Register/Social</small></h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <canvas id="pieChart" style="height:250px"></canvas>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        </div>
+        <div class="col-md-6">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Activity</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="chart">
+                <canvas id="areaChart" style="height:250px"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
       <!-- /.row -->
 
     </section>
     <!-- /.content -->
-
-
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript::;">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                <p>New phone +1(800)555-1234</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                <p>nora@example.com</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                <p>Execution time 5 seconds</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript::;">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="label label-danger pull-right">70%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <h4 class="control-sidebar-subheading">
-                Update Resume
-                <span class="label label-success pull-right">95%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <h4 class="control-sidebar-subheading">
-                Laravel Integration
-                <span class="label label-warning pull-right">50%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript::;">
-              <h4 class="control-sidebar-subheading">
-                Back End Framework
-                <span class="label label-primary pull-right">68%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Allow mail redirect
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Other sets of options are available
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Expose author name in posts
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Allow the user to show his name in blog posts
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Show me as online
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Turn off notifications
-              <input type="checkbox" class="pull-right">
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Delete chat history
-              <a href="javascript::;" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-            </label>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
   <!-- page script -->
   <script src="{{asset('assets/chartjs/Chart.min.js')}}"></script>
 <script>
+  $( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
   $(function () {
+
+    var calender = [];var data_male=[];var data_female=[];
+    var register = 0; var social = 0;
+    $.ajax({
+      url: 'dashboard/json_index',
+      async: false,  
+      success: function(response) {
+        response.data.male.map(function(index){
+          //var month = index.monthyear.split('-')
+          //calender.push(moment(month[0]).format('MMMM'))
+          data_male.push(index.total);
+          
+        });
+        response.data.female.map(function(index){
+          data_female.push(index.total);
+        });
+        register = response.data.register;
+        social = response.data.social;
+
+      }
+    });
+    
+    //console.log(Object.values(calender));console.log(['Set','Jun'])
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
      */
-
     //--------------
     //- AREA CHART -
     //--------------
-
     // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
-    var areaChart = new Chart(areaChartCanvas);
+    //var areaChart = new Chart(areaChartCanvas);
 
     var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+
+      labels: ['Age 13-17','Age 18-24','Age 25-34','Age 35-44','Age 45-54','Age 55-64','Over 65'],
       datasets: [
         {
-          label: "Electronics",
+          label: "Male",
           fillColor: "rgba(210, 214, 222, 1)",
           strokeColor: "rgba(210, 214, 222, 1)",
           pointColor: "rgba(210, 214, 222, 1)",
           pointStrokeColor: "#c1c7d1",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65, 59, 80, 81, 56, 55, 40]
+          data: data_male
         },
         {
-          label: "Digital Goods",
+          label: "Female",
           fillColor: "rgba(60,141,188,0.9)",
           strokeColor: "rgba(60,141,188,0.8)",
           pointColor: "#3b8bba",
           pointStrokeColor: "rgba(60,141,188,1)",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [28, 48, 40, 19, 86, 27, 90]
+          data: data_female
         }
       ]
     };
@@ -386,17 +274,9 @@
     };
 
     //Create the line chart
-    areaChart.Line(areaChartData, areaChartOptions);
+    //areaChart.Line(areaChartData, areaChartOptions);
 
-    //-------------
-    //- LINE CHART -
-    //--------------
-    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-    var lineChart = new Chart(lineChartCanvas);
-    var lineChartOptions = areaChartOptions;
-    lineChartOptions.datasetFill = false;
-    lineChart.Line(areaChartData, lineChartOptions);
-
+    
     //-------------
     //- PIE CHART -
     //-------------
@@ -405,41 +285,17 @@
     var pieChart = new Chart(pieChartCanvas);
     var PieData = [
       {
-        value: 700,
+        value: register,
         color: "#f56954",
         highlight: "#f56954",
-        label: "Chrome"
+        label: "Register Users"
       },
       {
-        value: 500,
-        color: "#00a65a",
-        highlight: "#00a65a",
-        label: "IE"
-      },
-      {
-        value: 400,
-        color: "#f39c12",
-        highlight: "#f39c12",
-        label: "FireFox"
-      },
-      {
-        value: 600,
-        color: "#00c0ef",
-        highlight: "#00c0ef",
-        label: "Safari"
-      },
-      {
-        value: 300,
+        value: social,
         color: "#3c8dbc",
         highlight: "#3c8dbc",
-        label: "Opera"
+        label: "Social Users"
       },
-      {
-        value: 100,
-        color: "#d2d6de",
-        highlight: "#d2d6de",
-        label: "Navigator"
-      }
     ];
     var pieOptions = {
       //Boolean - Whether we should show a stroke on each segment
@@ -480,6 +336,7 @@
     barChartData.datasets[1].pointColor = "#00a65a";
     var barChartOptions = {
       //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+
       scaleBeginAtZero: true,
       //Boolean - Whether grid lines are shown across the chart
       scaleShowGridLines: true,
@@ -509,5 +366,6 @@
     barChartOptions.datasetFill = false;
     barChart.Bar(barChartData, barChartOptions);
   });
+
 </script>
 @stop
