@@ -2,7 +2,7 @@
 
 @section('content')
 
-<body class="hold-transition register-page" style="background: {{$temp->Profile->background_color}}">
+<body class="hold-transition register-page" style="background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
     <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo">
