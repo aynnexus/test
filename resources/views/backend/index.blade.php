@@ -2,15 +2,15 @@
 @section('content')
   <section class="content-header">
     <h1 class="pull-left">Dashboard <small>control panal</small></h1>
-    <form>   
+    <form action="{{url('dashboard/data')}}" method="get">   
       <div class="form-group pull-right">
         <div class="input-group">
           <div class="input-group date">
-            <input type="text" name="from_date" class="form-control datetimepicker" placeholder="From">
+            <input type="text" name="from_date" id="form" class="form-control datetimepicker" placeholder="From">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
-            <input type="text" name="to_date" class="form-control datetimepicker" placeholder="To">
+            <input type="text" name="to_date" id="to" class="form-control datetimepicker" placeholder="To">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -20,7 +20,7 @@
         </div>
 
       </div>
-      <button type="button" class="btn btn-primary pull-right">
+      <button type="submit" class="btn btn-primary pull-right">
         search
       </button> 
     </form>
@@ -146,7 +146,7 @@
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Activity</h3>
+              <h3 class="box-title">Activity <small>Active Login</small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -170,31 +170,94 @@
   <!-- page script -->
   <script src="{{asset('assets/chartjs/Chart.min.js')}}"></script>
 <script>
-  $( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
+  $( ".datetimepicker" ).datetimepicker();
   $(function () {
 
-    var calender = [];var data_male=[];var data_female=[];
-    var register = 0; var social = 0;
-    $.ajax({
-      url: 'dashboard/json_index',
-      async: false,  
-      success: function(response) {
-        response.data.male.map(function(index){
-          //var month = index.monthyear.split('-')
-          //calender.push(moment(month[0]).format('MMMM'))
-          data_male.push(index.total);
-          
-        });
-        response.data.female.map(function(index){
-          data_female.push(index.total);
-        });
-        register = response.data.register;
-        social = response.data.social;
-
+    var calender = [];var data_male=[0,0,0,0,0,0,0];
+    var register = 0; var social = 0;var data_login=[];
+    var data_female=[0,0,0,0,0,0,0];
+    register = '<?php echo $data['register'] ?>';
+    social = '<?php echo $data['social'] ?>';
+    var data_1 = JSON.parse('<?php echo $data['male'] ?>');
+    var data_2 = JSON.parse('<?php echo $data['female'] ?>');
+    var data_3 = JSON.parse('<?php echo $data['login'] ?>');
+    
+    data_1.map(function(index){
+      if (index.age==1) {
+        data_male[0] = index.total
+      }
+      if (index.age==2) {
+        data_male[1] = index.total
+      }
+      if (index.age==3) {
+        data_male[2] = index.total
+      }
+      if (index.age==4) {
+        data_male[3] = index.total
+      }
+      if (index.age==5) {
+        data_male[4] = index.total
+      }
+      if (index.age==6) {
+        data_male[5] = index.total
+      }
+      if (index.age==7) {
+        data_male[6] = index.total
       }
     });
+    data_2.map(function(index){
+      if (index.age==1) {
+        data_female[0] = index.total
+      }
+      if (index.age==2) {
+        data_female[1] = index.total
+      }
+      if (index.age==3) {
+        data_female[2] = index.total
+      }
+      if (index.age==4) {
+        data_female[3] = index.total
+      }
+      if (index.age==5) {
+        data_female[4] = index.total
+      }
+      if (index.age==6) {
+        data_female[5] = index.total
+      }
+      if (index.age==7) {
+        data_female[6] = index.total
+      }
+    });
+
+    data_3.map(function(index){
+      var month = index.monthyear.split('-')
+      calender.push(moment(month[0]).format('MMMM')) 
+      data_login.push(index.data);         
+    });
     
-    //console.log(Object.values(calender));console.log(['Set','Jun'])
+    // $.ajax({
+    //   url: 'dashboard/json_index',
+    //   async: false,  
+    //   success: function(response) {
+    //     response.data.male.map(function(index){
+    //       data_male.push(index.total);
+          
+    //     });
+    //     response.data.female.map(function(index){
+    //       data_female.push(index.total);
+    //     });
+    //     register = response.data.register;
+    //     social = response.data.social;
+
+    //     response.data.login.map(function(index){
+    //       var month = index.monthyear.split('-')
+    //       calender.push(moment(month[0]).format('MMMM')) 
+    //       data_login.push(index.data);         
+    //     });
+
+    //   }
+    // });
+    
     /* ChartJS
      * -------
      * Here we will create a few charts using ChartJS
@@ -205,7 +268,7 @@
     // Get context with jQuery - using jQuery's .get() method.
     var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
-    //var areaChart = new Chart(areaChartCanvas);
+    var areaChart = new Chart(areaChartCanvas);
 
     var areaChartData = {
 
@@ -230,6 +293,22 @@
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(60,141,188,1)",
           data: data_female
+        }
+      ]
+    };
+
+    var areaChartDataS = {
+      labels: calender,
+      datasets: [
+        {
+          label: "Female",
+          fillColor: "rgba(60,141,188,0.9)",
+          strokeColor: "rgba(60,141,188,0.8)",
+          pointColor: "#3b8bba",
+          pointStrokeColor: "rgba(60,141,188,1)",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(60,141,188,1)",
+          data: data_login
         }
       ]
     };
@@ -274,7 +353,7 @@
     };
 
     //Create the line chart
-    //areaChart.Line(areaChartData, areaChartOptions);
+    areaChart.Bar(areaChartDataS, areaChartOptions);
 
     
     //-------------
