@@ -45,7 +45,7 @@
 
 										<a href="{{url('/dashboard/template')}}" class="btn btn-default">Back</a>
 										<button type="submit" class="btn btn-primary"> {{isset($site_photo)?'Update':'Submit'}}</button>
-										@if(isset($site_photo))<a href="{{url('dashboard/template/step_four/'.$id)}}" class="btn btn-warning">Preview</a>@endif
+										@if(isset($site_photo))<a href="{{url('dashboard/template/step_five/'.$id)}}" class="btn btn-warning">Continue</a>@endif
 								</form>
 								</div>
 							</div>	
