@@ -11,7 +11,7 @@
 
             <div class="register-box-body" style="border-radius:10px;background: transparent;">
                 <p class="login-box-msg"></p>
-                <?php   $feedback = json_decode($temp->Field->feedback_fields);
+                <?php $feedback = json_decode($temp->Field->feedback_fields);
 
                    // dd($feedback);
                          ?>
@@ -69,15 +69,73 @@
             </div>
             <!-- /.form-box --> 
             <div class="row">
-            @if($temp->iframe_link)
-                <iframe src="{{$temp->iframe_link}}" width="450" height="80" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-            @endif
+                <div id="fb-root"></div>
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"></div>
+                <button style="display: none;" id="loginBtn">Facebook Login</button>
+                <div id="response"></div>
             </div>
-    
+            
         </div>
-    <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
+        <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
 </body>
 <script type="text/javascript">
-    
+    const ID = '<?php echo $temp->Field->iframe_link ?>';
+    const guest_id = '<?php echo $id ?>'
+    function getUserData() {    
+        FB.api(
+            "me?fields=age_range",
+            function (response) {
+              if (response && !response.error) {
+                updateJsonAge(response.age_range.min,guest_id)
+              }
+            }
+        );
+    }
+    function updateJsonAge(data,id)
+    {
+        $.get('./guest_age/field?age='+data+'&id='+id);
+    }
+
+    window.fbAsyncInit = function() {
+        //SDK loaded, initialize it
+        FB.init({
+            appId      : ID,
+            xfbml      : true,
+            version    : 'v2.9'
+        });
+
+        //check user session and refresh it
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                //user is authorized
+                document.getElementById('loginBtn').style.display = 'none';
+                getUserData();
+            } else {
+                //user is not authorized
+            }
+        });
+    };
+
+    //load the JavaScript SDK
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.com/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    //add event listener to login button
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        //do the login
+        FB.login(function(response) {
+            if (response.authResponse) {
+                //user just authorized your app
+                document.getElementById('loginBtn').style.display = 'none';
+                getUserData();
+            }
+        }, {scope: 'email,public_profile', return_scopes: true});
+    }, false);
+
 </script>
 @endsection

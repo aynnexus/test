@@ -46,7 +46,7 @@
 										</div>										
 										<hr>
 										<div class="row" id="iframe">
-											<div class="col-md-3"><label>Facebook Iframe Link</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
+											<div class="col-md-3"><label>Facebook App ID</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
 										</div>	
 										<hr>
 										<div class="row">

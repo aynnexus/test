@@ -77,6 +77,8 @@
                         Gmail</a>
                     @endif
                 </div>
+                
+ 
             </div>
             <!-- /.form-box --> 
         </div>

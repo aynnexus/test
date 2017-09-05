@@ -260,4 +260,10 @@ class GuestController extends Controller
 
         return $id;
     }
+
+    public function socialUserAge(Request $request)
+    {
+        $age = avgAge($request->age);
+        Guest::find($request->id)->update(['age'=>$age]);
+    }
 }
