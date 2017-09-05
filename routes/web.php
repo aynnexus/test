@@ -22,6 +22,7 @@ Route::group(['prefix'=>'guest'],function(){
 	Route::post('feedback/{id?}','GuestController@postFeedback');
 	Route::get('login/{provider}', 'GuestController@redirectToProvider');
 	Route::get('login/{provider}/callback', 'GuestController@handleProviderCallback');
+	Route::get('/feedback/guest_age/{field?}','GuestController@socialUserAge');
 });
 
 Route::get('/member','MemberController@getlogin');

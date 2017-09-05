@@ -69,3 +69,40 @@ function datetime_convert($timestamp,$second)
 
 	return $result;
 }
+
+function avgAge($age)
+{	
+	$type_1 = [13,14,15,16,17];
+	$type_2 = [18,19,20,21,22,23,24];
+	$type_3 = [25,26,27,28,29,30,31,32,33,34];
+	$type_4=  [35,36,37,38,39,40,41,42,43,44];
+	$type_5 = [45,46,47,48,49,50,51,52,53,54];
+	$type_6 = [55,56,57,58,59,60,61,62,63,64];
+	$type_7 = [65,66,67,68,69,70];
+	switch ($age) {
+		case in_array($age, $type_1):
+			$result = 1;
+			break;
+		case in_array($age, $type_2):
+			$result = 2;
+			break;
+		case in_array($age, $type_3):
+			$result = 3;
+			break;
+		case in_array($age, $type_4):
+			$result = 4;
+			break;
+		case in_array($age, $type_5):
+			$result = 5;
+			break;
+		case in_array($age, $type_6):
+			$result = 6;
+			break;
+		case in_array($age, $type_7):
+			$result = 7;
+			break;
+		
+		default:break;
+	}
+	return $result;
+}
