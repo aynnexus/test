@@ -36,8 +36,13 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{$data['sites']}}</h3>
-
+              <h3>
+                @if($data['sites']>=1000)
+                  {{$data['sites']/1000}}k
+                @else
+                  {{$data['sites']}}
+                @endif
+              </h3>
               <p>Sites</p>
             </div>
             <div class="icon">
@@ -51,7 +56,13 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>{{$data['guests']}}</h3>
+              <h3>
+                @if($data['guests']>=1000)
+                  {{$data['guests']/1000}}k
+                @else
+                  {{$data['guests']}}
+                @endif
+              </h3>
 
               <p>Guest Login</p>
             </div>
@@ -65,7 +76,12 @@
           <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
-              <h3>{{$data['visit']}}</h3>
+              <h3>
+                @if($data['visit']>=1000)
+                  {{$data['visit']/1000}}k
+                @else
+                  {{$data['visit']}}
+                @endif</h3>
 
               <p>Guest Visits</p>
             </div>
@@ -80,7 +96,12 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{$data['clients']}}</h3>
+              <h3>
+                @if($data['clients']>=1000)
+                  {{$data['clients']/1000}}k
+                @else
+                  {{$data['clients']}}
+                @endif</h3>
 
               <p>Clients</p>
             </div>
