@@ -72,6 +72,16 @@
 				                    	</div><br>                   
 				                  	</div>
 				                  	<div class="form-group">                    
+				                    	<label class="col-lg-3 control-label">OS Type</label>
+				                    	<label class="col-lg-1 control-label">:</label>
+				                    	<div class="col-lg-7">                      
+					                      	<label class="form-label">
+												{{$guest->os}}
+											</label>	
+				                      		<div class="clr"></div>
+				                    	</div><br>                   
+				                  	</div>
+				                  	<div class="form-group">                    
 				                    	<label class="col-lg-3 control-label">Login Time</label>
 				                    	<label class="col-lg-1 control-label">:</label>
 				                    	<div class="col-lg-7">                      

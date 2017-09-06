@@ -33,20 +33,23 @@ class HomeController extends Controller
         $data['sites'] = Site::count();
         $data['clients'] = Client::count();
         $data['visit'] = Movement::count();
-        $data['register'] = Guest::where('type',REGISTER)->count();
-        $data['social'] = Guest::where('type',SOCIAL)->count();
+        //$data['register'] = Guest::where('type',REGISTER)->count();
+        //$data['social'] = Guest::where('type',SOCIAL)->count();
         $data['login'] = Guest::select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
                ->groupby('monthyear')
                ->get();
 
         $data['male'] = Guest::where('gender',1)->select(DB::raw("count(age) as `total`"),'age')
                 ->groupBy('age')
-                ->orderBy('age')
-               ->get();
+                ->get();
+
         $data['female'] = Guest::where('gender',2)->select(DB::raw("count(age) as `total`"),'age')
                 ->groupBy('age')
-                ->orderBy('age')
                 ->get();
+
+        $data['os_type'] = Guest::select(DB::raw('count(guest_id) as `data`'),'os')
+               ->groupby('os')
+               ->get();
         
         return view('backend.index',compact('data'));
     }

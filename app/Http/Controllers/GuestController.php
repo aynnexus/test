@@ -25,6 +25,8 @@ class GuestController extends Controller
             Session::put('ap',$request->id);
             Session::put('site',$url[3]);            
             Session::put('user_ap',$request->ap);
+            Session::put('os_type',$request->header('User-Agent'));
+
             $guest = Guest::where('user_ap',$request->ap)->get()->last();
             $site_info = Site::where('site_code',$url[3])->first();
             $define_minute = $site_info->time_limit+$site_info->timeout_limit;
@@ -97,19 +99,20 @@ class GuestController extends Controller
         $site = Session::get('site');
         $guestId = $this->firstCreated();
 
-        $guest = Guest::find($guestId)->update([
+        $guest = Guest::find($guestId['id'])->update([
             'name'=>$request->name,'email'=>$request->email,
             'age'=>$request->age,'phone'=>$request->phone,
             'gender' => $request->gender,
             'custom_1' => $request->custom_1,
             'custom_2' => $request->custom_2,
-            'type' => REGISTER
+            'type' => REGISTER,
+            'os'=>$guestId['os']
         ]);
         $site_data = Site::where('site_code',$site)->first();
         
         if($this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
             
-            return redirect('guest/feedback/'.$guestId);
+            return redirect('guest/feedback/'.$guestId['id']);
         }        
         return back();
     }
@@ -168,21 +171,6 @@ class GuestController extends Controller
         //return back();
     }
 
-    public static function authorizeGuest($id,$minutes,$ap_mac,$up=NULL,$down=NULL,$mb=NULL)
-    {   
-        $api = new Unifi;
-        $api->user = unifiUser;
-        $api->password = unifiPass;
-        $api->baseurl = unifiServer;        
-        $api->site = $id;
-        if ($api->login($ap_mac,$minutes,$up,$down,$mb)==true) {
-            $api->logout();
-            return true;
-        }        
-
-        return false;
-    }
-
     public function getSiteInGuest(Request $request,$id)
     {           
         if ($request->get('site_name')) {
@@ -216,6 +204,23 @@ class GuestController extends Controller
     {   
         $ap = Session::get('ap');
         $site = Session::get('site');
+        $user_ap = Session::get('user_ap');
+        $guest = Guest::where('user_ap',$user_ap)->get()->last();
+        $site_info = Site::where('site_code',$site)->first();
+        $define_minute = $site_info->time_limit+$site_info->timeout_limit;
+        Movement::MovementStore($site_info->site_id);
+        $date_time = new DateTime();
+        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');
+        if ($guest!=null) {
+            $guest_created_format = $guest->created_at->format('Y-m-d H:i:s');
+            $format_1 = datetime_convert($curr_datetime_format,$site_info->time_limit);
+            $format_2 = datetime_convert($guest_created_format,$define_minute);
+                //dd($format_1);
+            if ($format_1 <= $format_2) {
+                return redirect('500');
+            }                
+        }       
+
         if($this->authorizeGuest($site,FIRST_AUTH,$ap)==true){
             return Socialite::driver($provider)->redirect();
         }
@@ -231,7 +236,7 @@ class GuestController extends Controller
         }
         
         $guestId = $this->firstCreated();
-        $guest = Guest::find($guestId)->update([
+        $guest = Guest::find($guestId['id'])->update([
             'name'=>$social_user->getName(),
             'email'=>$social_user->getEmail(),
             'social_id'=>$social_user->getId(),
@@ -240,30 +245,48 @@ class GuestController extends Controller
             'profile_photo' => $social_user->getAvatar(),
             'type' => SOCIAL,
             'status'=>INACTIVE,
+            'os'=>$guestId['os']
         ]);
 
-        return redirect('guest/feedback/'.$guestId);
-    }
-
-    public static function firstCreated()
-    {
-        
-        $site = Session::get('site');
-        $user_ap = Session::get('user_ap');
-
-        $guest = new Guest;
-        $guest->site_id = Site::where('site_code',$site)->value('site_id');
-        $guest->user_ap = $user_ap;
-        $guest->status = ACTIVE;
-        $guest->save();
-        $id =$guest->guest_id;
-
-        return $id;
+        return redirect('guest/feedback/'.$guestId['id']);
     }
 
     public function socialUserAge(Request $request)
     {
         $age = avgAge($request->age);
         Guest::find($request->id)->update(['age'=>$age]);
+    }
+
+    public static function firstCreated()
+    {        
+        $site = Session::get('site');
+        $user_ap = Session::get('user_ap');
+        $os_type = Session::get('os_type');
+
+        $guest = new Guest;
+        $guest->site_id = Site::where('site_code',$site)->value('site_id');
+        $guest->user_ap = $user_ap;
+        $guest->status = ACTIVE;
+        $guest->os = detectOS($os_type);
+        $guest->save();
+        $data['id'] =$guest->guest_id;
+        $data['os'] = $guest->os;
+
+        return $data;
+    }
+
+    public static function authorizeGuest($id,$minutes,$ap_mac,$up=NULL,$down=NULL,$mb=NULL)
+    {   
+        $api = new Unifi;
+        $api->user = unifiUser;
+        $api->password = unifiPass;
+        $api->baseurl = unifiServer;        
+        $api->site = $id;
+        if ($api->login($ap_mac,$minutes,$up,$down,$mb)==true) {
+            $api->logout();
+            return true;
+        }        
+
+        return false;
     }
 }
