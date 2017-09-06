@@ -126,7 +126,7 @@
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Login Type <small>Register/Social</small></h3>
+              <h3 class="box-title">Login Type <small>OS</small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -174,13 +174,13 @@
   $(function () {
 
     var calender = [];var data_male=[0,0,0,0,0,0,0];
-    var register = 0; var social = 0;var data_login=[];
+    //var register = 0; var social = 0;
+    var data_login=[];var PieData = [];
     var data_female=[0,0,0,0,0,0,0];
-    register = '<?php echo $data['register'] ?>';
-    social = '<?php echo $data['social'] ?>';
     var data_1 = JSON.parse('<?php echo $data['male'] ?>');
     var data_2 = JSON.parse('<?php echo $data['female'] ?>');
     var data_3 = JSON.parse('<?php echo $data['login'] ?>');
+    var data_4 = JSON.parse('<?php echo $data['os_type'] ?>');
     
     data_1.map(function(index){
       if (index.age==1) {
@@ -234,6 +234,7 @@
       calender.push(moment(month[0]).format('MMMM')) 
       data_login.push(index.data);         
     });
+    
     
     // $.ajax({
     //   url: 'dashboard/json_index',
@@ -362,20 +363,30 @@
     // Get context with jQuery - using jQuery's .get() method.
     var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
     var pieChart = new Chart(pieChartCanvas);
-    var PieData = [
-      {
-        value: register,
-        color: "#f56954",
-        highlight: "#f56954",
-        label: "Register Users"
-      },
-      {
-        value: social,
-        color: "#3c8dbc",
-        highlight: "#3c8dbc",
-        label: "Social Users"
-      },
-    ];
+    
+    data_4.map(function(index,key){
+      var os_type = new Object;
+      os_type.value= index.data;
+      os_type.color= convertColor(index.os);
+      os_type.highlight= convertColor(index.os);
+      os_type.label= index.os
+      PieData.push(os_type);        
+    });
+    
+    // var PieData = [
+    //   {
+    //     value: 2,
+    //     color: "#f56954",
+    //     highlight: "#f56954",
+    //     label: "Register Users"
+    //   },
+    //   {
+    //     value: 3,
+    //     color: "#3c8dbc",
+    //     highlight: "#3c8dbc",
+    //     label: "Social Users"
+    //   },
+    // ];
     var pieOptions = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke: true,
