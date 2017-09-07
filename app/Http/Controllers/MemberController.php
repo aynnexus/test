@@ -22,7 +22,7 @@ class MemberController extends Controller
         if(Auth::attempt($rules))         
             return redirect('dashboard');
         else   
-        	Flash::error('Invalid user name and password!');
+            Flash::error('Invalid user name and password!');
            return back();
     }
 }

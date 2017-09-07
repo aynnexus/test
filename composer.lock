@@ -587,7 +587,11 @@
                 "framework",
                 "laravel"
             ],
+<<<<<<< HEAD
             "time": "2017-08-30 09:26:16"
+=======
+            "time": "2017-08-30T09:26:16+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "laravel/socialite",
@@ -766,7 +770,11 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
+<<<<<<< HEAD
             "time": "2017-08-12 15:52:38"
+=======
+            "time": "2017-08-12T15:52:38+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "league/flysystem",
@@ -1091,16 +1099,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "4d4896e553f2094e657fe493506dc37c509d4e2b"
+                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/4d4896e553f2094e657fe493506dc37c509d4e2b",
-                "reference": "4d4896e553f2094e657fe493506dc37c509d4e2b",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a1e8e1a30e1352f118feff1a8481066ddc2f234a",
+                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a",
                 "shasum": ""
             },
             "require": {
@@ -1138,7 +1146,11 @@
                 "parser",
                 "php"
             ],
+<<<<<<< HEAD
             "time": "2017-07-28 14:45:09"
+=======
+            "time": "2017-09-02T17:10:46+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "paragonie/random_compat",
@@ -1560,7 +1572,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-08-27 14:52:21"
+=======
+            "time": "2017-08-27T14:52:21+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/css-selector",
@@ -1613,7 +1629,11 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/debug",
@@ -1669,7 +1689,11 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-08-27 14:52:21"
+=======
+            "time": "2017-08-27T14:52:21+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1732,7 +1756,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/finder",
@@ -1781,7 +1809,11 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/http-foundation",
@@ -1834,7 +1866,11 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-08-10 07:07:06"
+=======
+            "time": "2017-08-10T07:07:06+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/http-kernel",
@@ -1920,7 +1956,11 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-08-28 22:35:03"
+=======
+            "time": "2017-08-28T22:35:03+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2028,7 +2068,11 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/routing",
@@ -2106,7 +2150,11 @@
                 "uri",
                 "url"
             ],
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/translation",
@@ -2171,7 +2219,11 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "symfony/var-dumper",
@@ -2239,7 +2291,11 @@
                 "debug",
                 "dump"
             ],
+<<<<<<< HEAD
             "time": "2017-08-27 14:52:21"
+=======
+            "time": "2017-08-27T14:52:21+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -2652,6 +2708,7 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
+<<<<<<< HEAD
             "version": "3.2.3",
             "source": {
                 "type": "git",
@@ -2662,6 +2719,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/86e24012a3139b42a7b71155cfaa325389f00f1f",
                 "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f",
+=======
+            "version": "4.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
                 "shasum": ""
             },
             "require": {
@@ -2693,7 +2762,11 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+<<<<<<< HEAD
             "time": "2017-08-29 19:37:41"
+=======
+            "time": "2017-08-30T18:51:59+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2740,26 +2813,30 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
+<<<<<<< HEAD
             "time": "2017-07-14 14:27:02"
+=======
+            "time": "2017-07-14T14:27:02+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.7.0",
+            "version": "v1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073"
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/93d39f1f7f9326d746203c7c056f300f7f126073",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
                 "sebastian/comparator": "^1.1|^2.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -2770,7 +2847,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -2803,7 +2880,11 @@
                 "spy",
                 "stub"
             ],
+<<<<<<< HEAD
             "time": "2017-03-02 20:05:34"
+=======
+            "time": "2017-09-04T11:05:03+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3761,7 +3842,11 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
+<<<<<<< HEAD
             "time": "2017-07-29 21:54:42"
+=======
+            "time": "2017-07-29T21:54:42+00:00"
+>>>>>>> fe94cf2ba30a115edf714542524a99a02c59ce0f
         },
         {
             "name": "webmozart/assert",

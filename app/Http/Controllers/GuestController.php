@@ -14,7 +14,17 @@ use App\Models\Movement;
 use Unifi,Session,Flash,DateTime,Socialite,Auth;
 
 class GuestController extends Controller
-{
+{   
+    public function __construct()
+    {   
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::id();
+            $this->site_id = json_decode(Client::where('user_id',$this->user)->value('site_id'));
+            return $next($request);
+        });
+        
+    }
+    
     public function index(Request $request,$id)
     {	
         $date_time = new DateTime();
@@ -80,10 +90,18 @@ class GuestController extends Controller
             }else{
                 $guests = Guest::where('type',$type)->orderBy('guest_id','desc')->paginate(20);
             }
+            
+        }else{
+            $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_id','site_name');
+            
+            if ($request->get('site_id')) {
+                $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy('guest_id','desc')->paginate(20);
 
-            return view('backend.guest.index',compact('guests','sites'));
+            }else{
+                $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->orderBy('guest_id','desc')->paginate(20);
+            }
         }
-        return back();
+        return view('backend.guest.index',compact('guests','sites'));
     }
 
     public function removeGuest($id)

@@ -32,7 +32,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
@@ -52,7 +52,7 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -72,7 +72,7 @@
             <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
@@ -92,6 +92,7 @@
           </div>
         </div>
         <!-- ./col -->
+        @if(Auth::user()->role==1)
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
@@ -111,6 +112,7 @@
             <a href="{{url('dashboard/clients')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        @endif
         <!-- ./col -->
       </div>
       <!-- /.row -->
