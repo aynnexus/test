@@ -12,10 +12,23 @@ use App\Models\Rating;
 use App\Models\Question;
 use App\Models\Survey;
 use App\Models\Surveying;
+use App\Models\Client;
+use App\Models\TemplateMovement;
 use Flash,Auth;
 
 class SiteController extends Controller
-{
+{   
+   
+    public function __construct()
+    {   
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::id();
+            $this->site_id = json_decode(Client::where('user_id',$this->user)->value('site_id'));
+            return $next($request);
+        });
+        
+    }
+
     public function index(Request $request)
     {	
         $sites = Site::orderBy('site_id','desc')->paginate(15);
@@ -27,33 +40,51 @@ class SiteController extends Controller
 
     public function indexTemplate(Request $request)
     {   
+
         if(Auth::user()->role==1)
         {   
             $templates = Template::orderBy('site_id','desc')->paginate(15);
             if ($request->get('name')) {
                 $templates = Template::Search($request->all())->orderBy('site_id','desc')->paginate(15);
             }
-                return view('backend.template.index',compact('templates'));
+            
+        }else{
+            $move = TemplateMovement::whereIn('site_id',$this->site_id)->get();
+            foreach ($move as $key => $value) {
+                $template_id[] = $value->template_id;                
+            }
+            $templates = Template::whereIn('template_id',$template_id)->orderBy('site_id','desc')->paginate(15);
+            if ($request->get('name')) {
+                $templates = Template::Search($request->all())->whereIn('site_id',$this->site_id)->orderBy('site_id','desc')->paginate(15);
+            }
         }
-        return back();
+
+        return view('backend.template.index',compact('templates'));
     }
 
     public function getSiteImform($id=0)
-    {
+    {   
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        
+        if ($move->isEmpty()) {
+            return back();
+        }
         $template = ($id>0)?Template::find($id):null;
         $step = ($template!=null)?$template->step:0;
         $tem = Template::all();
         $site_id=$final=[];
-        $sites = Site::active()->pluck('site_name','site_id');
+        $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_name','site_id');
         
         return view('backend.template.step_one',compact('template','step','id','sites'));
     }
 
     public function getSiteField($id=0)
     {   
-        if ($id==0) {
-            return redirect('dashboard/template/step_one/0');
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        if ($id==0 || $move->isEmpty()) {
+            return back();
         }
+
         $site_field = SiteField::where('template_id',$id)->first();
         $step = Template::where('template_id',$id)->value('step');
         
@@ -62,9 +93,11 @@ class SiteController extends Controller
 
     public function getSitePhoto($id=0)
     {   
-        if ($id==0) {
-            return redirect('dashboard/template/step_one/0');
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        if ($id==0 || $move->isEmpty()) {
+            return back();
         }
+
         $site_photo = ($id>0)?SiteProfile::where('template_id',$id)->first():null;
         $step = Template::where('template_id',$id)->value('step');
 
@@ -73,9 +106,11 @@ class SiteController extends Controller
 
     public function getFeedback($id)
     {   
-        if ($id==0) {
-            return redirect('dashboard/template/step_one/0');
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        if ($id==0 || $move->isEmpty()) {
+            return back();
         }
+
         $ratings=$surveyings=[];
         $feedback = SiteField::where('template_id',$id)->first();
         $step = Template::where('template_id',$id)->value('step');
@@ -100,8 +135,9 @@ class SiteController extends Controller
 
     public function getAds($id)
     {
-        if ($id==0) {
-            return redirect('dashboard/template/step_one/0');
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        if ($id==0 || $move->isEmpty()) {
+            return back();
         }
         
         $step = Template::where('template_id',$id)->value('step');
@@ -111,9 +147,11 @@ class SiteController extends Controller
 
     public function showPreview($id)
     {   
-        if ($id==0) {
-            return redirect('dashboard/template/step_one/0');
+        $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();
+        if ($id==0 || $move->isEmpty()) {
+            return back();
         }
+        
         $step = 4;
         $template = Template::find($id);
         return view('backend.template.preview',compact('id','step','template'));
@@ -142,7 +180,16 @@ class SiteController extends Controller
     	$template->status = ($template->status==null)?INACTIVE:$template->step;
         $template->step = ($template->step==null)?1:$template->step;
         $template->created_by = Auth::id();
-    	$template->save();
+    	if($template->save()){
+            TemplateMovement::where('template_id',$template->template_id)->where('auth_id',Auth::id())->delete();
+            for ($i=0; $i < count($request->site_name); $i++) { 
+                $move = new TemplateMovement;
+                $move->template_id = $template->template_id;
+                $move->site_id = $request->site_name[$i];
+                $move->auth_id = Auth::id();
+                $move->save();
+            }
+        }
 
     	Flash::success('Successfully Site Add');
     	return redirect('dashboard/template/step_two/'.$template->template_id);

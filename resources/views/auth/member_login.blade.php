@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="lockscreen-wrapper hold-transition lockscreen">
   <div class="lockscreen-logo">
     <a href="#"><b>Wifi</b>Protal</a>
@@ -19,8 +20,8 @@
     <!-- lockscreen credentials (contains the form) -->
     {!! Form::open(['url'=>'member','class'=>'lockscreen-credentials']) !!}
       {!! Form::email('email',null,['class'=>'form-control','placeholder'=>'email','required']) !!}
+      
       <div class="input-group">
-
       <input type="password" name="password" class="form-control" required placeholder="password">
         <div class="input-group-btn">
           <button type="submit" class="btn"><i class="fa fa-arrow-right text-muted"></i></button>
@@ -33,7 +34,7 @@
   </div>
   <!-- /.lockscreen-item -->
   <div class="help-block text-center">
-    Enter your password to retrieve your session
+    
   </div>
   <div class="text-center">
     <a href="login.html"></a>
