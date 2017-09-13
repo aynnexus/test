@@ -63,9 +63,12 @@
 						<ul class="nav nav-tabs pull-right">
 						  <li role="presentation" class="{{Request::is('dashboard/guests/register')?'active':''}}"><a href="{{url('dashboard/guests/register')}}">Register Users</a></li>
 						  <li role="presentation" class="{{Request::is('dashboard/guests/social')?'active':''}}"><a href="{{url('dashboard/guests/social')}}">Social Users</a></li>
+						  <li role="presentation" class="{{Request::is('dashboard/guests/mac')?'active':''}}"><a href="{{url('dashboard/guests/mac')}}">Group Mac</a></li>
 						</ul>	
 						<div class="row">
 							<div class="col-sm-12">
+							<form action="{{url('dashboard/guests/guest_info')}}" method="post">
+                            {{csrf_field()}}
 								<table class="table table-bordered table-striped dataTable">
 									<thead>
 
@@ -77,6 +80,7 @@
 											<th>Site Name</th>
 											<th>Login Time</th>
 											<th>Action</th>
+											<th><label><input type="checkbox" id="all"> All</label></th>
 										</tr>
 									</thead>
 									@if(isset($guests))
@@ -88,7 +92,7 @@
 											<td>{{$key+1}}. </td>
 											<td><img src="{{$row->profile_photo==null?asset('img/user-pic-01.jpg'):$row->profile_photo}}" width="40px" height="40px;" class="img-circle">
 												<div>
-													<a id="" value="" href="#">{{$row->name}}</a>
+													<a data-toggle="modal" data-target="#viewDetailPopUp" href="#">{{$row->name}}</a>
 												</div>	
 											</td>									
 											<td><i class="fa fa-envelope"></i> {{$row->email}} <br> <i class="fa fa-phone"></i> {{$row->phone}}</td>
@@ -103,13 +107,19 @@
 												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
 												<a href="{{url('/dashboard/guests/remove/'.$row->guest_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
+											<td>
+												 <input type="checkbox" name="id[]" value="{{$row->guest_id}}">
+											</td>
 										</tr>
-										
                     					@endforeach
 									</tbody>
 									@endif	
 								</table>
+								<div class="col-md-offset-5">
+	                                <button type="submit" class="btn btn-success">Export</button>
+	                            </div>
 							</div>
+							</form>
 						</div>
 					</div>  
 					<div class="box-footer">
@@ -126,5 +136,12 @@
 	</section>
 <script>
 	$( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
+    $('input#all').on('click',function(e){
+        if (e.target.checked) {
+            $('input[type=checkbox]').prop('checked',true)
+        }else{
+            $('input[type=checkbox]').prop('checked',false)
+        }
+    });
 </script>
 @stop

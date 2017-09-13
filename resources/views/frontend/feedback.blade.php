@@ -6,7 +6,7 @@
     <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo">
-                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 46%;">
+                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 47%;">
             </div>
 
             <div class="register-box-body" style="border-radius:10px;background: transparent;">
@@ -26,9 +26,23 @@
 
                     @if(isset($feedback) && $feedback->rate==1)
                     @foreach($temp->Rating as $key=>$rating)
-                        <div class="form-group has-feedback">    
-                            {{$rating->Rate->label}}         
-                              <div class="stars">
+                        
+                        <div class="form-group has-feedback">  
+                            <div class="col-xs-3 col-md-3">
+                                <label>{{$rating->Rate->label}}</label>
+                            </div>
+                            <div class="col-xs-9 col-md-9">
+                                <fieldset class="rating">
+                                <input type="radio" id="star5{{$key}}" name="{{$rating->Rate->label}}" value="5" /><label for="star5{{$key}}" title="Rocks!"></label>
+                                <input type="radio" id="star4{{$key}}" name="{{$rating->Rate->label}}" value="4" /><label for="star4{{$key}}" title="Pretty good"></label>
+                                <input type="radio" id="star3{{$key}}" name="{{$rating->Rate->label}}" value="3" /><label for="star3{{$key}}" title="Meh"></label>
+                                <input type="radio" id="star2{{$key}}" name="{{$rating->Rate->label}}" value="2" /><label for="star2{{$key}}" title="Kinda bad"></label>
+                                <input type="radio" id="star1{{$key}}" name="{{$rating->Rate->label}}" value="1" /><label for="star1{{$key}}" title="Sucks big time"></label>
+
+                            </fieldset>
+                            </div>
+                                     
+                             <!--  <div class="stars">
                                 <input class="star star-5" value="5" id="star-5{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
                                 <label class="star star-5" for="star-5{{$key}}"></label>
                                 <input class="star star-4" value="4" id="star-4{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
@@ -39,17 +53,19 @@
                                 <label class="star star-2" for="star-2{{$key}}"></label>
                                 <input class="star star-1" value="1" id="star-1{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
                                 <label class="star star-1" for="star-{{$key}}"></label>
-                              </div>
+                              </div> -->
                         </div>
                     @endforeach
                     @endif
-
+                    <br><br><br>
+                    <br><br><br>
+                    <br>
                     @if(isset($feedback) && $feedback->survey==1)
                     @foreach($temp->Surveying as $key=>$surveying)
                         <div class="form-group has-feedback">
                             <label>{{$key+1}}. {{$surveying->Question->label}}</label>
                             @foreach($surveying->Question->Answers as $answer)
-                                <p><input type="radio" name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
+                                <p><input type="radio" required name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
                             @endforeach
                         </div>
                     @endforeach
@@ -76,9 +92,49 @@
             </div>
             
         </div>
+
+        
         <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
+        
+        @if($ads)  
+        <div class="adspopUp">
+            <!-- Modal -->
+            <div class="modal fade" id="adspopUp" role="dialog">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">          
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 id="countdown" style="font-weight: bold"></h3>
+                            @if($ads->type==1)
+                                <img src="{{url('/storage/'.$ads->photo)}}" width="570" height="345">
+                            @else
+                                <iframe width="570" height="345" src="{{$ads->video}}" frameborder="0" allowfullscreen></iframe>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <!-- model end -->
+        </div>
+        @endif
 </body>
+
 <script type="text/javascript">
+    $("#adspopUp").modal('show');
+    var timer = '<?php echo $ads['timeout'] ?>',
+    el = document.getElementById('countdown');
+    (function t_minus() {
+        'use strict';
+        el.innerHTML = timer--;
+        if (timer >= 0) {
+            setTimeout(function () {
+                t_minus();
+            }, 1000);
+        } else {
+            $("#adspopUp").modal('hide');
+        }
+    }());
+
     const ID = '<?php echo $temp->Field->iframe_link ?>';
     const guest_id = '<?php echo $id ?>'
     function getUserData() {    

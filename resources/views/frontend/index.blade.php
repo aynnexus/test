@@ -6,14 +6,29 @@
     <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo">
-                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 46%;">
+                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 45%;">
             </div>
-
+            <br>
             <div class="register-box-body" style="border-radius:10px;background: transparent;">
                 <p class="login-box-msg"></p>
                 <?php   $social = json_decode($temp->Field->social_login);
                         $form = json_decode($temp->Field->form_login);
                          ?>
+                
+
+                <div class="social-auth-links text-center">
+                    
+                    @if(isset($social) && $social->fb==1)
+                        <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i> Sign in using
+                    Facebook</a>
+                    @endif
+                    @if(isset($social) && $social->gmail==1)
+                        <a href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
+                        Gmail</a>
+                    @endif
+                    <p>- OR -</p>
+                </div>
+
                 {!! Form::open(['url'=>'guest/login','id'=>'login']) !!}
                     @if(isset($form) && $form->name==1)
                     <input type="hidden" name="user_ap" value="{{$user_ap}}">
@@ -64,20 +79,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
-                </form>
-
-                <div class="social-auth-links text-center">
-                    <p>- OR -</p>
-                    @if(isset($social) && $social->fb==1)
-                        <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i> Sign in using
-                    Facebook</a>
-                    @endif
-                    @if(isset($social) && $social->gmail==1)
-                        <a href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
-                        Gmail</a>
-                    @endif
-                </div>
-                
+                {!! Form::close() !!}
  
             </div>
             <!-- /.form-box --> 

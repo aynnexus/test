@@ -11,6 +11,7 @@ use App\Models\Lookup;
 use App\Models\Answer;
 use App\Models\Survey;
 use App\Models\Movement;
+use App\Models\Ads;
 use Unifi,Session,Flash,DateTime,Socialite,Auth;
 
 class GuestController extends Controller
@@ -32,13 +33,13 @@ class GuestController extends Controller
         $user_ap = $request->id;
         if (isset($request->id)) {
             $url = explode('/', $_SERVER['REDIRECT_URL']);
-            Session::put('ap',$request->id);
-            Session::put('site',$url[3]);            
-            Session::put('user_ap',$request->id);
-            Session::put('os_type',$request->header('User-Agent'));
-
-            $guest = Guest::where('user_ap',$request->ap)->get()->last();
+          
+            $guest = Guest::where('user_ap',$request->id)->get()->last();
             $site_info = Site::where('site_code',$url[3])->first();
+            if ($site_info==null) {
+                return back();
+            }
+
             $define_minute = $site_info->time_limit+$site_info->timeout_limit;
             Movement::MovementStore($site_info->site_id);
             
@@ -50,7 +51,11 @@ class GuestController extends Controller
                 if ($format_1 <= $format_2) {
                     return redirect('500');
                 }                
-            }                 
+            } 
+            Session::put('ap',$request->id);
+            Session::put('site',$url[3]);            
+            Session::put('user_ap',$request->id);
+            Session::put('os_type',$request->header('User-Agent'));                
         }
 
         $site=null;$temp=[];
@@ -79,26 +84,41 @@ class GuestController extends Controller
 
     public function indexLists(Request $request,$type='register')
     {   
-        $type = ($type=='register')?1:2;
+        if ($type=='register') {
+           $type =1;
+        }elseif ($type=='social') {
+            $type =2;
+        }else{
+            $type = 3;
+        }
+        $order = ($type==3)?'user_ap':'guest_id';
         if(Auth::user()->role==1)
         {   
             $sites = Site::active()->pluck('site_id','site_name');
             
             if ($request->get('site_id')) {
-                $guests = Guest::search($request->all())->orderBy('guest_id','desc')->paginate(20);
+                $guests = Guest::search($request->all())->groupBy()->orderBy($order,'desc')->paginate(20);
 
             }else{
-                $guests = Guest::where('type',$type)->orderBy('guest_id','desc')->paginate(20);
+                if ($type==3) {
+                    $guests = Guest::orderBy($order,'desc')->paginate(20);
+                }else{
+                    $guests = Guest::where('type',$type)->orderBy($order,'desc')->paginate(20);
+                }
             }
             
         }else{
             $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_id','site_name');
             
             if ($request->get('site_id')) {
-                $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy('guest_id','desc')->paginate(20);
-
+                $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy($order,'desc')->paginate(20);
             }else{
-                $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->orderBy('guest_id','desc')->paginate(20);
+                if ($type==3) {
+                    $guests = Guest::whereIn('site_id',$this->site_id)->orderBy($order,'desc')->paginate(20);  
+                }else{
+                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->orderBy($order,'desc')->paginate(20);  
+                }
+                              
             }
         }
         return view('backend.guest.index',compact('guests','sites'));
@@ -141,9 +161,12 @@ class GuestController extends Controller
             return back();
         }
         $temp_id = Session::get('template');
+        $temp_id = 2;
         $temp = Template::find($temp_id);
-        
-        return view('frontend.feedback',compact('temp','id'));
+        $guest = Guest::where('guest_id',$id)->first();
+        $ads = Ads::where('template_id',$temp_id)->where('target_gender',$guest->gender)->where('target_age','LIKE','%'.$guest->age.'%')->first();
+
+        return view('frontend.feedback',compact('temp','id','ads'));
     }
 
     public function detail($id)
@@ -160,7 +183,7 @@ class GuestController extends Controller
         $temp = Template::find($temp_id);
         $site_data = Site::where('site_code',$site)->first();
         foreach ($temp->Rating as $key => $value) {
-            $values[] = $request[$value->Rate->label.'_'];
+            $values[] = $request[$value->Rate->label];
             $keys[] = $value->Rate->label;
         }
         
@@ -183,7 +206,8 @@ class GuestController extends Controller
             $this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit);
         }
         //if($this->authorizeGuest($site,$site_data->timeout_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit)==true){
-            header('Location: http://www.google.com');exit();
+            header('Location: '.$temp->Field->url);
+            exit();
         //}
 
         //return back();
@@ -306,5 +330,27 @@ class GuestController extends Controller
         }        
 
         return false;
+    }
+
+    public function postExport(Request $request)
+    {       
+        if (count($request->id)==0) {
+            Flash::error('please select at least one');
+            return back();
+        }
+        for ($i=0; $i < count($request->id); $i++) { 
+            $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','created_at')->first()->toArray();
+        }
+        $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Created At'];
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+        $filename = "guest_infos.csv";
+        $gender = Lookup::where('title','GENDER')->pluck('value','key');
+        $age_group = Lookup::where('title','Age Group')->pluck('value','key');
+        convert_csv($filename,$key,$value,$gender,$age_group);
+
+        return response()->download('csv/'.$filename, $filename, $headers);
     }
 }

@@ -54,6 +54,8 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/step_four/{id?}','SiteController@getFeedback');
 		Route::post('/step_four/{id?}','SiteController@postFeedback');
 		Route::get('/step_five/{id?}','SiteController@getAds');
+		Route::post('/step_five/{id?}','SiteController@postAds');
+		Route::get('/step_five/remove/{id?}','SiteController@removeAds');
 		Route::get('/preview/{id?}','SiteController@showPreview');
 		Route::post('/action/{step}/{id?}','SiteController@store');
 		Route::get('/remove/{id?}','SiteController@removeTemplate');
@@ -86,6 +88,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/remove/{id?}','GuestController@removeGuest');
 		Route::get('/detail/{id?}','GuestController@detail');
 		Route::get('data/{search?}','GuestController@searchData');
+		Route::post('/guest_info','GuestController@postExport');
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::get('/','AdminController@index');

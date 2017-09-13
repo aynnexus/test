@@ -18,8 +18,18 @@
           </div>
 
         </div>
-
       </div>
+      @if(Auth::user()->role!=1)
+        <div class="form-group pull-right">
+          <select class="form-control" name="site">
+              <option>Select Site</option>
+              @foreach($data['sites'] as $key=>$value)
+                <option value="{{$key}}">{{$value}}</option>
+              @endforeach
+            </select>
+        </div>
+      @endif
+      
       <button type="submit" class="btn btn-primary pull-right">
         search
       </button> 
@@ -32,15 +42,15 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         
-        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?3:2}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3>
-                @if($data['sites']>=1000)
-                  {{$data['sites']/1000}}k
+                @if(count($data['sites'])>=1000)
+                  {{count($data['sites'])/1000}}k
                 @else
-                  {{$data['sites']}}
+                  {{count($data['sites'])}}
                 @endif
               </h3>
               <p>Sites</p>
@@ -52,7 +62,7 @@
           </div>
         </div>
         <!-- ./col -->
-        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?3:3}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
@@ -72,7 +82,7 @@
             <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-lg-{{Auth::user()->role==2?4:3}} col-xs-6">
+        <div class="col-lg-{{Auth::user()->role==2?3:3}} col-xs-6">
           <!-- small box -->
           <div class="small-box bg-primary">
             <div class="inner">
@@ -91,9 +101,28 @@
             <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="col-lg-{{Auth::user()->role==2?3:2}} col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>
+                @if($data['active']>=1000)
+                  {{$data['active']/1000}}k
+                @else
+                  {{$data['active']}}
+                @endif</h3>
+
+              <p>Acitve Users</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="{{url('dashboard/guests')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
         <!-- ./col -->
         @if(Auth::user()->role==1)
-        <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-2 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
@@ -169,7 +198,7 @@
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Activity <small>Active Login</small></h3>
+              <h3 class="box-title">Activity <small>Active Login (This hourly is that today.)</small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -195,7 +224,6 @@
 <script>
   $( ".datetimepicker" ).datetimepicker();
   $(function () {
-
     var calender = [];var data_male=[0,0,0,0,0,0,0];
     //var register = 0; var social = 0;
     var data_login=[];var PieData = [];
@@ -253,8 +281,9 @@
     });
 
     data_3.map(function(index){
-      var month = index.monthyear.split('-')
-      calender.push(moment(month[0]).format('MMMM')) 
+      //var month = index.time.split('-')
+      //calender.push(moment(month[0]).format('LT')) 
+      calender.push(index.time+' Hour')
       data_login.push(index.data);         
     });
     

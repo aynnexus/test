@@ -32,10 +32,12 @@
 										@if(isset($template))<a href="{{url('dashboard/template/step_two/'.$id)}}" class="btn btn-warning">Continue</a>@endif
 									</form>
 								</div>
+								@if(Auth::user()->role==1)
 								<div class="col-md-2">
 									<div style="color: transparent;margin-bottom: 5px">skip</div>
 									<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp0"><i class="fa fa-plus"></i> Add New Site</button>
 								</div>
+								@endif
 							</div>	
 
 					</div>  

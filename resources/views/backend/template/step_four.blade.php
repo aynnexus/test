@@ -76,6 +76,9 @@
 												<label><input type="checkbox" {{($fdb!=null && $fdb->s_require==1)?'checked':''}} value="1" name="s_require"> Require</label>
 											</div> -->
 										</div><hr>
+										<div class="row">
+											<div class="col-md-3"><label>Redirect url</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="url" value="{{isset($feedback)?$feedback->url:null}}" class="form-control" required placeholder="www.google.com"></div>
+										</div>	<hr>
 										<div class="row" id="select_open">
 											<div class="col-md-12">
 												<div class="col-md-6">	

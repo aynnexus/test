@@ -8,7 +8,7 @@ class SiteField extends Model
 {	
 	protected $table = 'landing_fields';
     protected $primaryKey = 'field_id';
-    protected $fillable = ['feedback_fields','iframe_link'];	
+    protected $fillable = ['feedback_fields','iframe_link','url'];	
 
     public function step()
     {
