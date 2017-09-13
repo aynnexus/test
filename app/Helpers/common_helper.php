@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Storage;
+use App\Models\Site;
+use Illuminate\Support\Facades\Mail;
 
 function showPrettyStatus($status){
 	if($status == ACTIVE) echo "<p onclick='getStatus(1);' class='btn btn-success btn-xs'>Enabled</p>";
@@ -147,4 +149,38 @@ function detectOS($userAgent) {
 
     return $os;
 
+}
+
+function convert_csv($filename,$key,$value,$gend,$age_group)
+{	
+	$output = fopen('csv/'.$filename, 'w+');
+	fputcsv($output, $key); 
+	foreach ($value as $row) { 
+		$st = Site::find($row['site_id']);
+		$gender = $gend[$row['gender']];
+		$age = $age_group[$row['age']];
+
+		$final = array_merge($row,
+			[	'Site'=>$st['site_name'],
+				'Age'=>$age,
+				'Gender'=>$gender,
+				'date'=>date('d M Y G:i:s',strtotime($row['created_at']))
+			]);
+		unset($final['site_id']);unset($final['gender']);
+		unset($final['age']);unset($final['created_at']);
+		fputcsv($output, $final);	
+	}
+	fclose($output);
+
+	return $output;
+}
+
+function mailSending($data)
+{   
+    $app_user = ['name'=>$data['name'],'email'=>$data['email']];
+
+    Mail::send('emails.alert', function ($message) use ($app_user) 
+    {                        
+        $message->to($app_user['email'], $app_user['name'])->subject('Email Alert');
+    });
 }

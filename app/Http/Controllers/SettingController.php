@@ -8,6 +8,7 @@ use App\Models\Lookup;
 use App\Models\Servey;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Models\Guest;
 use Flash,Auth;
 
 class SettingController extends Controller
@@ -108,6 +109,6 @@ class SettingController extends Controller
         }
         Flash::success('Successfully saving servey');
         return back();
-    }
+    }    
 }
 

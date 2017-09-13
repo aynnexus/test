@@ -8,7 +8,7 @@ use App\Models\Guest;
 use App\Models\Site;
 use App\Models\Client;
 use App\Models\Movement;
-use DB,Auth;
+use DB,Auth,Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -29,17 +29,24 @@ class HomeController extends Controller
      */
     public function index()
     {  
-        if (Auth::user()->role==1) {         
-            $data['guests'] = Guest::count();
-            $data['sites'] = Site::count();
-            $data['clients'] = Client::count();
-            $data['visit'] = Movement::count();
-            //$data['register'] = Guest::where('type',REGISTER)->count();
-            //$data['social'] = Guest::where('type',SOCIAL)->count();
-            $data['login'] = Guest::select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
-                   ->groupby('monthyear')
-                   ->get();
+        $timein = date('Y-m-d G:i:s',strtotime('-1 hour'));
+        $timeout = date('Y-m-d G:i:s');
+        $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();
 
+        if (Auth::user()->role==1) {   
+            $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();       
+            $data['guests'] = Guest::count();
+            $data['sites'] = Site::pluck('site_name','site_id');
+            $data['clients'] = Client::count();
+            $data['visit'] = Movement::count(); 
+            // $data['login'] = Guest::select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
+            //        ->groupby('monthyear')
+            //        ->get();
+            $data['login'] = Guest::select(DB::raw('count(guest_id) as `data`'),DB::raw('HOUR(created_at) as time'))
+                    ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                    ->groupBy('time')
+                   ->get();
+                  
             $data['male'] = Guest::where('gender',1)->select(DB::raw("count(age) as `total`"),'age')
                     ->groupBy('age')
                     ->get();
@@ -54,13 +61,17 @@ class HomeController extends Controller
         }else{
             $client_id = Client::where('user_id',Auth::id())->first();
             $site_id = json_decode($client_id->site_id);
-            
+            $data['active'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',[$timein,$timeout])->count();
             $data['guests'] = Guest::whereIn('site_id',$site_id)->count();
-            $data['sites'] = Site::whereIn('site_id',$site_id)->count();
+            $data['sites'] = Site::whereIn('site_id',$site_id)->pluck('site_name','site_id');
             $data['visit'] = Movement::whereIn('site_id',$site_id)->count();
 
-            $data['login'] = Guest::whereIn('site_id',$site_id)->select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
-                   ->groupby('monthyear')
+            // $data['login'] = Guest::whereIn('site_id',$site_id)->select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
+            //        ->groupby('monthyear')
+            //        ->get();
+            $data['login'] = Guest::whereIn('site_id',$site_id)->select(DB::raw('count(guest_id) as `data`'),DB::raw('HOUR(created_at) as time'))
+                    ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                    ->groupBy('time')
                    ->get();
 
             $data['male'] = Guest::whereIn('site_id',$site_id)->where('gender',1)->select(DB::raw("count(age) as `total`"),'age')
@@ -81,18 +92,19 @@ class HomeController extends Controller
     public function searchData(Request $request)
     {   
         $search_date = [date('Y-m-d G:i:s',strtotime($request->from_date)),date('Y-m-d G:i:s',strtotime($request->to_date))];
-        if (Auth::user()->role==1) {         
+        $timein = date('Y-m-d G:i:s',strtotime('-1 hour'));
+        $timeout = date('Y-m-d G:i:s');
+
+        if (Auth::user()->role==1) {   
+            $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();      
             $data['guests'] = Guest::whereBetween('created_at',$search_date)->count();
             $data['sites'] = Site::whereBetween('created_at',$search_date)->count();
             $data['clients'] = Client::whereBetween('created_at',$search_date)->count();
             $data['visit'] = Movement::whereBetween('created_at',$search_date)->count();
-            //$data['register'] = Guest::whereBetween('created_at',$search_date)->where('type',REGISTER)->count();
             
-            //$data['social'] = Guest::whereBetween('created_at',$search_date)->where('type',SOCIAL)->count();
-            $data['login'] = Guest::whereBetween('created_at',$search_date)->select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
-                   ->groupby('monthyear')
-                   ->get();
-
+            $data['login'] = Guest::whereBetween('created_at',$search_date)->select(DB::raw('count(guest_id) as `data`'),DB::raw('HOUR(created_at) as time'))
+                    ->groupBy('time')
+                    ->get();
             $data['male'] = Guest::whereBetween('created_at',$search_date)->where('gender',1)->select(DB::raw("count(age) as `total`"),'age')
                     ->groupBy('age')
                     ->orderBy('age','desc')
@@ -106,15 +118,18 @@ class HomeController extends Controller
                    ->get();
         }else{
             $client_id = Client::where('user_id',Auth::id())->first();
-            $site_id = json_decode($client_id->site_id);
-            
+            $site = json_decode($client_id->site_id);
+            $site_id = [$request->site];
             $data['guests'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->count();
-            $data['sites'] = Site::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->count();
+            $data['active'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',[$timein,$timeout])->count();
+           
+            $data['sites'] = Site::whereIn('site_id',$site)->pluck('site_name','site_id');
             $data['clients'] = Client::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->count();
             $data['visit'] = Movement::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->count();
-            $data['login'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->select(DB::raw('count(guest_id) as `data`'),DB::raw("CONCAT_WS('-',MONTH(created_at),YEAR(created_at)) as monthyear"))
-                   ->groupby('monthyear')
-                   ->get();
+            
+            $data['login'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->select(DB::raw('count(guest_id) as `data`'),DB::raw('HOUR(created_at) as time'))
+                ->groupBy('time')
+                ->get();
 
             $data['male'] = Guest::whereIn('site_id',$site_id)->whereBetween('created_at',$search_date)->where('gender',1)->select(DB::raw("count(age) as `total`"),'age')
                     ->groupBy('age')

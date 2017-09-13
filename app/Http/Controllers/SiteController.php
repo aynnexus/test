@@ -13,8 +13,10 @@ use App\Models\Question;
 use App\Models\Survey;
 use App\Models\Surveying;
 use App\Models\Client;
+use App\Models\Ads;
+use App\Models\Lookup;
 use App\Models\TemplateMovement;
-use Flash,Auth;
+use Flash,Auth,Validator;
 
 class SiteController extends Controller
 {   
@@ -153,10 +155,13 @@ class SiteController extends Controller
                 return back();
             }
         }
+        $ads = Ads::where('template_id',$id)->get();
+        $gender = Lookup::where('title','GENDER')->pluck('value','key');
+        $age = Lookup::where('title','Age Group')->pluck('value','key');
 
         $step = Template::where('template_id',$id)->value('step');
 
-        return view('backend.template.step_five',compact('id','step'));
+        return view('backend.template.step_five',compact('id','step','ads','age','gender'));
     }
 
     public function showPreview($id)
@@ -310,13 +315,47 @@ class SiteController extends Controller
         }
         $feedback = SiteField::UpdateOrCreate(['template_id'=>$id],[
                 'feedback_fields'=>json_encode($feedback_field,true),
-                'iframe_link' => $request->iframe
+                'iframe_link' => $request->iframe,'url'=>$request->url
             ]);
         
         Template::find($id)->update(['step'=>4]);
 
         Flash::success('Successfully Feedback Add');
         return redirect('dashboard/template/step_five/'.$id);
+    }
+
+    public function postAds(Request $request,$id=0)
+    {
+        $rule = ['gender'=>'required','age'=>'required','timeout'=>'required'];
+        $valid  = Validator::make($request->all(),$rule);
+        if ($valid->fails()) {
+            return back()->withErrors($valid);
+        }
+        if ($request->hasFile('photo')) {
+            $result = fileUpload($request->photo,'ads');
+        }
+        $ads = ($id>0)?Ads::find($id):new Ads;
+        $ads->target_age = implode(',', $request->age);
+        $ads->target_gender = $request->gender;
+        $ads->template_id = $request->template_id;
+        $ads->type = $request->type;
+        $ads->timeout = $request->timeout;
+        $ads->video = $request->video;
+        $ads->photo = isset($result)?$result['file_path'].$result['file_name']:$ads->photo;
+        $ads->status = $request->status;
+        $ads->user_id = Auth::id();
+        $ads->save();
+        Template::find($request->template_id)->update(['step'=>5]);
+
+        Flash::success('Successfully ads creating');
+        return redirect('dashboard/template/step_five/'.$request->template_id);
+    }
+
+    public function removeAds($id)
+    {
+        Ads::destroy($id);
+        Flash::success('Successfully ads removing');
+        return back();
     }
 
     public function remove($id)

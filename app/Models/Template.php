@@ -49,6 +49,11 @@ class Template extends Model
         return $this->hasMany(Surveying::class,'template_id');
     }
 
+    public function Ads()
+    {
+        return $this->hasMany(Ads::class,'template_id');
+    }
+
     // public function scopeSearch($query,$request)
     // {
     //     return $query->whereIn('site_id',$request['site_id']);
