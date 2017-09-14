@@ -30,6 +30,19 @@
 											    <img src="{{url('/storage/'.$template->Profile->logo_image)}}" class="logo-template" width="100" height="100">
 											  </div>
 												<div class="register-box-body" style="background-color: transparent;">
+													<div class="social-auth-links text-center">
+												     
+												      	@if($social->fb==ACTIVE)
+												      		<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
+												        Facebook</a>
+												      	@endif
+												      	@if($social->gmail==ACTIVE)
+												      		<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google"></i> Sign up using
+												        	Gmail</a>
+												     	@endif
+												     	<p>- OR -</p>
+												    </div>
+
 												    <p class="login-box-msg"></p>
 												    	@if($field->name==ACTIVE)
 												      		<div class="form-group has-feedback">
@@ -64,17 +77,7 @@
 												        <!-- /.col -->
 												      </div>
 
-												    <div class="social-auth-links text-center">
-												      <p>- OR -</p>
-												      	@if($social->fb==ACTIVE)
-												      		<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using
-												        Facebook</a>
-												      	@endif
-												      	@if($social->gmail==ACTIVE)
-												      		<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google"></i> Sign up using
-												        	Gmail</a>
-												     	@endif
-												    </div>
+												    
 												  </div>
 												  <!-- /.form-box -->
 												</div>
