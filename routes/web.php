@@ -80,6 +80,8 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/lookup/{status?}/{id?}','SettingController@changeStatusLookup');
 		Route::get('/serveys/{type?}','SettingController@getServey');
 		Route::post('/serveys/{type?}/{id?}','SettingController@postServey');
+		Route::get('/mail','SettingController@emailTest');
+		Route::get('/mailtest','SettingController@emailTesting');
 	});
 
 	Route::group(['prefix'=>'guests'],function(){

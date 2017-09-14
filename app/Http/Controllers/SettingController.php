@@ -9,7 +9,8 @@ use App\Models\Servey;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Guest;
-use Flash,Auth;
+use App\User;
+use Flash,Auth,Mail;
 
 class SettingController extends Controller
 {
@@ -110,5 +111,23 @@ class SettingController extends Controller
         Flash::success('Successfully saving servey');
         return back();
     }    
+
+    public function emailTest(){
+        return view('backend.setting.mail');
+    }
+
+    public function emailTesting()
+    {   
+        $user = User::find(Auth::id());
+        $app_user = ['name'=>$user->name,'email'=>$user->email];
+        Mail::send('mail.test', ['user' => $app_user], function ($message) use ($app_user)
+        {                           
+            $message->to($app_user['email'], $app_user['name'])->subject('Testing Email from Nexus');
+        });
+
+        Flash::success('Success your email testing');
+
+        return back();
+    }
 }
 
