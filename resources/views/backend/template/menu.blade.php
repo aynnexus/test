@@ -4,7 +4,6 @@ $two_done = $step > 1 ? 'done' : '';
 $three_done = $step > 2 ? 'done' : '';
 $four_done = $step > 3 ? 'done' : ''; 
 $five_done = $step > 4 ? 'done' : ''; 
-
 ?>
 
 <ul class="app-menu">
@@ -37,14 +36,14 @@ $five_done = $step > 4 ? 'done' : '';
             <span>Feedback</span>
         </a>
     </li>
-    <li class="{!!$step > 2 ?"":"pn"!!}">
+    <li class="{!!$step > 3 ?"":"pn"!!}">
         <a href="{!!url('dashboard/template/step_five/'.$id)!!}"
-           class="{!! Request::is('dashboard/template/step_five/'.$id) ? 'active' : '' !!} {!!$five_done!!}">
+           class="{!! Request::is('dashboard/template/step_five/'.$id) ? 'active' : '' !!} {!!$four_done!!}">
             <div class="menu-tab">A</div>
             <span>Ads</span>
         </a>
     </li>
-    <li class="{!!$step > 2 ?"":"pn"!!}">
+    <li class="{!!$step > 4 ?"":"pn"!!}">
         <a href="{!!url('dashboard/template/preview/'.$id)!!}"
            class="{!! Request::is('dashboard/template/preview/'.$id) ? 'active' : '' !!} {!!$five_done!!}">
             <div class="menu-tab">P</div>

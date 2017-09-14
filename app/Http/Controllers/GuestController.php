@@ -188,6 +188,7 @@ class GuestController extends Controller
         }
         
         $guest = Guest::find($id);
+        
         $guest->update(['comment'=>$request->comment,'rating_key'=>json_encode($keys),'rating_value'=>json_encode($values),'status'=>ACTIVE]);
 
         for ($i=0; $i < count($temp->Surveying); $i++) { 
@@ -201,7 +202,11 @@ class GuestController extends Controller
                 $survey->save();
             }
         }
-        
+
+        if (array_sum($values)<=6) {
+            mailSending($guest);
+        }
+
         if ($guest->type==2) {
             $this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit);
         }

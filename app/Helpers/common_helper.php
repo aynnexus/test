@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Storage;
 use App\Models\Site;
+use App\Models\Lookup;
 use Illuminate\Support\Facades\Mail;
 
 function showPrettyStatus($status){
@@ -175,12 +176,24 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 	return $output;
 }
 
-function mailSending($data)
+function mailSending($guest)
 {   
-    $app_user = ['name'=>$data['name'],'email'=>$data['email']];
-
-    Mail::send('emails.alert', function ($message) use ($app_user) 
-    {                        
-        $message->to($app_user['email'], $app_user['name'])->subject('Email Alert');
+    $app_user = ['name'=>'Admin','email'=>'indepentdent.89@gmail.com'];
+	
+	Mail::send('mail.feedback', ['user' => $guest], function ($message) use ($app_user)
+    {                           
+    	$message->to($app_user['email'], $app_user['name'])->subject('Feedback Alert');
     });
+}
+
+function age_group($age)
+{	
+	$age_group = Lookup::where('title','Age Group')->where('key',$age)->value('value');
+	
+	return $age_group;
+}
+
+function site_name($id)
+{
+	return Site::where('site_id',$id)->value('site_name');
 }
