@@ -10,7 +10,7 @@
             </div>
 
             <div class="register-box-body" style="border-radius:10px;background: transparent;">
-                <p class="login-box-msg"></p>
+               <!--  <p class="login-box-msg"></p> -->
                 <?php $feedback = json_decode($temp->Field->feedback_fields);
 
                    // dd($feedback);
@@ -28,10 +28,10 @@
                     @foreach($temp->Rating as $key=>$rating)
                         
                         <div class="form-group has-feedback">  
-                            <div class="col-xs-3 col-md-3">
+                            <div class="">
                                 <label>{{$rating->Rate->label}}</label>
                             </div>
-                            <div class="col-xs-9 col-md-9">
+                            <div class="col-xs-12 col-md-12">
                                 <fieldset class="rating">
                                 <input type="radio" id="star5{{$key}}" name="{{$rating->Rate->label}}" value="5" /><label for="star5{{$key}}" title="Rocks!"></label>
                                 <input type="radio" id="star4{{$key}}" name="{{$rating->Rate->label}}" value="4" /><label for="star4{{$key}}" title="Pretty good"></label>
@@ -57,8 +57,6 @@
                         </div>
                     @endforeach
                     @endif
-                    <br><br><br>
-                    <br><br><br>
                     <br>
                     @if(isset($feedback) && $feedback->survey==1)
                     @foreach($temp->Surveying as $key=>$surveying)
@@ -105,11 +103,16 @@
                         <div class="modal-header">          
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h3 id="countdown" style="font-weight: bold"></h3>
-                            @if($ads->type==1)
-                                <img src="{{url('/storage/'.$ads->photo)}}" width="570" height="345">
-                            @else
-                                <iframe width="570" height="345" src="{{$ads->video}}" frameborder="0" allowfullscreen></iframe>
-                            @endif
+                            <div class="row">
+                              <div class="col-xs-12 col-md-12 col-lg-12">
+                                    @if($ads->type==1)
+                                        <img src="{{url('/storage/'.$ads->photo)}}" width="100%">
+                                    @else
+                                        <iframe src="{{$ads->video}}" width="100%" frameborder="0" allowfullscreen></iframe>
+                                    @endif
+                              </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

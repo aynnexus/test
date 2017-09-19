@@ -48,11 +48,11 @@ ul.app-menu li{
 	.form-control{
 		border-radius: 5px
 	}
-	img.logo-template{
+	/*img.logo-template{
 		position: absolute;
-		top: 20%;
+		top: 30%;
 		left: 43%;
-	}
+	}*/
 
 	div.stars {
   width: 300px;
