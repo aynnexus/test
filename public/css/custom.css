@@ -70,7 +70,7 @@ label.star {/*
 }
 
 label.stared {
-  /*float: right;*/
+  float: right;
   padding: 0px;
   margin-top: -10px
 }

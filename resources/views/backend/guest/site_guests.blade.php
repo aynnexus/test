@@ -35,7 +35,6 @@
 							<div class="col-sm-12">
 								<table class="table table-bordered table-striped dataTable">
 									<thead>
-
 										<tr>
 											<th>#</th>
 											<th>Name</th>

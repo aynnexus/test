@@ -149,11 +149,10 @@
         <!-- /.col (LEFT) -->
         <div class="col-md-12">
           
-
-          <!-- BAR CHART -->
-          <div class="box box-success">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Activity <small>Male <button class="btn bnt-xs btn-default"></button> Female <button class="btn bnt-xs btn-success"></button></small></h3>
+              <h3 class="box-title">Activity <small>Active Login (This hourly is that today.)</small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -163,12 +162,12 @@
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="barChart" style="height:230px"></canvas>
+                <canvas id="areaChart" style="height:250px"></canvas>
               </div>
             </div>
-            <!-- /.box-body -->
           </div>
           <!-- /.box -->
+          
 
         </div>
         <!-- /.col (RIGHT) -->
@@ -195,10 +194,10 @@
 
         </div>
         <div class="col-md-6">
-          <!-- AREA CHART -->
-          <div class="box box-primary">
+            <!-- BAR CHART -->
+          <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Activity <small>Active Login (This hourly is that today.)</small></h3>
+              <h3 class="box-title">Login Type <small>Gender/Age-group</small> </h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -208,9 +207,10 @@
             </div>
             <div class="box-body">
               <div class="chart">
-                <canvas id="areaChart" style="height:250px"></canvas>
+                <canvas id="barChart" style="height:334px"></canvas>
               </div>
             </div>
+            <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
@@ -220,13 +220,12 @@
     </section>
     <!-- /.content -->
   <!-- page script -->
-  <script src="{{asset('assets/chartjs/Chart.min.js')}}"></script>
+  <script src="{{asset('assets/chartjs/Chart.bundle.js')}}"></script>
+  <script src="{{asset('assets/chartjs/utils.js')}}"></script>
 <script>
   $( ".datetimepicker" ).datetimepicker();
-  $(function () {
     var calender = [];var data_male=[0,0,0,0,0,0,0];
-    //var register = 0; var social = 0;
-    var data_login=[];var PieData = [];
+    var data_login=[];var PieData_label = [];var PieData_value = [];var PieData_color = [];
     var data_female=[0,0,0,0,0,0,0];
     var data_1 = JSON.parse('<?php echo $data['male'] ?>');
     var data_2 = JSON.parse('<?php echo $data['female'] ?>');
@@ -286,228 +285,106 @@
       calender.push(index.time+' Hour')
       data_login.push(index.data);         
     });
-    
-    
-    // $.ajax({
-    //   url: 'dashboard/json_index',
-    //   async: false,  
-    //   success: function(response) {
-    //     response.data.male.map(function(index){
-    //       data_male.push(index.total);
-          
-    //     });
-    //     response.data.female.map(function(index){
-    //       data_female.push(index.total);
-    //     });
-    //     register = response.data.register;
-    //     social = response.data.social;
-
-    //     response.data.login.map(function(index){
-    //       var month = index.monthyear.split('-')
-    //       calender.push(moment(month[0]).format('MMMM')) 
-    //       data_login.push(index.data);         
-    //     });
-
-    //   }
-    // });
-    
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-    //--------------
-    //- AREA CHART -
-    //--------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
-    var areaChart = new Chart(areaChartCanvas);
-
-    var areaChartData = {
-
-      labels: ['Age 13-17','Age 18-24','Age 25-34','Age 35-44','Age 45-54','Age 55-64','Over 65'],
-      datasets: [
-        {
-          label: "Male",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "rgba(210, 214, 222, 1)",
-          pointColor: "rgba(210, 214, 222, 1)",
-          pointStrokeColor: "#c1c7d1",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(220,220,220,1)",
-          data: data_male
-        },
-        {
-          label: "Female",
-          fillColor: "rgba(60,141,188,0.9)",
-          strokeColor: "rgba(60,141,188,0.8)",
-          pointColor: "#3b8bba",
-          pointStrokeColor: "rgba(60,141,188,1)",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(60,141,188,1)",
-          data: data_female
-        }
-      ]
-    };
-
-    var areaChartDataS = {
-      labels: calender,
-      datasets: [
-        {
-          label: "Female",
-          fillColor: "rgba(60,141,188,0.9)",
-          strokeColor: "rgba(60,141,188,0.8)",
-          pointColor: "#3b8bba",
-          pointStrokeColor: "rgba(60,141,188,1)",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(60,141,188,1)",
-          data: data_login
-        }
-      ]
-    };
-
-    var areaChartOptions = {
-      //Boolean - If we should show the scale at all
-      showScale: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: false,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "rgba(0,0,0,.05)",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: true,
-      //Boolean - Whether the line is curved between points
-      bezierCurve: true,
-      //Number - Tension of the bezier curve between points
-      bezierCurveTension: 0.3,
-      //Boolean - Whether to show a dot for each point
-      pointDot: false,
-      //Number - Radius of each point dot in pixels
-      pointDotRadius: 4,
-      //Number - Pixel width of point dot stroke
-      pointDotStrokeWidth: 1,
-      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-      pointHitDetectionRadius: 20,
-      //Boolean - Whether to show a stroke for datasets
-      datasetStroke: true,
-      //Number - Pixel width of dataset stroke
-      datasetStrokeWidth: 2,
-      //Boolean - Whether to fill the dataset with a color
-      datasetFill: true,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio: true,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive: true
-    };
-
-    //Create the line chart
-    areaChart.Bar(areaChartDataS, areaChartOptions);
-
-    
-    //-------------
-    //- PIE CHART -
-    //-------------
-    // Get context with jQuery - using jQuery's .get() method.
-    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-    var pieChart = new Chart(pieChartCanvas);
-    
     data_4.map(function(index,key){
-      var os_type = new Object;
-      os_type.value= index.data;
-      os_type.color= convertColor(index.os);
-      os_type.highlight= convertColor(index.os);
-      os_type.label= index.os
-      PieData.push(os_type);        
+      //var os_type = new Object;
+      //os_type.value= index.data;
+      //os_type.color= convertColor(index.os);
+      PieData_value.push(index.data);
+      PieData_color.push(convertColor(index.os));
+      PieData_label.push(index.os);
+      //os_type.highlight= convertColor(index.os);
+      //os_type.label= index.os
+      //PieData.push(os_type);        
     });
-    
-    // var PieData = [
-    //   {
-    //     value: 2,
-    //     color: "#f56954",
-    //     highlight: "#f56954",
-    //     label: "Register Users"
-    //   },
-    //   {
-    //     value: 3,
-    //     color: "#3c8dbc",
-    //     highlight: "#3c8dbc",
-    //     label: "Social Users"
-    //   },
-    // ];
-    var pieOptions = {
-      //Boolean - Whether we should show a stroke on each segment
-      segmentShowStroke: true,
-      //String - The colour of each segment stroke
-      segmentStrokeColor: "#fff",
-      //Number - The width of each segment stroke
-      segmentStrokeWidth: 2,
-      //Number - The percentage of the chart that we cut out of the middle
-      percentageInnerCutout: 50, // This is 0 for Pie charts
-      //Number - Amount of animation steps
-      animationSteps: 100,
-      //String - Animation easing effect
-      animationEasing: "easeOutBounce",
-      //Boolean - Whether we animate the rotation of the Doughnut
-      animateRotate: true,
-      //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale: false,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive: true,
-      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio: true,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-    };
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
-    pieChart.Doughnut(PieData, pieOptions);
+              donut_data = {
+                datasets: [{
+                  data: PieData_value,
+                  backgroundColor: PieData_color,
+                }],
+                labels: PieData_label
+              };
+              bar_data = {
+                  labels: calender,
+                  datasets: [{
+                    label: 'Active',
+                    data: data_login,
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.9)',                    
+                    borderWidth: 1
+                  }]
+              };
+              hozbar_data = {
+                labels: ['Age 13-17','Age 18-24','Age 25-34','Age 35-44','Age 45-54','Age 55-64','Over 65'],
+                datasets: [{
+                    label: 'Male',
+                    backgroundColor: window.chartColors.orange,
+                    borderColor: window.chartColors.orange,
+                    borderWidth: 1,
+                    data: data_male
+                }, {
+                    label: 'Female',
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    data: data_female
+                }]
+              }
 
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $("#barChart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas);
-    var barChartData = areaChartData;
-    barChartData.datasets[1].fillColor = "#00a65a";
-    barChartData.datasets[1].strokeColor = "#00a65a";
-    barChartData.datasets[1].pointColor = "#00a65a";
-    var barChartOptions = {
-      //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+              var ctx = document.getElementById("areaChart");
+              var myChart = new Chart(ctx, {
+                  type: 'bar',
+                  data:bar_data,
+                  options: {
+                      scales: {
+                          yAxes: [{
+                              ticks: {
+                                  beginAtZero:true
+                              }
+                          }]
+                      }
+                  }
+              });
 
-      scaleBeginAtZero: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: true,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "rgba(0,0,0,.05)",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: true,
-      //Boolean - If there is a stroke on each bar
-      barShowStroke: true,
-      //Number - Pixel width of the bar stroke
-      barStrokeWidth: 2,
-      //Number - Spacing between each of the X value sets
-      barValueSpacing: 5,
-      //Number - Spacing between data sets within X values
-      barDatasetSpacing: 1,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to make the chart responsive
-      responsive: true,
-      maintainAspectRatio: true
-    };
+              var ctx = document.getElementById("pieChart");
+              var myDoughnutChart = new Chart(ctx, {
+                      type: 'doughnut',
+                      data: donut_data,
+                      options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: false,
+                                text: 'Chart.js Doughnut Chart'
+                            },
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true
+                            }
+                        }
+              });
 
-    barChartOptions.datasetFill = false;
-    barChart.Bar(barChartData, barChartOptions);
-  });
+              var ctx = document.getElementById("barChart").getContext("2d");
+              var myhorBarChart = new Chart(ctx, {
+                  type: 'horizontalBar',
+                  data: hozbar_data,
+                  options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2,
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: false,
+                        text: 'Chart.js Horizontal Bar Chart'
+                    }
+                  }
+              });
+
 
 </script>
 @stop

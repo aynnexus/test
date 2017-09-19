@@ -91,6 +91,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/detail/{id?}','GuestController@detail');
 		Route::get('data/{search?}','GuestController@searchData');
 		Route::post('/guest_info','GuestController@postExport');
+		Route::get('single_detail/{id?}','GuestController@singleDetail');
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 		Route::get('/','AdminController@index');
