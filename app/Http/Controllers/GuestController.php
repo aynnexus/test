@@ -101,9 +101,9 @@ class GuestController extends Controller
 
             }else{
                 if ($type==3) {
-                    $guests = Guest::orderBy($order,'desc')->paginate(20);
+                    $guests = Guest::groupBy($order)->orderBy($order,'desc')->paginate(20);
                 }else{
-                    $guests = Guest::where('type',$type)->orderBy($order,'desc')->paginate(20);
+                    $guests = Guest::where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(20);
                 }
             }
             
@@ -114,14 +114,21 @@ class GuestController extends Controller
                 $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy($order,'desc')->paginate(20);
             }else{
                 if ($type==3) {
-                    $guests = Guest::whereIn('site_id',$this->site_id)->orderBy($order,'desc')->paginate(20);  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->groupBy($order)->orderBy($order,'desc')->paginate(20);  
                 }else{
-                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->orderBy($order,'desc')->paginate(20);  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(20);  
                 }
                               
             }
         }
         return view('backend.guest.index',compact('guests','sites'));
+    }
+
+    public function singleDetail($id)
+    {
+        $guest = Guest::find($id);
+        $guests = Guest::where('user_ap',$guest->user_ap)->select('email','phone','created_at')->get();
+        return response()->json($guests);
     }
 
     public function removeGuest($id)
@@ -172,7 +179,9 @@ class GuestController extends Controller
     public function detail($id)
     {
         $guest = Guest::find($id);
-        return view('backend.guest.detail',compact('guest'));
+        $guests = Guest::where('user_ap',$guest->user_ap)->get();
+        
+        return view('backend.guest.detail',compact('guests'));
     }
 
     public function postFeedback(Request $request,$id)

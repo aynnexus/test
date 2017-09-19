@@ -8,8 +8,6 @@
 		<li class="active"> Action</li>
 	</ol>
 </section>
-<?php $rating_key = isset($guest->rating_key)?json_decode($guest->rating_key):null;
-										 	$rating_value = isset($guest->rating_value)?json_decode($guest->rating_value):null; ?>	
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12">
@@ -17,107 +15,32 @@
 				<div class="box">				
 					<div class="box-body">
 						
-						<div class="row">
-							<div class="col-md-offset-3">
-								<h4>Site Name : {{$guest->Site['site_name']}}</h4><br>
-								<div class="col-md-8">                      
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Name</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->name}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>
-				                  	</div>  
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Email</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->email}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>  
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Phone</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->phone}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Age Group / Gender</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->Age($guest->age)}} / {{$guest->Gender($guest->gender)}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">User AP (Device)</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->user_ap}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">OS Type</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->os}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Social ID</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->social_id}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Login Time</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{date('d M, Y g:i:s',strtotime($guest->created_at))}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Comment</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	<label class="form-label">
-												{{$guest->comment}}
-											</label>	
-				                      		<div class="clr"></div>
-				                    	</div> <br><br>                  
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Rating</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7">                      
-					                      	@if(isset($rating_value))
+						
+							<table class="table table-bordered table-striped">
+								<tr>
+									<th>#</th>
+									<th>User Info</th>
+									<th>User AP/OS/Social ID</th>
+									<th>Rating</th>
+									<th>Survay</th>
+									<th>Comment</th>
+									<th>Login Time</th>
+								</tr>
+								@foreach($guests as $key=>$row)
+									<?php $rating_key = isset($row->rating_key)?json_decode($row->rating_key):null;
+										 	$rating_value = isset($row->rating_value)?json_decode($row->rating_value):null; ?>
+									<tr>
+										<td>{{$key+1}}. </td>
+										<td>{{$row->name!=''?$row->name:'-'}}<br>{{$row->email!=''?$row->email:'-'}}<br>{{$row->phone!=''?$row->phone:'-'}} <br>
+										{{$row->Age($row->age)!=''?$row->Age($row->age):'-'}} <br> {{$row->Gender($row->gender)!=''?$row->Gender($row->gender):'-'}}
+										</td>
+										<td>{{$row->user_ap!=''?$row->user_ap:'-'}}<br>{{$row->os!=''?$row->os:''}}<br>{{$row->social_id!=''?$row->social_id:'-'}}</td>
+										<td class="col-md-2">
+											@if(isset($rating_value))
 												@foreach($rating_value as $key=>$value)
+												
 												<div class="form-group">
+													<span>{{$rating_key[$key]}}</span>
 													<input class="star star-5" {{$value==5?'checked':''}} id="star-5" type="radio"/>
 													<label class="star stared star-5" for="star-5"></label>
 													<input class="star star-4" {{$value==4?'checked':''}} id="star-4" type="radio"/>
@@ -131,25 +54,20 @@
 												</div>
 												@endforeach
 											@endif	
-				                      		<div class="clr"></div>
-				                    	</div><br>                   
-				                  	</div>
-				                  	<div class="form-group">                    
-				                    	<label class="col-lg-3 control-label">Survey</label>
-				                    	<label class="col-lg-1 control-label">:</label>
-				                    	<div class="col-lg-7"> 
-				                    		@foreach($guest->Surveys as $value)
+										</td>
+										<td>
+											@foreach($row->Surveys as $value)
 				                    		<p><b>{{$value->question}}</b><br>{{$value->answer}}</p>
 				                    		@endforeach
-				                      		<div class="clr"></div>
-				                    	</div>                  
-				                  	</div>
-				                </div>
-							</div>
-						</div>	
-
+										</td>
+										<td>{{$row->comment!=''?$row->comment:'-'}}</td>
+										<td>{{date('d M, Y g:i:s',strtotime($row->created_at))}}</td>
+									</tr>
+								@endforeach
+							</table>
+						
 					</div>
-					<div class="box-footer col-md-offset-3">
+					<div class="box-footer col-md-offset-5">
 						<a href="{{url('dashboard/guests')}}" class="btn btn-default"> Back</a>
 					</div>  
 				</div>

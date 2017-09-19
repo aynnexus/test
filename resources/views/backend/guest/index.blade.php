@@ -87,12 +87,11 @@
 									<tbody>
 
 										@foreach($guests as $key=>$row)
-										 
 										<tr>
 											<td>{{$key+1}}. </td>
 											<td><img src="{{$row->profile_photo==null?asset('img/user-pic-01.jpg'):$row->profile_photo}}" width="40px" height="40px;" class="img-circle">
 												<div>
-													<a data-toggle="modal" data-target="#viewDetailPopUp" href="#">{{$row->name}}</a>
+													<a onclick="callModel({{$row->guest_id}})" href="#">{{$row->name}}</a>
 												</div>	
 											</td>									
 											<td><i class="fa fa-envelope"></i> {{$row->email}} <br> <i class="fa fa-phone"></i> {{$row->phone}}</td>
@@ -111,6 +110,7 @@
 												 <input type="checkbox" name="id[]" value="{{$row->guest_id}}">
 											</td>
 										</tr>
+										
                     					@endforeach
 									</tbody>
 									@endif	
@@ -132,7 +132,25 @@
 				</div>
 			</div>
 		</div>
-		
+		 <!-- Modal -->
+		 <div class="modal fade" id="viewDetailPopUp" role="dialog">
+		 	<div class="modal-dialog modal-md">
+		 		<div class="modal-content">
+		 			<div class="modal-header"> 				
+		 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+		 				<h4 class="modal-title">Login Detail</h4>
+		 				<table class="table table-bordered table-striped" id="render">
+		 					
+		 				</table>		 				
+		 			</div>
+
+		 			<div class="modal-footer">
+		 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		 			</div>
+		 		</div>
+		 	</div>
+		 </div>
+		<!-- model end -->
 	</section>
 <script>
 	$( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
@@ -143,5 +161,17 @@
             $('input[type=checkbox]').prop('checked',false)
         }
     });
+    function callModel(attr_id)
+    {	
+    	$('#render tr').remove();
+    	$.get('/dashboard/guests/single_detail/'+attr_id,function(response){
+    		$('<tr><th>#</th><th>Email</th><th>Phone</th><th>Login At</th></tr>').appendTo('table#render')
+    		response.map(function(index,key){
+    			$('<tr><td>'+Number(key+1)+'.</td><td>'+index.email+'</td><td>'+index.phone+'</td><td>'+index.created_at+'</td></tr>').appendTo('table#render');    			
+    		});
+    		$('#viewDetailPopUp').modal('show')
+    	});
+    	
+    }
 </script>
 @stop

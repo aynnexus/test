@@ -9,7 +9,7 @@
 					<div class="box-body">
 							@include('backend.template.menu')
 							<div class="col-md-6">
-								<h4>Please make your feedback page required fields</h4>
+								<h4>Please make your feedback page required fields</h4><br>
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3">
@@ -20,11 +20,11 @@
 										<?php $fdb = isset($feedback)?json_decode($feedback->feedback_fields):null; ?>
 
 										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label>Facebook Check-in</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-2">
+											<div class="col-md-7">
 												<input type="radio" {{($fdb!=null && $fdb->checkin==1)?'checked':''}} value="1" name="checkin"> Yes
 												
 												<input type="radio" {{($fdb!=null && $fdb->checkin==0)?'checked':''}} value="0" name="checkin"> No
@@ -32,11 +32,11 @@
 											</div>											
 										</div><hr>
 										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label>Facebook Like</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-2">
+											<div class="col-md-7">
 												<input type="radio" {{($fdb!=null && $fdb->like==1)?'checked':''}} value="1" name="like"> Yes
 												
 												<input type="radio" {{($fdb!=null && $fdb->like==0)?'checked':''}} value="0" name="like"> No
@@ -46,54 +46,58 @@
 										</div>										
 										<hr>
 										<div class="row" id="iframe">
-											<div class="col-md-3"><label>Facebook App ID</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
+											<div class="col-md-4"><label>Facebook App ID</label></div><div class="col-md-1">:</div><div class="col-md-7"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
 										</div>	
 										<hr>
 										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label>Comment Box</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-2">
+											<div class="col-md-7">
 												<input type="radio" {{($fdb!=null && $fdb->comment==1)?'checked':''}} value="1" name="comment"> Yes
 												
 												<input type="radio" {{($fdb!=null && $fdb->comment==0)?'checked':''}} value="0" name="comment"> No
-											</div>
-											<div class="col-md-2">
 												<label><input type="checkbox" {{($fdb!=null && $fdb->cbb_require==1)?'checked':''}} value="1" name="cbb_require"> Require</label>
+											</div>
+											
+										</div><hr>
+										<div class="row">
+											<div class="col-md-4">
+												<label>Redirect url</label>
+											</div>
+											<div class="col-md-1">:</div>
+											<div class="col-md-7">
+												<input type="text" name="url" value="{{isset($feedback)?$feedback->url:null}}" class="form-control" required placeholder="www.google.com">
 											</div>
 										</div><hr>
 										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label>Survey</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-2">
+											<div class="col-md-7">
 												<input type="radio" {{($fdb!=null && $fdb->survey==1)?'checked':''}} value="1" name="survey"> Yes
 												<input type="radio" {{($fdb!=null && $fdb->survey==0)?'checked':''}} value="0" name="survey"> No
+
+												{!! Form::select('survey_id[]',$survey,$surveyings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
 											</div>
 											<!-- <div class="col-md-2">
 												<label><input type="checkbox" {{($fdb!=null && $fdb->s_require==1)?'checked':''}} value="1" name="s_require"> Require</label>
 											</div> -->
 										</div><hr>
+																				
 										<div class="row">
-											<div class="col-md-3"><label>Redirect url</label></div><div class="col-md-1">:</div><div class="col-md-6"><input type="text" name="url" value="{{isset($feedback)?$feedback->url:null}}" class="form-control" required placeholder="www.google.com"></div>
-										</div>	<hr>
-										<div class="row" id="select_open">
-											<div class="col-md-12">
-												<div class="col-md-6">	
-													{!! Form::select('survey_id[]',$survey,$surveyings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
-												</div>	
-											</div>
-										</div><hr>
-										<div class="row">
-											<div class="col-md-3">
+											<div class="col-md-4">
 												<label>Rate</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-2">
+											<div class="col-md-7">
 												<input type="radio" id="Yes" {{($fdb!=null && $fdb->rate==1)?'checked':''}} value="1" name="rate"> Yes
 												<input type="radio" id="No" {{($fdb!=null && $fdb->rate==0)?'checked':''}} value="0" name="rate"> No
+												
+												{!! Form::select('rate_id[]',$rate,$ratings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
+												<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp"><i class="fa fa-plus"></i> Add New Rate</button>
 											</div>
 											<!-- <div class="col-md-2">
 												<label><input type="checkbox" {{($fdb!=null && $fdb->r_require==1)?'checked':''}} value="1" name="r_require"> Require</label>
@@ -101,18 +105,6 @@
 
 										</div>
 										<br>
-										
-										<div class="row" id="select_open">
-											<div class="col-md-12">
-												<div class="col-md-6">													
-													{!! Form::select('rate_id[]',$rate,$ratings,['class'=>'form-control select2','multiple data-placeholder'=>'Select one rate']) !!}
-												</div>											
-												<div class="col-md-4">
-													<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp"><i class="fa fa-plus"></i> Add New Rate</button>
-												</div>
-											</div>
-										</div>
-										
 										<hr>
 										<a href="{{url('/dashboard/sites/step_one/'.$id)}}" class="btn btn-default">Back</a>
 										<button type="submit" class="btn btn-primary"> {{isset($fdb)?'Update':'Submit'}}</button>
