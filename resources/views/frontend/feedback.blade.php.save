@@ -1,0 +1,197 @@
+@extends('layouts.app')
+
+@section('content')
+<?php dd($temp) ?>
+<body class="hold-transition register-page" style="background: {{$temp->Profile->background_color}}">
+    <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
+        <div class="register-box" style="margin:0% auto">
+            <div class="register-logo">
+                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 47%;">
+            </div>
+
+            <div class="register-box-body" style="border-radius:10px;background: transparent;">
+                <p class="login-box-msg"></p>
+                <?php $feedback = json_decode($temp->Field->feedback_fields);
+
+                   // dd($feedback);
+                         ?>
+                {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
+                    @if(isset($feedback) && $feedback->comment==1)
+                    <div class="form-group has-feedback">
+                        <label>Comment</label>
+                        <textarea name="comment" class="form-control" {{$feedback->cbb_require==1?'required':''}}>
+                        </textarea>
+                    </div>
+                    @endif
+
+                    @if(isset($feedback) && $feedback->rate==1)
+                    @foreach($temp->Rating as $key=>$rating)
+                        
+                        <div class="form-group has-feedback">  
+                            <div class="col-xs-3 col-md-3">
+                                <label>{{$rating->Rate->label}}</label>
+                            </div>
+                            <div class="col-xs-9 col-md-9">
+                                <fieldset class="rating">
+                                <input type="radio" id="star5{{$key}}" name="{{$rating->Rate->label}}" value="5" /><label for="star5{{$key}}" title="Rocks!"></label>
+                                <input type="radio" id="star4{{$key}}" name="{{$rating->Rate->label}}" value="4" /><label for="star4{{$key}}" title="Pretty good"></label>
+                                <input type="radio" id="star3{{$key}}" name="{{$rating->Rate->label}}" value="3" /><label for="star3{{$key}}" title="Meh"></label>
+                                <input type="radio" id="star2{{$key}}" name="{{$rating->Rate->label}}" value="2" /><label for="star2{{$key}}" title="Kinda bad"></label>
+                                <input type="radio" id="star1{{$key}}" name="{{$rating->Rate->label}}" value="1" /><label for="star1{{$key}}" title="Sucks big time"></label>
+
+                            </fieldset>
+                            </div>
+                                     
+                             <!--  <div class="stars">
+                                <input class="star star-5" value="5" id="star-5{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
+                                <label class="star star-5" for="star-5{{$key}}"></label>
+                                <input class="star star-4" value="4" id="star-4{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
+                                <label class="star star-4" for="star-4{{$key}}"></label>
+                                <input class="star star-3" value="3" id="star-3{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
+                                <label class="star star-3" for="star-3{{$key}}"></label>
+                                <input class="star star-2" value="2" id="star-2{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
+                                <label class="star star-2" for="star-2{{$key}}"></label>
+                                <input class="star star-1" value="1" id="star-1{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
+                                <label class="star star-1" for="star-{{$key}}"></label>
+                              </div> -->
+                        </div>
+                    @endforeach
+                    @endif
+                    <br><br><br>
+                    <br><br><br>
+                    <br>
+                    @if(isset($feedback) && $feedback->survey==1)
+                    @foreach($temp->Surveying as $key=>$surveying)
+                        <div class="form-group has-feedback">
+                            <label>{{$key+1}}. {{$surveying->Question->label}}</label>
+                            @foreach($surveying->Question->Answers as $answer)
+                                <p><input type="radio" required name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
+                            @endforeach
+                        </div>
+                    @endforeach
+                    @endif
+
+                    <div class="row">
+                        <div class="col-xs-8">
+                          
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <button type="submit" id="login" class="btn btn-success btn-block">Submit</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.form-box --> 
+            <div class="row">
+                <div id="fb-root"></div>
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"></div>
+                <button style="display: none;" id="loginBtn">Facebook Login</button>
+                <div id="response"></div>
+            </div>
+            
+        </div>
+
+        
+        <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
+        
+        @if($ads)  
+        <div class="adspopUp">
+            <!-- Modal -->
+            <div class="modal fade" id="adspopUp" role="dialog">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">          
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3 id="countdown" style="font-weight: bold"></h3>
+                            @if($ads->type==1)
+                                <img src="{{url('/storage/'.$ads->photo)}}" width="570" height="345">
+                            @else
+                                <iframe width="570" height="345" src="{{$ads->video}}" frameborder="0" allowfullscreen></iframe>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <!-- model end -->
+        </div>
+        @endif
+</body>
+
+<script type="text/javascript">
+    $("#adspopUp").modal('show');
+    var timer = '<?php echo $ads['timeout'] ?>',
+    el = document.getElementById('countdown');
+    (function t_minus() {
+        'use strict';
+        el.innerHTML = timer--;
+        if (timer >= 0) {
+            setTimeout(function () {
+                t_minus();
+            }, 1000);
+        } else {
+            $("#adspopUp").modal('hide');
+        }
+    }());
+
+    const ID = '<?php echo $temp->Field->iframe_link ?>';
+    const guest_id = '<?php echo $id ?>'
+    function getUserData() {    
+        FB.api(
+            "me?fields=age_range",
+            function (response) {
+              if (response && !response.error) {
+                updateJsonAge(response.age_range.min,guest_id)
+              }
+            }
+        );
+    }
+    function updateJsonAge(data,id)
+    {
+        $.get('./guest_age/field?age='+data+'&id='+id);
+    }
+
+    window.fbAsyncInit = function() {
+        //SDK loaded, initialize it
+        FB.init({
+            appId      : ID,
+            xfbml      : true,
+            version    : 'v2.9'
+        });
+
+        //check user session and refresh it
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                //user is authorized
+                document.getElementById('loginBtn').style.display = 'none';
+                getUserData();
+            } else {
+                //user is not authorized
+            }
+        });
+    };
+
+    //load the JavaScript SDK
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.com/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    //add event listener to login button
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        //do the login
+        FB.login(function(response) {
+            if (response.authResponse) {
+                //user just authorized your app
+                document.getElementById('loginBtn').style.display = 'none';
+                getUserData();
+            }
+        }, {scope: 'email,public_profile', return_scopes: true});
+    }, false);
+
+</script>
+@endsection
