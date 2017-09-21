@@ -1,14 +1,14 @@
 @extends('backend.layouts.app')
-@section('content')
-	<section class="content-header">
-		<h1>Servey Management</h1>
+@section('content')  
+<section class="content-header">
+	<h1>Servey Management</h1>
 		<ol class="breadcrumb">
 			<li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li> 
 			<li><a href="#"> Setting</a></li>
 			<li><a href="{{url('/dashboad/setting/serveys')}}"> Servey</a></li>
 			<li class="active"> Action</li>
 		</ol>
-	</section>
+</section>
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12">
@@ -18,21 +18,18 @@
 				</ul>
 				<div class="box">				
 					<div class="box-body">
-						<div class="dataTables_wrapper form-inline dt-bootstrap">
-							<div class="row">
-
+						<div class="row">
 								<div class="col-md-6">
 									<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp0"><i class="fa fa-plus"></i> Add {{$type}}</button>
 								</div>
 								<div class="col-md-6" style="text-align: right">
 									
 								</div>
-							</div>	
-							<div class="row">
-								<div class="col-sm-12">
-									<table class="table table-bordered table-striped dataTable">
+						</div>	
+						<div class="row">
+							<div class="col-sm-12">
+								<table class="table table-bordered table-striped dataTable">
 									<thead>
-
 										<tr>
 											<th>#</th>
 											<th>Slug</th>
@@ -45,7 +42,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									@if(isset($datas))
+										@if(isset($datas))
 										@foreach($datas as $key=>$row)
 										<tr>
 											<td>{{$key+1}}.</td>
@@ -119,10 +116,8 @@
                     				@endif
 									</tbody>
 								</table>
-								</div>
 							</div>
 						</div>
-
 					</div>  
 				</div>
 			</div>
@@ -169,4 +164,5 @@
  	</div>
  </div>
  <!-- model end -->
+
 @stop

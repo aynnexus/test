@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
     <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/adminlte/css/admin.css') !!}">
     {!! Html::style('assets/bootstrap/css/bootstrap.css') !!}
     {!! Html::style('css/custom.css') !!}
     {!! Html::style('assets/bootstrap/css/font-awesome.min.css') !!}
@@ -27,6 +28,7 @@
     {!! Html::script('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js') !!}
     {!! Html::script('assets/bootstrap/js/bootstrap.min.js') !!}
     {!! Html::script('assets/adminlte/js/app.js') !!}
+    <script src="{!! asset('assets/adminlte/js/admin.js') !!}"></script>
     {!! Html::script('assets/adminlte/plugins/select2/select2.full.min.js') !!}
     {!! Html::script('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}
     {!! Html::script('js/bootstrap-datetimepicker.js') !!}
@@ -90,8 +92,10 @@
 
         </header>        
         @include('backend.layouts.sidebar')
-        <div style="min-height: 946px;" class="content-wrapper">
+        <div class="notification-panel">
             @include('flash::message')
+        </div>   
+        <div style="min-height: 946px;" class="content-wrapper">
             @yield('content')
         </div>
         @include('backend.layouts.footer')
@@ -107,7 +111,7 @@
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
               <h4 class="modal-title" id="myModalLabel">
-                Create Admin
+                Update Info
               </h4>
             </div>
             <div class="modal-body" id="modal-bodyku">
@@ -118,16 +122,14 @@
                   <input type="email" name="email" value="{{Auth::user()->email}}" required="true" class="form-control" placeholder="Email">
                 </div>
                 <div class="form-group">
-                  <input type="password" name="old_password" class="form-control" placeholder="Old Password">               
+                  <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password" class="form-control" placeholder="New Password">               
+                  <input type="password" name="password_confirmation" class="form-control" placeholder="Re Password">               
                 </div>
                 <div class="form-group">
                   <select name="role_id" class="form-control">
-                    @foreach($sele as $key=>$value)
-                      <option value="{{$key}}" <?php echo (Auth::user()->role_id==$key)?'selected':''; ?>>{{$value}}</option>
-                    @endforeach
+                    <option value="1">Admin</option>
                   </select>
                 </div>
             </div>
