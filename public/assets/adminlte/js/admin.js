@@ -48,3 +48,11 @@ function formSubmit(form){
             }
         });
 }
+
+$(document).ready(function(){
+  setTimeout(function(){
+    $('body .notification-panel .alert').fadeOut(function(){
+      $(this).remove();
+    });    
+  },5000);  
+});

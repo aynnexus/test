@@ -10,7 +10,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Guest;
 use App\User;
-use Flash,Auth,Mail;
+use Flash,Auth,Mail,Session;
 
 class SettingController extends Controller
 {

@@ -97,6 +97,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::get('/','AdminController@index');
 		Route::get('/remove/{id?}','AdminController@remove');
 		Route::post('/update/{id?}','AdminController@update');
+		Route::post('/{id}','AdminController@updateSelf');
 	});
 
 	Route::post('rate/store/{id?}','SiteController@storeRate');
