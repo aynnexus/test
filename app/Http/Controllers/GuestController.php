@@ -38,8 +38,7 @@ class GuestController extends Controller
             $site_info = Site::where('site_code',$url[3])->first();
             if ($site_info==null) {
                 return back();
-            }
-
+            }                
             $define_minute = $site_info->time_limit+$site_info->timeout_limit;
             Movement::MovementStore($site_info->site_id);
             
@@ -49,7 +48,20 @@ class GuestController extends Controller
                 $format_2 = datetime_convert($guest_created_format,$define_minute);
                 //dd($format_1);
                 if ($format_1 <= $format_2) {
-                    return redirect('500');
+                    $cli = Client::active()->get();  
+                    foreach ($cli as $c) {
+                        $sit = $c->Allsite($c->site_id);      
+                        foreach ($sit as $s) { 
+                            if ($s->site_id==$site_info->site_id) {
+                                $cl =$c;
+                            }
+                        }
+                    }    
+                    $error = 'default';               
+                    if ($cl->User->name) {
+                        $error = $cl->User->name;
+                    }
+                    return view('frontend.error.'.$error.'block');
                 }                
             } 
             Session::put('ap',$request->id);
@@ -179,7 +191,7 @@ class GuestController extends Controller
     public function detail($id)
     {
         $guest = Guest::find($id);
-        $guests = Guest::where('user_ap',$guest->user_ap)->get();
+        $guests = Guest::where('user_ap',$guest->user_ap)->orderBy('guest_id','desc')->get();
         
         return view('backend.guest.detail',compact('guests'));
     }
