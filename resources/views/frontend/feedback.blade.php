@@ -17,9 +17,9 @@
                          ?>
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
                     @if(isset($feedback) && $feedback->comment==1)
-                    <div class="form-group has-feedback">
+                    <div class="form-group">
                         <label>Comment</label>
-                        <textarea name="comment" class="form-control" {{$feedback->cbb_require==1?'required':''}}>
+                        <textarea name="comment" rows="4" cols="50" class="form-control" {{$feedback->cbb_require==1?'required':''}}>
                         </textarea>
                     </div>
                     @endif
@@ -27,33 +27,24 @@
                     @if(isset($feedback) && $feedback->rate==1)
                     @foreach($temp->Rating as $key=>$rating)
                         
-                        <div class="form-group has-feedback">  
+                        <div class="form-group">  
                             <div class="">
                                 <label>{{$rating->Rate->label}}</label>
                             </div>
                             <div class="col-xs-12 col-md-12">
-                                <fieldset class="rating">
-                                <input type="radio" id="star5{{$key}}" name="{{$rating->Rate->label}}" value="5" /><label for="star5{{$key}}" title="Rocks!"></label>
-                                <input type="radio" id="star4{{$key}}" name="{{$rating->Rate->label}}" value="4" /><label for="star4{{$key}}" title="Pretty good"></label>
-                                <input type="radio" id="star3{{$key}}" name="{{$rating->Rate->label}}" value="3" /><label for="star3{{$key}}" title="Meh"></label>
-                                <input type="radio" id="star2{{$key}}" name="{{$rating->Rate->label}}" value="2" /><label for="star2{{$key}}" title="Kinda bad"></label>
-                                <input type="radio" id="star1{{$key}}" name="{{$rating->Rate->label}}" value="1" /><label for="star1{{$key}}" title="Sucks big time"></label>
-
-                            </fieldset>
+                                <div class="stars">
+                                    <input class="star star-5" value="5" id="star-5{{$key}}" type="radio" name="{{$rating->Rate->label}}"/>
+                                    <label class="star star-5" for="star-5{{$key}}"></label>
+                                    <input class="star star-4" value="4" id="star-4{{$key}}" type="radio" name="{{$rating->Rate->label}}"/>
+                                    <label class="star star-4" for="star-4{{$key}}"></label>
+                                    <input class="star star-3" value="3" id="star-3{{$key}}" type="radio" name="{{$rating->Rate->label}}"/>
+                                    <label class="star star-3" for="star-3{{$key}}"></label>
+                                    <input class="star star-2" value="2" id="star-2{{$key}}" type="radio" name="{{$rating->Rate->label}}"/>
+                                    <label class="star star-2" for="star-2{{$key}}"></label>
+                                    <input class="star star-1" value="1" id="star-1{{$key}}" type="radio" name="{{$rating->Rate->label}}"/>
+                                    <label class="star star-1" for="star-1{{$key}}"></label>
+                                </div>
                             </div>
-                                     
-                             <!--  <div class="stars">
-                                <input class="star star-5" value="5" id="star-5{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
-                                <label class="star star-5" for="star-5{{$key}}"></label>
-                                <input class="star star-4" value="4" id="star-4{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
-                                <label class="star star-4" for="star-4{{$key}}"></label>
-                                <input class="star star-3" value="3" id="star-3{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
-                                <label class="star star-3" for="star-3{{$key}}"></label>
-                                <input class="star star-2" value="2" id="star-2{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
-                                <label class="star star-2" for="star-2{{$key}}"></label>
-                                <input class="star star-1" value="1" id="star-1{{$key}}" type="radio" name="{{$rating->Rate->label}} "/>
-                                <label class="star star-1" for="star-{{$key}}"></label>
-                              </div> -->
                         </div>
                     @endforeach
                     @endif
@@ -101,10 +92,10 @@
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header">          
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <button type="button" onclick="closeVideo()" class="close status hide" data-dismiss="modal">&times;</button>
                             <h3 id="countdown" style="font-weight: bold"></h3>
                             <div class="row">
-                              <div class="col-xs-12 col-md-12 col-lg-12">
+                              <div class="col-xs-12 col-md-12 col-lg-12" id="media">
                                     @if($ads->type==1)
                                         <img src="{{url('/storage/'.$ads->photo)}}" width="100%">
                                     @else
@@ -114,6 +105,9 @@
                             </div>
                             
                         </div>
+                        <div class="modal-footer">
+                        <button type="button" onclick="closeVideo()" class="btn btn-default status hide" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
                 </div>
              </div>
@@ -134,10 +128,13 @@
                 t_minus();
             }, 1000);
         } else {
-            $("#adspopUp").modal('hide');
+            //$("#adspopUp").modal('hide');
+            $('button.status').removeClass('hide')
         }
     }());
-
+    function closeVideo() {
+        $('div#media').remove();
+    }
     const ID = '<?php echo $temp->Field->iframe_link ?>';
     const guest_id = '<?php echo $id ?>'
     function getUserData() {    

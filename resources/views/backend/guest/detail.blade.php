@@ -34,23 +34,24 @@
 										<td>{{$row->name!=''?$row->name:'-'}}<br>{{$row->email!=''?$row->email:'-'}}<br>{{$row->phone!=''?$row->phone:'-'}} <br>
 										{{$row->Age($row->age)!=''?$row->Age($row->age):'-'}} <br> {{$row->Gender($row->gender)!=''?$row->Gender($row->gender):'-'}}
 										</td>
-										<td>{{$row->user_ap!=''?$row->user_ap:'-'}}<br>{{$row->os!=''?$row->os:''}}<br>{{$row->social_id!=''?$row->social_id:'-'}}</td>
+										<td>{{$row->user_ap!=''?$row->user_ap:'-'}}<br>{{$row->os!=''?$row->os:''}}<br>{{$row->social_id!=''?$row->social_id:'-'}}<br>
+										{{$row->Site['site_name']}}</td>
 										<td class="col-md-2">
 											@if(isset($rating_value))
 												@foreach($rating_value as $key=>$value)
 												
 												<div class="form-group">
 													<span>{{$rating_key[$key]}}</span>
-													<input class="star star-5" {{$value==5?'checked':''}} id="star-5" type="radio"/>
-													<label class="star stared star-5" for="star-5"></label>
-													<input class="star star-4" {{$value==4?'checked':''}} id="star-4" type="radio"/>
-													<label class="star stared star-4" for="star-"></label>
-													<input class="star star-3" {{$value==3?'checked':''}} id="star-3" type="radio"/>
-													<label class="star stared star-3" for="star-3"></label>
-													<input class="star star-2" {{$value==2?'checked':''}} id="star-2" type="radio" />
-													<label class="star stared star-2" for="star-2"></label>
-													<input class="star star-1" {{$value==1?'checked':''}} value="1" id="star-1" type="radio" />
-													<label class="star stared star-1" for="star-"></label>
+													<input class="stars star-5" {{$value==5?'checked':''}} id="star-5" type="radio"/>
+													<label class="stars stared star-5" for="star-5"></label>
+													<input class="stars star-4" {{$value==4?'checked':''}} id="star-4" type="radio"/>
+													<label class="stars stared star-4" for="star-"></label>
+													<input class="stars star-3" {{$value==3?'checked':''}} id="star-3" type="radio"/>
+													<label class="stars stared star-3" for="star-3"></label>
+													<input class="stars star-2" {{$value==2?'checked':''}} id="star-2" type="radio" />
+													<label class="stars stared star-2" for="star-2"></label>
+													<input class="stars star-1" {{$value==1?'checked':''}} value="1" id="star-1" type="radio" />
+													<label class="stars stared star-1" for="star-"></label>
 												</div>
 												@endforeach
 											@endif	

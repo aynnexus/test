@@ -54,7 +54,7 @@
 											</td>
 											
 											<td>
-												{{showPrettyStatus($row->status)}}
+												<p data-toggle="modal" data-target="#ChangeStatusBox{{$row->client_id}}" class='btn btn-{{($row->status==ACTIVE)?'success':'danger'}} btn-xs'>{{$row->status==ACTIVE?'Enabled':'Disabled'}}</p>
 											</td>
 											<td>
 												{{date('M d, Y',strtotime($row->created_at))}}
@@ -64,6 +64,27 @@
 												<a href="{{url('/dashboard/clients/remove/'.$row->client_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
+										<!-- status Modal -->
+										 	<div class="modal fade" id="ChangeStatusBox{{$row->client_id}}" role="dialog">
+											 	<div class="modal-dialog modal-sm">
+											 		<div class="modal-content">
+											 			<div class="modal-header"> 				
+											 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+											 				<h4>Select Status</h4>
+											 				<!-- <h4 class="modal-title">Modal Header</h4> -->
+											 				<div class="col-md-offset-3">
+											 					<a href="{{url('/dashboard/clients/status/1/'.$row->client_id)}}" class='btn btn-success'>Enable</a>
+											 					<a href="{{url('/dashboard/clients/status/0/'.$row->client_id)}}" class='btn btn-danger'>Disable</a>
+											 				</div>
+											 			</div>
+
+											 			<div class="modal-footer">
+											 				<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+											 			</div>
+											 		</div>
+											 	</div>
+										 	</div>
+										 	<!-- model end -->
                     					@endforeach
 									</tbody>
 								</table>

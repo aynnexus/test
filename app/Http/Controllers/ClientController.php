@@ -66,7 +66,7 @@ class ClientController extends Controller
     	$client = Client::where('user_id',$user->id)->first()==null?new Client:$client;
         $client->site_id = json_encode($request->site_id);
         $client->user_id = $user->id;
-        $client->status = ACTIVE;
+        $client->status = INACTIVE;
         $client->save();
        
     	Flash::success('Successfully Client Add');
@@ -110,5 +110,15 @@ class ClientController extends Controller
     	Flash::success('Successfully Client Removing');
 
     	return back();
+    }
+
+    public function changeStatusSite($status,$id)
+    {
+        $client=Client::where('client_id',$id)->first();
+        $client->update(['status'=>$status]);
+        User::find($client->user_id)->update(['status'=>$status]);
+        Flash::success('Successfully Status changing');
+
+        return back();
     }
 }

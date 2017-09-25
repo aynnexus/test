@@ -36,7 +36,7 @@
                         <td>{{ $index}}.</td> 
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->email }}</td>    
-                        <td>{{ 'Admin'}}</td>  
+                        <td>{{ $value->role==1?'Admin':'Client'}}</td>  
                         <td>{{ ($value->status==1)?'Active':'Inactive'}}</td>  
                         <td>    
                           <a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$value->id}}" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit</a>
@@ -82,7 +82,7 @@
                         <td>{{ $index}}</td> 
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->email }}</td>
-                        <td>{{ $type[$value->role_id] }}</td>
+                        <td>{{ $value->role==1?'Admin':'Client'}}</td>
                         <td>{!! show_pretty_status($value->status) !!}</td>
                         <td>               
                           <!-- <a class="btn btn-small btn-info" href="{{ URL::to('user/' . $value->id . '/edit') }}">Edit</a> -->

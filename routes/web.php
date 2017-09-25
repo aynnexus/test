@@ -69,6 +69,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::post('/create/{id?}','ClientController@store');
 		Route::post('/update/{id?}','ClientController@update');
 		Route::get('/remove/{id?}','ClientController@remove');
+		Route::get('/status/{status?}/{id?}','ClientController@changeStatusSite');
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'settings'],function(){
 		Route::get('/images','SettingController@indexImg');
