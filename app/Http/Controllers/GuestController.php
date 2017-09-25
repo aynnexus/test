@@ -29,7 +29,7 @@ class GuestController extends Controller
     public function index(Request $request,$id)
     {	
         $date_time = new DateTime();
-        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');dd($curr_datetime_format);
+        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');
         $user_ap = $request->id;
         if (isset($request->id)) {
             $url = explode('/', $_SERVER['REDIRECT_URL']);           
