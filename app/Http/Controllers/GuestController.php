@@ -59,8 +59,8 @@ class GuestController extends Controller
                             }
                         }
                     }    
-                    $error = 'default';               
-                    if ($cl->User->name) {
+                    $error = '';               
+                    if (isset($cl)) {
                         $error = $cl->User->name;
                     }
                     return view('frontend.error.'.$error.'block');
