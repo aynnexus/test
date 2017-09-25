@@ -29,7 +29,7 @@ class GuestController extends Controller
     public function index(Request $request,$id)
     {	
         $date_time = new DateTime();
-        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');
+        $curr_datetime_format = $date_time->format('Y-m-d H:i:s');dd($curr_datetime_format);
         $user_ap = $request->id;
         if (isset($request->id)) {
             $url = explode('/', $_SERVER['REDIRECT_URL']);           
@@ -46,9 +46,9 @@ class GuestController extends Controller
                 $guest_created_format = $guest->created_at->format('Y-m-d H:i:s');
                 $format_1 = datetime_convert($curr_datetime_format,$site_info->time_limit);
                 $format_2 = datetime_convert($guest_created_format,$define_minute);
-                echo $format_1;
-                echo $format_2;
-                dd($format_2);
+                //echo $format_1;
+                //echo $format_2;
+                //dd($format_2);
                 if ($format_1 <= $format_2) {
                     $cli = Client::active()->get();  
                     foreach ($cli as $c) {
