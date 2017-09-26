@@ -38,7 +38,7 @@
 										</div><hr>
 										<div class="row">
 											<div class="col-md-3">
-												<label>Gmail Login</label>
+												<label>Google Account Login</label>
 											</div>
 											<div class="col-md-1">:</div>
 											<div class="col-md-3">
@@ -52,7 +52,7 @@
 										</div>										
 										<hr>
 										<div class="row">
-											<div class="col-md-3 pull-right"><h4>Fields Login</h4></div>
+											<div class="col-md-3 pull-right"><h4>Form Registration</h4></div>
 											<div class="col-md-3">
 												<label>Name</label>
 											</div>

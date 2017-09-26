@@ -19,7 +19,7 @@ $five_done = $step > 4 ? 'done' : '';
     <a href="{!!url('dashboard/template/step_two/'.$id)!!}"
            class="{!! Request::is('dashboard/template/step_two/'.$id) ? 'active' : '' !!} {!!$two_done!!}">
             <div class="menu-tab">F</div>
-            <span>Template Fields</span>
+            <span>Landing Page</span>
         </a>
     </li>
     <li class="{!!$step > 1 ?"":"pn"!!}">

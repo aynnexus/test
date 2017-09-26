@@ -49,7 +49,7 @@
 											</td>	
 											<td>
 												{{$row->data_limit}} Kbs /
-												{{$row->time_limit}} Minite
+												{{$row->time_limit}} Minutes
 											</td>
 											<td>
 												<p data-toggle="modal" data-target="#ChangeStatusBox{{$row->site_id}}" class='btn btn-{{($row->status==ACTIVE)?'success':'danger'}} btn-xs'>{{$row->status==ACTIVE?'Enabled':'Disabled'}}</p>
@@ -58,7 +58,7 @@
 												{{date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$row->site_id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Check</a>
+												<a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$row->site_id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
 												<a href="{{url('/dashboard/sites/remove/'.$row->site_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
@@ -87,12 +87,12 @@
 											 					<div class="form-group">
 											 						<div class="row">
 											 							<div class="col-md-6">
-											 								<label class="form-label">Session Datalimit (Mb)</label>
+											 								<label class="form-label">Session Data Limit (MB)</label>
 											 								<input type="text"  name="limit_data" class="form-control" value="{{isset($row)?$row->data_limit:null}}" required placeholder="3 Mbs">
 											 							</div>
 											 							<div class="col-md-6">
-											 								<label class="form-label">Session Timelimit (Mins)</label>
-											 								<input type="text" value="{{isset($row)?$row->time_limit:null}}" name="limit_time" class="form-control" required placeholder="2 Minite">
+											 								<label class="form-label">Session Time Limit (Mins)</label>
+											 								<input type="text" value="{{isset($row)?$row->time_limit:null}}" name="limit_time" class="form-control" required placeholder="2 Minutes">
 											 							</div>
 											 						</div>
 											 					</div>
@@ -103,7 +103,7 @@
 											 								<input type="text"  name="timeout_limit" class="form-control" value="{{isset($row)?$row->timeout_limit:null}}" required placeholder="10 Mins">
 											 							</div>
 											 							<div class="col-md-6">
-											 								<label class="form-label">Download/Upload Speedlimit (Mb)</label>
+											 								<label class="form-label">Download/Upload Speed Limit (Mbps)</label>
 											 								<input type="text" value="{{isset($row)?$row->speed_limit:null}}" name="speed_limit" class="form-control" required placeholder="100 Mb">
 											 							</div>
 											 						</div>
@@ -176,11 +176,11 @@
 	 					<div class="form-group">
 	 						<div class="row">
 	 							<div class="col-md-6">
-	 								<label class="form-label">Session Datalimit (Mb)</label>
+	 								<label class="form-label">Session Data Limit (MB)</label>
 	 								<input type="text"  name="limit_data" class="form-control" required placeholder="3 Mbs">
 	 							</div>
 	 							<div class="col-md-6">
-	 								<label class="form-label">Session Timelimit (Mins)</label>
+	 								<label class="form-label">Session Time Limit (Mins)</label>
 	 								<input type="text" name="limit_time" class="form-control" required placeholder="2 Mins">
 	 							</div>
 	 						</div>
@@ -192,7 +192,7 @@
 	 								<input type="text"  name="timeout_limit" class="form-control" required placeholder="10 Mins">
 	 							</div>
 	 							<div class="col-md-6">
-	 								<label class="form-label">Download/Upload Speedlimit (Mb)</label>
+	 								<label class="form-label">Download/Upload Speed Limit (Mbps)</label>
 	 								<input type="text" name="speed_limit" class="form-control" required placeholder="100 Mb">
 	 							</div>
 	 						</div>
