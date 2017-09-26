@@ -1,7 +1,7 @@
 @extends('backend.layouts.app')
 @section('content')
   <section class="content-header">
-    <h1 class="pull-left">Dashboard <small>control panal</small></h1>
+    <h1 class="pull-left">Dashboard <small>Control Panel</small></h1>
     <form action="{{url('dashboard/data')}}" method="get">   
       <div class="form-group pull-right">
         <div class="input-group">
@@ -177,7 +177,7 @@
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Login Type <small>OS</small></h3>
+              <h3 class="box-title">Operating Systems<small></small></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -197,7 +197,7 @@
             <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Login Type <small>Gender/Age-group</small> </h3>
+              <h3 class="box-title">Demographics <small>Gender/Age-group</small> </h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
