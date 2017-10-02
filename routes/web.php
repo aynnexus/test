@@ -60,6 +60,7 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::post('/action/{step}/{id?}','SiteController@store');
 		Route::get('/remove/{id?}','SiteController@removeTemplate');
 		Route::get('/status/{status?}/{id?}','SiteController@changeStatusTemplate');
+		Route::get('/photo/remove/{key?}','SiteController@removePhoto');
 	});
 	Route::group(['middleware'=>'admin','prefix'=>'clients'],function(){
 		Route::get('/','ClientController@index');

@@ -410,4 +410,27 @@ class SiteController extends Controller
             ]);
         return back();
     }
+
+    public function removePhoto(Request $request)
+    {   
+        $site = SiteProfile::where('template_id',$request->id)->first();
+        switch ($request->type) {
+            case 'hd':
+                $site->update(['header_image'=>null]);
+                break;
+            case 'lg':
+                $site->update(['logo_image'=>null]);
+                break;
+            case 'ft':
+                $site->update(['footer_image'=>null]);
+                break;
+            case 'bg':
+                $site->update(['background_image'=>null]);
+                break;
+            
+            default:break;
+        }
+        Flash::success('Successfully photo removing');
+        return back();
+    }
 }
