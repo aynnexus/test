@@ -10,11 +10,9 @@
             </div>
 
             <div class="register-box-body" style="border-radius:10px;">
-               <!--  <p class="login-box-msg"></p> -->
-                <?php $feedback = json_decode($temp->Field->feedback_fields);
-
-                   // dd($feedback);
-                         ?>
+                 <p class="login-box-msg">Thanks for your submition. Now you get internet accesss.</p>
+                <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
+                @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
                     @if(isset($feedback) && $feedback->comment==1)
                     <div class="form-group">
@@ -71,6 +69,7 @@
                         <!-- /.col -->
                     </div>
                 {!! Form::close() !!}
+                @endif
             </div>
             <!-- /.form-box --> 
             <div class="row">
