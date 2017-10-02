@@ -159,8 +159,8 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 	foreach ($value as $row) { 
 
 		//$st = Site::find($row['site_id']);
-		$gender = $gend[$row['gender']];
-		$age = $age_group[$row['age']];
+		$gender = 'male';
+		$age = '20';
 
 		$final = array_merge($row,
 			[	'Site'=>'test',
