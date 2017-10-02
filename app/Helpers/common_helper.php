@@ -155,9 +155,9 @@ function detectOS($userAgent) {
 function convert_csv($filename,$key,$value,$gend,$age_group)
 {	
 	$output = fopen('csv/'.$filename, 'w+');
-	fputcsv($output, $key); 
+	fputcsv($output, $key); dd($value);
 	foreach ($value as $row) { 
-		dd($row);
+		
 		$st = Site::find($row['site_id']);
 		$gender = $gend[$row['gender']];
 		$age = $age_group[$row['age']];
