@@ -370,7 +370,7 @@ class GuestController extends Controller
             $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','created_at')->first()->toArray();
         }
         $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Created At'];
-        dd($value);
+        
         $headers = array(
             'Content-Type' => 'text/csv',
         );
@@ -378,7 +378,7 @@ class GuestController extends Controller
         $gender = Lookup::where('title','GENDER')->pluck('value','key');
         $age_group = Lookup::where('title','Age Group')->pluck('value','key');
         convert_csv($filename,$key,$value,$gender,$age_group);
-
+        
         return response()->download('csv/'.$filename, $filename, $headers);
     }
 }
