@@ -15,9 +15,9 @@
                         $form = json_decode($temp->Field->form_login);
                          ?>
                 
-
+                @if(isset($social) && $social->fb==1 || $social->gmail==1)
                 <div class="social-auth-links text-center">
-                    
+                
                     @if(isset($social) && $social->fb==1)
                         <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook"><i class="fa fa-facebook"></i> Sign in using
                     Facebook</a>
@@ -25,10 +25,14 @@
                     @if(isset($social) && $social->gmail==1)
                         <a href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
                         Gmail</a>
-                    @endif
-                    <p>- OR -</p>
+                    @endif  
+                    @if(isset($form) && $form->name==1 || $form->email==1 || $form->phone==1 ||$form->gender==1 ||$form->age==1)
+                    <p>- OR -</p>      
+                    @endif           
                 </div>
-
+                @endif
+                @if(isset($form) && $form->name==1 || $form->email==1 || $form->phone==1 ||$form->gender==1 ||$form->age==1)
+                        
                 {!! Form::open(['url'=>'guest/login','id'=>'login']) !!}
                     @if(isset($form) && $form->name==1)
                     <input type="hidden" name="user_ap" value="{{$user_ap}}">
@@ -80,7 +84,7 @@
                         <!-- /.col -->
                     </div>
                 {!! Form::close() !!}
- 
+                @endif
             </div>
             <!-- /.form-box --> 
         </div>

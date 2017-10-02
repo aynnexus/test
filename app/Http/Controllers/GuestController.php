@@ -186,6 +186,17 @@ class GuestController extends Controller
         $temp = Template::find($temp_id);
         $guest = Guest::where('guest_id',$id)->first();
         $ads = Ads::where('template_id',$temp_id)->where('target_gender',$guest->gender)->where('target_age','LIKE','%'.$guest->age.'%')->first();
+        $feedback = json_decode($temp->Field->feedback_fields);
+        if(isset($feedback) && $feedback->comment!=1 || $feedback->rate!=1 || $feedback->survey!=1)
+        {   
+            $ap = Session::get('ap');
+            $site = Session::get('site');
+            $site_data = Site::where('site_code',$site)->first();
+
+            if ($guest->type==2) {
+                $this->authorizeGuest($site,$site_data->time_limit,$ap,$site_data->speed_limit,$site_data->speed_limit,$site_data->data_limit);
+            }
+        }
 
         return view('frontend.feedback',compact('temp','id','ads'));
     }
@@ -370,7 +381,7 @@ class GuestController extends Controller
             $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','created_at')->first()->toArray();
         }
         $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Created At'];
-        
+
         $headers = array(
             'Content-Type' => 'text/csv',
         );
@@ -378,7 +389,7 @@ class GuestController extends Controller
         $gender = Lookup::where('title','GENDER')->pluck('value','key');
         $age_group = Lookup::where('title','Age Group')->pluck('value','key');
         convert_csv($filename,$key,$value,$gender,$age_group);
-        
+
         return response()->download('csv/'.$filename, $filename, $headers);
     }
 }
