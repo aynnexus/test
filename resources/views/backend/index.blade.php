@@ -6,11 +6,12 @@
       <div class="form-group pull-right">
         <div class="input-group">
           <div class="input-group date">
-            <input type="text" name="from_date" id="form" class="form-control datetimepicker" placeholder="From">
+            <input type="text" name="from_date" value="<?php echo isset($_GET['from_date'])?$_GET['from_date']:null ?>" id="form" class="form-control datetimepicker" placeholder="From">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
-            <input type="text" name="to_date" id="to" class="form-control datetimepicker" placeholder="To">
+
+            <input type="text" name="to_date" value="<?php echo isset($_GET['to_date'])?$_GET['to_date']:null ?>" id="to" class="form-control datetimepicker" placeholder="To">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>

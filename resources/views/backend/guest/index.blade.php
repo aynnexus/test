@@ -24,7 +24,7 @@
 											<option>Current Site</option>
 											@if(isset($sites))
 												@foreach($sites as $key=>$value)
-													<option value="{{$value}}">{{$key}}</option>
+													<option {{isset($_GET['to_date'])&&$_GET['site_id']==$value?'selected':''}} value="{{$value}}">{{$key}}</option>
 												@endforeach
 											@endif
 										</select>
@@ -32,12 +32,12 @@
 				            	</div>
 				            	<div class="col-sm-2">
 				            		<div class="form-group">
-				            			<input type="search" class="form-control" class="" name="name" placeholder="Search Name">
+				            			<input type="search" class="form-control" value="<?php echo isset($_GET['name'])?$_GET['name']:null ?>" name="name" placeholder="Search Name">
 				            		</div>
 				            	</div>
 				                <div class="col-sm-2">
 				                    <div class="input-group date">
-				                        <input type="text" name="from_date" class="form-control datetimepicker" placeholder="From">
+				                        <input type="text" value="<?php echo isset($_GET['from_date'])?$_GET['to_date']:null ?>" name="from_date" class="form-control datetimepicker" placeholder="From">
 				                        <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-calendar"></span>
 				                    </span>
@@ -46,7 +46,7 @@
 
 				                <div class="col-sm-2">
 				                    <div class="input-group date">
-				                        <input type="text" name="to_date" class="form-control datetimepicker" placeholder="To">
+				                        <input type="text" value="<?php echo isset($_GET['to_date'])?$_GET['to_date']:null ?>" name="to_date" class="form-control datetimepicker" placeholder="To">
 				                    <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-calendar"></span>
 				                    </span>

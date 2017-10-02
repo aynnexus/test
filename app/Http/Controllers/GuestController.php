@@ -182,7 +182,7 @@ class GuestController extends Controller
             return back();
         }
         $temp_id = Session::get('template');
-        //$temp_id = 2;
+        $temp_id = 2;
         $temp = Template::find($temp_id);
         $guest = Guest::where('guest_id',$id)->first();
         $ads = Ads::where('template_id',$temp_id)->where('target_gender',$guest->gender)->where('target_age','LIKE','%'.$guest->age.'%')->first();
@@ -370,7 +370,7 @@ class GuestController extends Controller
             $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','created_at')->first()->toArray();
         }
         $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Created At'];
-
+        dd($value);
         $headers = array(
             'Content-Type' => 'text/csv',
         );
