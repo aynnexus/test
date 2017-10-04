@@ -182,7 +182,7 @@ class GuestController extends Controller
             return back();
         }
         $temp_id = Session::get('template');
-        $temp_id = 2;
+        //$temp_id = 2;
         $temp = Template::find($temp_id);
         $guest = Guest::where('guest_id',$id)->first();
         $ads = Ads::where('template_id',$temp_id)->where('target_gender',$guest->gender)->where('target_age','LIKE','%'.$guest->age.'%')->first();
