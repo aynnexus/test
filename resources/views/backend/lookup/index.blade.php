@@ -20,8 +20,8 @@
 								</div>
 								<div class="col-md-6" style="text-align: right">
 									<form action="{{url('admin/category/data/response?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="category_search" placeholder="Search Name">
-					                  <input type="hidden" class="" name="type" value="">
+					                  <!-- <input type="search" class="custom-input" name="category_search" placeholder="Search Name">
+					                  <input type="hidden" class="" name="type" value=""> -->
 					                </form> 
 								</div>
 						</div>	
