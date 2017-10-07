@@ -20,7 +20,7 @@
 								</div>
 								<div class="col-md-6" style="text-align: right">
 									<form action="{{url('dashboard/sites/search?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="name" placeholder="Search Name">
+					                  <input type="search" class="custom-input" name="name" placeholder="Search Name">
 					                </form> 
 								</div>
 						</div>	

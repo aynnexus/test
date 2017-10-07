@@ -19,15 +19,16 @@
 										<input type="hidden" name="step" value="{{$step}}">
 										<?php $fdb = isset($feedback)?json_decode($feedback->feedback_fields):null; ?>
 
-										<div class="row">
+										<div class="row hide">
 											<div class="col-md-4">
 												<label>Facebook Check-in</label>
 											</div>
 											<div class="col-md-1">:</div>
 											<div class="col-md-7">
-												<input type="radio" {{($fdb!=null && $fdb->checkin==1)?'checked':''}} value="1" name="checkin"> Yes
+												{{--<input type="radio" {{($fdb!=null && $fdb->checkin==1)?'checked':''}} value="1" name="checkin"> Yes
 												
-												<input type="radio" {{($fdb!=null && $fdb->checkin==0)?'checked':''}} value="0" name="checkin"> No
+												<input type="radio" {{($fdb!=null && $fdb->checkin==0)?'checked':''}} value="0" name="checkin"> No--}}
+												<input type="hidden" name="checkin" value="0">
 												
 											</div>											
 										</div><hr>
@@ -46,7 +47,7 @@
 										</div>										
 										<hr>
 										<div class="row" id="iframe">
-											<div class="col-md-4"><label>Facebook App ID</label></div><div class="col-md-1">:</div><div class="col-md-7"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="url"></div>
+											<div class="col-md-4"><label>Facebook App ID</label></div><div class="col-md-1">:</div><div class="col-md-7"><input type="text" name="iframe" value="{{isset($feedback)?$feedback->iframe_link:null}}" class="form-control" required placeholder="App ID"></div>
 										</div>	
 										<hr>
 										<div class="row">
@@ -68,7 +69,7 @@
 											</div>
 											<div class="col-md-1">:</div>
 											<div class="col-md-7">
-												<input type="text" name="url" value="{{isset($feedback)?$feedback->url:null}}" class="form-control" required placeholder="www.google.com">
+												<input type="text" name="url" value="{{isset($feedback)?$feedback->url:null}}" class="form-control" required placeholder="https://www.google.com/">
 											</div>
 										</div><hr>
 										<div class="row">

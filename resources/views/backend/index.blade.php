@@ -315,7 +315,7 @@
                   }]
               };
               hozbar_data = {
-                labels: ['Age 13-17','Age 18-24','Age 25-34','Age 35-44','Age 45-54','Age 55-64','Over 65'],
+                labels: ['Age 13-17','Age 18-24','Age 25-34','Age 35-54','Over 55'],
                 datasets: [{
                     label: 'Male',
                     backgroundColor: window.chartColors.orange,

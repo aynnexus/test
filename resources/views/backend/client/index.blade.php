@@ -15,7 +15,7 @@
 								</div>
 								<div class="col-md-6" style="text-align: right">
 									<form action="{{url('dashboard/clients/search?')}}" class="" method="get" accept-charset="utf-8">
-					                  <input type="search" class="" name="name" placeholder="Search client name">
+					                  <input type="search" class="custom-input" name="name" placeholder="Search client name">
 					                </form> 
 								</div>
 							</div>	
@@ -60,7 +60,7 @@
 												{{date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<a href="{{url('/dashboard/clients/edit/'.$row->client_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Check</a>
+												<a href="{{url('/dashboard/clients/edit/'.$row->client_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
 												<a href="{{url('/dashboard/clients/remove/'.$row->client_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>

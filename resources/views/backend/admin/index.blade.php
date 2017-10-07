@@ -11,7 +11,7 @@
               <div class="box-tools pull-right">
                 
                 <form action="{{url('admin/user/data?')}}" class="" method="get" accept-charset="utf-8">  
-                  <input type="search" class="pull-right" name="user_search" placeholder="Search Name">
+                  <input type="search" class="pull-right custom-input" name="user_search" placeholder="Search Name">
               </form>  
               </div>
 	    		</div>
@@ -39,8 +39,8 @@
                         <td>{{ $value->role==1?'Admin':'Client'}}</td>  
                         <td>{{ ($value->status==1)?'Active':'Inactive'}}</td>  
                         <td>    
-                          <a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$value->id}}" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i>Edit</a>
-                          <a href="{{url('dashboard/admin/remove/'.$value->id)}}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i>Delete</a>
+                          <a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$value->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                          <a href="{{url('dashboard/admin/remove/'.$value->id)}}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 
                         </td>  
                       </tr>

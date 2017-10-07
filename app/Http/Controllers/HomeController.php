@@ -54,7 +54,7 @@ class HomeController extends Controller
             $data['female'] = Guest::where('gender',2)->select(DB::raw("count(age) as `total`"),'age')
                     ->groupBy('age')
                     ->get();
-
+           
             $data['os_type'] = Guest::select(DB::raw('count(guest_id) as `data`'),'os')
                    ->groupby('os')
                    ->get();
