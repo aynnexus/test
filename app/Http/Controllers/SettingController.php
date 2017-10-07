@@ -120,6 +120,7 @@ class SettingController extends Controller
     {   
         $user = User::find(Auth::id());
         $app_user = ['name'=>$user->name,'email'=>$user->email];
+        
         Mail::send('mail.test', ['user' => $app_user], function ($message) use ($app_user)
         {                           
             $message->to($app_user['email'], $app_user['name'])->subject('Testing Email from Nexus');

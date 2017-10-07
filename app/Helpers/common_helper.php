@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Storage;
 use App\Models\Site;
 use App\Models\Lookup;
+use App\Models\Client;
 use Illuminate\Support\Facades\Mail;
 
 function showPrettyStatus($status){
@@ -179,7 +180,15 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 
 function mailSending($guest)
 {   
-    $app_user = ['name'=>'Admin','email'=>'indepentdent.89@gmail.com'];
+	$cli = Client::active()->get();  
+	foreach ($cli as $c) {
+		$sit = $c->Allsite($c->site_id);      
+		foreach ($sit as $s) { 
+			if ($s->site_id==$site_info->site_id) {
+				$app_user = ['name'=>$c->User->name,'email'=>$c->User->email];
+			}
+		}
+	} 
 	
 	Mail::send('mail.feedback', ['user' => $guest], function ($message) use ($app_user)
     {                           
