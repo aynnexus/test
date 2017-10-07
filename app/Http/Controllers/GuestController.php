@@ -317,16 +317,16 @@ class GuestController extends Controller
         }
         
         $guestId = $this->firstCreated();
+        $gender = 1;
+        if ($provider=='facebook') {
+            $gender = $social_user->user['gender']=='male'?1:2;
+        }
         $guest = Guest::find($guestId['id'])->update([
             'name'=>$social_user->getName(),
             'email'=>$social_user->getEmail(),
             'social_id'=>$social_user->getId(),
             //'phone'=>$request->phone,
-            if ($provider=='facebook') {
-                'gender' => $social_user->user['gender']=='male'?1:2,
-            }else{
-                'gender' => 1,
-            }
+            'gender' => $gender,
             'profile_photo' => $social_user->getAvatar(),
             'type' => SOCIAL,
             'status'=>INACTIVE,
