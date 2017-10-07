@@ -322,7 +322,11 @@ class GuestController extends Controller
             'email'=>$social_user->getEmail(),
             'social_id'=>$social_user->getId(),
             //'phone'=>$request->phone,
-            'gender' => $social_user->user['gender']=='male'?1:2,
+            if ($provider=='facebook') {
+                'gender' => $social_user->user['gender']=='male'?1:2,
+            }else{
+                'gender' => 1,
+            }
             'profile_photo' => $social_user->getAvatar(),
             'type' => SOCIAL,
             'status'=>INACTIVE,
