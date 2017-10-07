@@ -74,8 +74,7 @@ class GuestController extends Controller
 
         $site=null;$temp=[];
     	//$site = Site::where('site_id',$id)->active()->first();
-        $look_age = Lookup::where('title','Age Group')->pluck('value','key');
-        $look_gender = Lookup::where('title','GENDER')->pluck('value','key');
+        
         $temps = Template::active()->get();
         if (!$temps->isEmpty()) {
             foreach ($temps as $key => $value) {
@@ -91,7 +90,10 @@ class GuestController extends Controller
         if ($temp==null) {
             return abort(403, 'Unauthorized action.');
         }
+
         Session::put('template',$temp->template_id);
+        $look_age = Lookup::where('title','Age Group')->pluck('value','key');
+        $look_gender = Lookup::where('title','GENDER')->pluck('value','key');
 
         return view('frontend.index',compact('site','temp','look_age','look_gender','user_ap'));
     }
