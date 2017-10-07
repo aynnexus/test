@@ -59,7 +59,7 @@
 												{{$row->User->name}} - {{date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp{{$type=='questions'?$row->question_id:$row->answer_id}}"><i class="fa fa-edit"></i> Check</button>
+												<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewDetailPopUp{{$type=='questions'?$row->question_id:$row->answer_id}}"><i class="fa fa-edit"></i> Edit</button>
 												
 												@if($type=='questions')
 													<a href="{{url('/dashboard/settings/serveys/questions/remove/'.$row->question_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>

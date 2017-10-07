@@ -54,7 +54,7 @@
 												{{$row->User['name'].' / '.date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$row->lookup_id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Check</a>
+												<a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$row->lookup_id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
 												<a href="{{url('/dashboard/settings/lookup/remove/'.$row->lookup_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>

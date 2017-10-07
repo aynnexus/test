@@ -224,20 +224,22 @@ class SiteController extends Controller
                     //'g_req'=>$request->gmail_require
                     ];
         $form_field = [
-                    'name'=>$request->name,
-                    'n_req'=>$request->name_require,
-                    'email'=>$request->email,
-                    'e_req'=>$request->email_require,
-                    'age'=>$request->age,
-                    'gender'=>$request->gender,
-                    'g_req' => $request->gender_require,
-                    'a_req'=>$request->age_require,
-                    'phone'=>$request->phone,
-                    'p_req'=>$request->phone_requird,
-                    'field_1'=>$request->field_1,
-                    'f1_req'=>$request->cs1_require,
-                    'field_2'=>$request->field_2,
-                    'f2_req'=>$request->cs2_require
+                        'name'=>$request->name,
+                        'n_req'=>$request->name_require,
+                        'email'=>$request->email,
+                        'e_req'=>$request->email_require,
+                        'age'=>$request->age,
+                        'gender'=>$request->gender,
+                        'g_req' => $request->gender_require,
+                        'a_req'=>$request->age_require,
+                        'phone'=>$request->phone,
+                        'p_req'=>$request->phone_requird,
+                        'field_1'=>$request->field_1,
+                        'f1_req'=>$request->cs1_require,
+                        'field_2'=>$request->field_2,
+                        'f2_req'=>$request->cs2_require,
+                        'field_1_value'=>$request->field_1_value,
+                        'field_2_value'=>$request->field_2_value
                     ];
         $site_field = SiteField::where('template_id',$id)->first();
         $step = ($site_field!=null)?$request->step:2;
@@ -278,7 +280,7 @@ class SiteController extends Controller
         $site_profile->save();
         Template::find($id)->update(['step'=>$step]);
 
-        Flash::success('Successfully Site Add');
+        Flash::success('Successfully template saving.');
         return redirect('dashboard/template/step_four/'.$id);
     }
 

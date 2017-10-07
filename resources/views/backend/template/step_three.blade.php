@@ -17,7 +17,7 @@
 									<form class="form" action="{{url('dashboard/template/step_three/'.$id)}}" method="POST" enctype="multipart/form-data">
 								
 										{{csrf_field()}}
-										<input type="hidden" name="step" value="3">
+										<input type="hidden" name="step" value="{{$step}}">
 										<div class="form-group">
 											<label class="form-label">Header Image : </label>
 											<input type="file" name="file_1" class="form-control">

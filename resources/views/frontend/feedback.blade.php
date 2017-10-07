@@ -3,14 +3,14 @@
 @section('content')
 <body class="hold-transition register-page" style="background-repeat: no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
 
-    <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
+        <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo">
-                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 47%;">
+                <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 45%;">
             </div>
 
-            <div class="register-box-body" style="border-radius:10px;">
-                 <p class="login-box-msg">Thanks for your submition. Now you get internet accesss.</p>
+            <div class="register-box-body custom-box">
+                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thanks for your submition. Now you get internet accesss.</p>
                 <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
                 @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
@@ -23,8 +23,7 @@
                     @endif
 
                     @if(isset($feedback) && $feedback->rate==1)
-                    @foreach($temp->Rating as $key=>$rating)
-                        
+                    @foreach($temp->Rating as $key=>$rating)                        
                         <div class="form-group">  
                             <div class="">
                                 <label>{{$rating->Rate->label}}</label>
@@ -77,27 +76,28 @@
                 <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"></div>
                 <button style="display: none;" id="loginBtn">Facebook Login</button>
                 <div id="response"></div>
-            </div>
-            
+            </div>            
         </div>
         <br>
-        <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
         
         @if($ads)  
-        <div class="adspopUp">
             <!-- Modal -->
             <div class="modal fade" id="adspopUp" role="dialog">
                 <div class="modal-dialog modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">          
-                            <button type="button" onclick="closeVideo()" class="close status hide" data-dismiss="modal">&times;</button>
-                            <h3 id="countdown" style="font-weight: bold"></h3>
+                    <div class="modal-content" style="border-radius: 5px">
+                        <div class="modal-header">    
+                            <div>  
+                                <button type="button" onclick="closeVideo()" class="close status hide" data-dismiss="modal">&times;</button>
+
+                                <button id="countdown" type="button" class="close status"></button>
+                               <!--  <h3 id="countdown" class="pull-right" style="font-weight: bold"></h3> -->
+                            </div>    
                             <div class="row">
                               <div class="col-xs-12 col-md-12 col-lg-12" id="media">
                                     @if($ads->type==1)
                                         <img src="{{url('/storage/'.$ads->photo)}}" width="100%">
                                     @else
-                                        <iframe src="{{$ads->video}}" width="100%" frameborder="0" allowfullscreen></iframe>
+                                        <iframe src="{{$ads->video}}" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
                                     @endif
                               </div>
                             </div>
@@ -110,8 +110,8 @@
                 </div>
              </div>
             <!-- model end -->
-        </div>
         @endif
+        <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
 </body>
 
 <script type="text/javascript">
@@ -128,6 +128,7 @@
         } else {
             //$("#adspopUp").modal('hide');
             $('button.status').removeClass('hide')
+            $('button#countdown').addClass('hide')
         }
     }());
     function closeVideo() {

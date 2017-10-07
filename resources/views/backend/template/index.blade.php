@@ -48,7 +48,7 @@
 												{{$row->User['name'].' / '.date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<a href="{{url('dashboard/template/step_one/'.$row->template_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Check</a>
+												<a href="{{url('dashboard/template/step_one/'.$row->template_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
 												<a href="{{url('/dashboard/template/remove/'.$row->template_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>

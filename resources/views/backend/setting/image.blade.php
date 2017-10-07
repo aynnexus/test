@@ -56,7 +56,7 @@
 												{{date('M d, Y',strtotime($row->created_at))}}
 											</td>
 											<td>
-												<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp{{$row->id}}"><i class="fa fa-edit"></i> Check</button>
+												<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#viewDetailPopUp{{$row->id}}"><i class="fa fa-edit"></i> Edit</button>
 												<a href="{{url('/dashboard/settings/images/remove/'.$row->id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>

@@ -14,12 +14,12 @@
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3">
 									<form class="form" action="{{url('dashboard/template/step_two/'.$id)}}" method="POST">
-								
+									
 										{{csrf_field()}}
 										<input type="hidden" name="step" value="{{$step}}">
 										<?php $field_1 = isset($site_field)?json_decode($site_field->social_login):null;
 											$field_2 = isset($site_field)?json_decode($site_field->form_login):null; ?>
-
+										
 										<div class="row">
 											<div class="col-md-3 pull-right"><h4>Social Login</h4></div>
 											<div class="col-md-3">
@@ -121,11 +121,14 @@
 												<label>Custom Field 1</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-5">
-												<input type="radio" {{($field_2!=null && $field_2->field_1==1)?'checked':''}} value="1" name="field_1"> Yes
-												<input type="radio" value="0" {{($field_2!=null && $field_2->field_1==0)?'checked':''}} name="field_1"> No
+											<div class="col-md-5" id="onefield">
+												<input type="radio" {{($field_2!=null && $field_2->field_1==1)?'checked':''}} value="1" name="field_1" onclick="oneClick('one',true)"> Yes
+												<input type="radio" value="0" {{($field_2!=null && $field_2->field_1==0)?'checked':''}} name="field_1" onclick="oneClick('one',false)"> No
 											
 												<label><input type="checkbox" {{($field_2!=null && $field_2->f1_req==1)?'checked':''}} value="1" name="cs1_require"> Require</label>
+												@if($field_2->field_1)
+													<input type="text" name="field_1_value" required class="form-control" value="{{$field_2->field_1_value}}">
+												@endif
 											</div>
 										</div><hr>
 										<div class="row">
@@ -133,11 +136,14 @@
 												<label>Custom Field 2</label>
 											</div>
 											<div class="col-md-1">:</div>
-											<div class="col-md-5">
-												<input type="radio" {{($field_2!=null && $field_2->field_2==1)?'checked':''}} value="1" name="field_2"> Yes
-												<input type="radio" value="0" {{($field_2!=null && $field_2->field_2==0)?'checked':''}} name="field_2"> No
+											<div class="col-md-5" id="twofield">
+												<input type="radio" {{($field_2!=null && $field_2->field_2==1)?'checked':''}} value="1" name="field_2" onclick="oneClick('two',true)"> Yes
+												<input type="radio" value="0" {{($field_2!=null && $field_2->field_2==0)?'checked':''}} name="field_2" onclick="oneClick('two',false)"> No
 											
 												<label><input type="checkbox" {{($field_2!=null && $field_2->f2_req==1)?'checked':''}} value="1" name="cs2_require"> Require</label>
+												@if($field_2->field_2)
+													<input type="text" name="field_2_value" required class="form-control" value="{{$field_2->field_2_value}}">
+												@endif
 											</div>
 										</div>
 										<hr>
@@ -155,5 +161,16 @@
 		
 	</section>
 <script type="text/javascript">
+	var check = $('input[name=field_1')[0];
+	function oneClick(type,status){
+		if (type=='one') {
+			if(status==true) $('<input type="text" class="form-control" required name="field_1_value">').appendTo('#onefield')
+			else $('input[name=field_1_value]').remove()
+		}
+		if (type=='two') {
+			if(status==true) $('<input type="text" class="form-control" required name="field_2_value">').appendTo('#twofield')
+			else $('input[name=field_2_value]').remove()
+		}
+	}
 </script>
 @stop
