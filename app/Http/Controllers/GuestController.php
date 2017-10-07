@@ -315,7 +315,7 @@ class GuestController extends Controller
         } catch (Exception $e) {
             return redirect('/');
         }
-        
+        dd($social_user);
         $guestId = $this->firstCreated();
         $guest = Guest::find($guestId['id'])->update([
             'name'=>$social_user->getName(),
