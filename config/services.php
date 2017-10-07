@@ -44,7 +44,7 @@ return [
     'google'=> [
         'client_id'     => '275452552098-ah3t42nibns1pentoi3qjsurt1qgot4k.apps.googleusercontent.com',
         'client_secret' => 'YvNQG99ljK-y0GCk3Iy-PbYV',
-        'redirect'      => 'http://13.228.141.122/login/google/callback'
+        'redirect'      => 'http://13.228.141.122/guest/login/google/callback'
     ],
 
 ];
