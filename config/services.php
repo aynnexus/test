@@ -42,9 +42,10 @@ return [
     ],
 
     'google'=> [
-        'client_id'     => '275452552098-ah3t42nibns1pentoi3qjsurt1qgot4k.apps.googleusercontent.com',
-        'client_secret' => 'YvNQG99ljK-y0GCk3Iy-PbYV',
-        'redirect'      => 'http://13.228.141.122/login/google/callback'
+        'client_id'     => '275452552098-dv498tql34isvfer4e0354q640l8rsds.apps.googleusercontent.com',
+        'client_secret' => 'KlW8aj5V9zp5iU0dqwxn9yK6',
+        'redirect'      => 'https://panel.nexus.com.mm/guest/login/google/callback'
     ],
 
 ];
+
