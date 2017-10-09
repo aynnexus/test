@@ -51,7 +51,8 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>N</b>P</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Nexus</b> Portal</span>
+            <!-- <span class="logo-lg"><b>Nexus</b> Portal</span> -->
+            <img src="{{asset('img/lognexus.png')}}" width="50%">
           </a>
           <!-- Header Navbar: style can be found in header.less -->
           <nav class="navbar navbar-static-top" role="navigation">

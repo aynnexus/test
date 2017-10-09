@@ -184,7 +184,7 @@ function mailSending($guest)
 	foreach ($cli as $c) {
 		$sit = $c->Allsite($c->site_id);      
 		foreach ($sit as $s) { 
-			if ($s->site_id==$site_info->site_id) {
+			if ($s->site_id==$guest->site_id) {
 				$app_user = ['name'=>$c->User->name,'email'=>$c->User->email];
 			}
 		}
