@@ -80,7 +80,7 @@
 											<th>Site Name</th>
 											<th>Login Time</th>
 											<th>Action</th>
-											<th><label><input type="checkbox" id="all"> All</label></th>
+											<!-- <th><label><input type="checkbox" id="all"> All</label></th> -->
 										</tr>
 									</thead>
 									@if(isset($guests))
@@ -106,18 +106,18 @@
 												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
 												<a href="{{url('/dashboard/guests/remove/'.$row->guest_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
-											<td>
-												 <input type="checkbox" name="id[]" value="{{$row->guest_id}}">
-											</td>
+											<input type="hidden" name="id[]" value="{{$row->guest_id}}">
 										</tr>
 										
                     					@endforeach
 									</tbody>
 									@endif	
-								</table>
+								</table>	
+								@if(isset($_GET['site_id']) || isset($_GET['name']))
 								<div class="col-md-offset-5">
 	                                <button type="submit" class="btn btn-success">Export</button>
 	                            </div>
+	                            @endif
 							</div>
 							</form>
 						</div>
@@ -153,7 +153,7 @@
 		<!-- model end -->
 	</section>
 <script>
-	$( ".datetimepicker" ).datetimepicker({format:'YYYY-m-d H:m:s'});
+	$( ".datetimepicker" ).datetimepicker({format:'YYYY-MM-DD H:m:s'});
     $('input#all').on('click',function(e){
         if (e.target.checked) {
             $('input[type=checkbox]').prop('checked',true)

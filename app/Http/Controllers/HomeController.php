@@ -29,8 +29,9 @@ class HomeController extends Controller
      */
     public function index()
     {  
-        $timein = date('Y-m-d G:i:s',strtotime('-1 hour'));
+        $timein = date('Y-m-d G:i:s',strtotime('-3 minutes'));
         $timeout = date('Y-m-d G:i:s');
+        
         $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();
 
         if (Auth::user()->role==1) {   
@@ -86,13 +87,14 @@ class HomeController extends Controller
                    ->groupby('os')
                    ->get();
         }
+
         return view('backend.index',compact('data'));
     }
 
     public function searchData(Request $request)
     {   
         $search_date = [date('Y-m-d G:i:s',strtotime($request->from_date)),date('Y-m-d G:i:s',strtotime($request->to_date))];
-        $timein = date('Y-m-d G:i:s',strtotime('-1 hour'));
+        $timein = date('Y-m-d G:i:s',strtotime('-3 minutes'));
         $timeout = date('Y-m-d G:i:s');
 
         if (Auth::user()->role==1) {   
@@ -143,7 +145,7 @@ class HomeController extends Controller
                    ->groupby('os')
                    ->get();
         }
-        
+       
         return view('backend.index',compact('data'));
     }
 
