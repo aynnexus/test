@@ -155,22 +155,31 @@ function detectOS($userAgent) {
 
 function convert_csv($filename,$key,$value,$gend,$age_group)
 {	
+	$rkey=$rvalue= null;
 	$output = fopen('csv/'.$filename, 'w+');
 	fputcsv($output, $key); 
 	foreach ($value as $row) { 
-
 		$st = Site::find($row['site_id']);
 		$gender = ($row['gender']!=null)?$gend[$row['gender']]:'-';
 		$age = ($row['age']!=null)?$age_group[$row['age']]:'-';
+		if ($row['rating_key']!=null) {
 
+			$rkey = implode(',', json_decode($row['rating_key']));
+		}
+		if ($row['rating_value']!=null) {
+			$rvalue = implode(',', json_decode($row['rating_value']));
+		}
 		$final = array_merge($row,
 			[	'Site'=>$st['site_name'],
 				'Age'=>$age,
 				'Gender'=>$gender,
+				'Rating Key'=>$rkey,
+				'Rating Value'=>$rvalue,
 				'date'=>date('d M Y G:i:s',strtotime($row['created_at']))
 			]);
 		unset($final['site_id']);unset($final['gender']);
 		unset($final['age']);unset($final['created_at']);
+		unset($final['rating_key']);unset($final['rating_value']);
 		fputcsv($output, $final);	
 	}
 	fclose($output);

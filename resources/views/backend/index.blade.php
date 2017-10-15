@@ -25,7 +25,7 @@
           <select class="form-control" name="site">
               <option>Select Site</option>
               @foreach($data['sites'] as $key=>$value)
-                <option value="{{$key}}">{{$value}}</option>
+                <option {{isset($_GET['site']) && $_GET['site']==$key?'selected':''}} value="{{$key}}">{{$value}}</option>
               @endforeach
             </select>
         </div>
@@ -283,9 +283,10 @@
     data_3.map(function(index){
       //var month = index.time.split('-')
       //calender.push(moment(month[0]).format('LT')) 
-      calender.push(index.time+' Hour')
+      calender.push(moment("January-21-1983 "+index.time+":00:00").format('LT'))
       data_login.push(index.data);         
     });
+    
     data_4.map(function(index,key){
       //var os_type = new Object;
       //os_type.value= index.data;

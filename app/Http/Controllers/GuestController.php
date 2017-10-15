@@ -113,8 +113,8 @@ class GuestController extends Controller
             $sites = Site::active()->pluck('site_id','site_name');
             
             if ($request->get('site_id')) {
-                $guests = Guest::search($request->all())->groupBy()->orderBy($order,'desc')->paginate(20);
-
+                $guests = Guest::search($request->all())->orderBy($order,'desc')->paginate(20);
+                
             }else{
                 if ($type==3) {
                     $guests = Guest::groupBy($order)->orderBy($order,'desc')->paginate(20);
@@ -137,6 +137,7 @@ class GuestController extends Controller
                               
             }
         }
+        
         return view('backend.guest.index',compact('guests','sites'));
     }
 
@@ -379,14 +380,14 @@ class GuestController extends Controller
 
     public function postExport(Request $request)
     {       
-        if (count($request->id)==0) {
-            Flash::error('please select at least one');
-            return back();
-        }
+        // if (count($request->id)==0) {
+        //     Flash::error('please select at least one');
+        //     return back();
+        // }
         for ($i=0; $i < count($request->id); $i++) { 
-            $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','created_at')->first()->toArray();
+            $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','rating_key','rating_value','created_at')->first()->toArray();
         }
-        $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Created At'];
+        $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Rating Key','Rating Value','Created At'];
 
         $headers = array(
             'Content-Type' => 'text/csv',
@@ -394,6 +395,7 @@ class GuestController extends Controller
         $filename = "guest_infos.csv";
         $gender = Lookup::where('title','GENDER')->pluck('value','key');
         $age_group = Lookup::where('title','Age Group')->pluck('value','key');
+        
         convert_csv($filename,$key,$value,$gender,$age_group);
 
         return response()->download('csv/'.$filename, $filename, $headers);

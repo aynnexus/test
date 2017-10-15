@@ -21,7 +21,6 @@
     {!! Html::style('assets/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}  
     {!! Html::style('css/bootstrap-datetimepicker.css') !!} 
     {!! Html::style('assets/adminlte/plugins/daterangepicker/daterangepicker-bs3.css') !!}
- 
     <!-- Scripts -->
     
     {!! Html::script('js/custom.js') !!}
