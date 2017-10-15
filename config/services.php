@@ -43,8 +43,8 @@ return [
     ],
 
     'google'=> [
-        'client_id'     => '275452552098-dv498tql34isvfer4e0354q640l8rsds.apps.googleusercontent.com',
-        'client_secret' => 'KlW8aj5V9zp5iU0dqwxn9yK6',
+        'client_id'     => '4338555811-du9is2c9pk4ankgniv2sffbt9kodd9kl.apps.googleusercontent.com',
+        'client_secret' => 'Nzog7Mv6xcqgMBFXWkGvZIpj',
         'redirect'      => 'https://panel.nexus.com.mm/guest/login/google/callback'
     ],
 

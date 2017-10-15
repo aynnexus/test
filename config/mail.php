@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => 'sendmail',
+    'driver' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'hello@example.com',
-        'name' => 'Example',
+        'address' => 'info@nexus.com.mm',
+        'name' => 'Nexus',
     ],
 
     /*

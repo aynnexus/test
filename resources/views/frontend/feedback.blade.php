@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<body class="hold-transition register-page" style="background-position: center;background-attachment: fixed;background-repeat: no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
+<body class="hold-transition register-page" style="width:auto; background-position:top center;background-attachment: fixed;background-repeat: no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
 
         <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
@@ -10,7 +10,7 @@
             </div>
 
             <div class="register-box-body custom-box">
-                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thanks for your submition. Now you get internet accesss.</p>
+                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thank you for singing in. Please enjoy our free internet access.</p>
                 <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
                 @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
@@ -73,7 +73,7 @@
             <!-- /.form-box --> 
             <div class="row">
                 <div id="fb-root"></div>
-                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"></div>
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="350"  data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
                 <button style="display: none;" id="loginBtn">Facebook Login</button>
                 <div id="response"></div>
             </div>            
