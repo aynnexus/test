@@ -122,11 +122,11 @@
 											</div>
 											<div class="col-md-1">:</div>
 											<div class="col-md-5" id="onefield">
-												<input type="radio" value="1" {{($field_2!=null && $field_2->field_1==1)?'checked':''}} name="field_1" onclick="oneClick('one',true)"> Yes
-												<input type="radio" value="0" {{($field_2!=null && $field_2->field_1==0)?'checked':''}} name="field_1" onclick="oneClick('one',false)"> No
+												<input type="radio" value="1" name="field_1" onclick="oneClick('one',true)"> Yes
+												<input type="radio" value="0" name="field_1" onclick="oneClick('one',false)"> No
 											
-												<label><input type="checkbox" {{($field_2!=null && $field_2->f1_req==1)?'checked':''}} value="1" name="cs1_require"> Require</label>
-												@if($field_2!=null && $field_2->field_1)
+												<label><input type="checkbox" cked':''}} value="1" name="cs1_require"> Require</label>
+												@if($field_2->field_1)
 													<input type="text" name="field_1_value" required class="form-control" value="{{$field_2->field_1_value}}">
 												@endif
 											</div>
@@ -141,7 +141,7 @@
 												<input type="radio" value="0" {{($field_2!=null && $field_2->field_2==0)?'checked':''}} name="field_2" onclick="oneClick('two',false)"> No
 											
 												<label><input type="checkbox" {{($field_2!=null && $field_2->f2_req==1)?'checked':''}} value="1" name="cs2_require"> Require</label>
-												@if($field_2 !=null && $field_2->field_2)
+												@if($field_2->field_2)
 													<input type="text" name="field_2_value" required class="form-control" value="{{$field_2->field_2_value}}">
 												@endif
 											</div>
