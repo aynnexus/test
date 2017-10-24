@@ -84,6 +84,8 @@ Route::group(['prefix'=>'dashboard'],function(){
 		Route::post('/serveys/{type?}/{id?}','SettingController@postServey');
 		Route::get('/mail','SettingController@emailTest');
 		Route::get('/mailtest','SettingController@emailTesting');
+		Route::get('service','SettingController@getService');
+		Route::post('service/{id?}','SettingController@postService');
 	});
 
 	Route::group(['prefix'=>'guests'],function(){

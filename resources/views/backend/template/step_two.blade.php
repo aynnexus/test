@@ -21,7 +21,8 @@
 											$field_2 = isset($site_field)?json_decode($site_field->form_login):null; ?>
 										
 										<div class="row">
-											<div class="col-md-3 pull-right"><h4>Social Login</h4></div>
+											<div class="col-md-3 pull-right"><h4>Social Login</h4>
+											</div>
 											<div class="col-md-3">
 												<label>Facebook Login</label>
 											</div>
@@ -30,7 +31,7 @@
 												<input type="radio" {{($field_1!=null && $field_1->fb==1)?'checked':''}} value="1" name="fb"> Yes
 												
 												<input type="radio" value="0" {{($field_1!=null && $field_1->fb==0)?'checked':''}} name="fb"> No
-												
+												{{Form::select('provider',$facebook,null,['class'=>'form-control','placeholder'=>'select one'])}}
 											</div>
 											{{-- <div class="col-md-2">
 												<label><input type="checkbox" {{($field_1!=null && $field_1->fb_req==1)?'checked':''}} value="1" name="fb_require"> Require</label>
@@ -45,6 +46,7 @@
 												<input type="radio" {{($field_1!=null && $field_1->gmail==1)?'checked':''}} value="1" name="gmail"> Yes
 												
 												<input type="radio" value="0" {{($field_1!=null && $field_1->gmail==0)?'checked':''}} name="gmail"> No
+												{{Form::select('provider',$google,null,['class'=>'form-control','placeholder'=>'select one'])}}
 											</div>
 											{{-- <div class="col-md-2">
 												<label><input type="checkbox" {{($field_1!=null && $field_1->g_req==1)?'checked':''}} value="1" name="gmail_require"> Require</label>
@@ -141,7 +143,8 @@
 												<input type="radio" value="0" {{($field_2!=null && $field_2->field_2==0)?'checked':''}} name="field_2" onclick="oneClick('two',false)"> No
 											
 												<label><input type="checkbox" {{($field_2!=null && $field_2->f2_req==1)?'checked':''}} value="1" name="cs2_require"> Require</label>
-												@if($field_2 !=null && $field_2->field_2)
+
+												@if($field_2!=null && $field_2->field_2)
 													<input type="text" name="field_2_value" required class="form-control" value="{{$field_2->field_2_value}}">
 												@endif
 											</div>

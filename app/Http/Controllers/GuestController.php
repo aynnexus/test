@@ -112,8 +112,8 @@ class GuestController extends Controller
         {   
             $sites = Site::active()->pluck('site_id','site_name');
             
-            if ($request->get('site_id')) {
-                $guests = Guest::search($request->all())->orderBy($order,'desc')->paginate(20);
+            if ($request->get('site_id') || $request->get('name') || $request->get('from_date')) {
+                $guests = Guest::search($request->all())->orderBy($order,'desc')->get();
                 
             }else{
                 if ($type==3) {

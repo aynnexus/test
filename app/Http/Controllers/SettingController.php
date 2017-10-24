@@ -9,6 +9,7 @@ use App\Models\Servey;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Guest;
+use App\Models\Service;
 use App\User;
 use Flash,Auth,Mail,Session;
 
@@ -128,6 +129,23 @@ class SettingController extends Controller
 
         Flash::success('Success your email testing');
 
+        return back();
+    }
+
+    public function getService()
+    {   
+        $services = Service::orderBy('service_id','desc')->paginate(15);
+        return view('backend.setting.service',compact('services'));
+    }
+
+    public function postService(Request $request,$id=0)
+    {
+        $service = ($id>0)?Service::find($id):new Service;
+        $service->id = $request->id;
+        $service->secrect = $request->secrect;
+        $service->type = $request->type;
+        $service->status = ACTIVE;
+        $service->save();
         return back();
     }
 }

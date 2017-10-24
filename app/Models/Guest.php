@@ -29,12 +29,14 @@ class Guest extends Model
         if ($request['name']) {
             $query->where('name', 'like','%'.$request['name'].'%');
         }
-        if($request['from_date']){
-
-            //$query->whereBetween('created_at',[$request['from_date'],$request['to_date']]);
+        if($request['from_date']){            
+            $query->whereBetween('created_at',[$request['from_date'],$request['to_date']]);
         }
-
-        return $query->where('site_id',$request['site_id']);                     
+        if($request['site_id']){
+            $query->where('site_id',$request['site_id']);            
+        }
+        
+        return $query;                     
     }
 
     public function Surveys()
