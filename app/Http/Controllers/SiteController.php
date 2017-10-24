@@ -15,6 +15,7 @@ use App\Models\Surveying;
 use App\Models\Client;
 use App\Models\Ads;
 use App\Models\Lookup;
+use App\Models\Service;
 use App\Models\TemplateMovement;
 use Flash,Auth,Validator;
 
@@ -97,8 +98,10 @@ class SiteController extends Controller
 
         $site_field = SiteField::where('template_id',$id)->first();
         $step = Template::where('template_id',$id)->value('step');
+        $facebook = Service::where('type',1)->pluck('id','service_id');
+        $google = Service::where('type',2)->pluck('id','service_id');
         
-        return view('backend.template.step_two',compact('site_field','step','id'));
+        return view('backend.template.step_two',compact('site_field','step','id','google','facebook'));
     }   
 
     public function getSitePhoto($id=0)

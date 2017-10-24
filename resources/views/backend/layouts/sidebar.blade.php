@@ -31,6 +31,7 @@
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu"> 
+          <li><a href="{{url('dashboard/settings/service')}}"><i class="fa fa-circle-o"></i> Service</a></li>
           <li><a href="{{url('dashboard/settings/serveys/questions')}}"><i class="fa fa-circle-o"></i> Servey</a></li>
           <li><a href="{{url('dashboard/settings/lookup')}}"><i class="fa fa-circle-o"></i> LookUp</a></li>    
           <li><a href="{{url('dashboard/settings/mail')}}"><i class="fa fa-circle-o"></i> Mail Test</a></li>          

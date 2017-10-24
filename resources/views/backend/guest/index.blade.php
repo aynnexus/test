@@ -21,7 +21,7 @@
 				            	<div class="col-sm-2">
 				            		<div class="form-group">
 				            			<select name="site_id" class="form-control select2">
-											<option>Current Site</option>
+											<option value="0">Current Site</option>
 											@if(isset($sites))
 												@foreach($sites as $key=>$value)
 													<option {{isset($_GET['to_date'])&&$_GET['site_id']==$value?'selected':''}} value="{{$value}}">{{$key}}</option>
@@ -37,7 +37,7 @@
 				            	</div>
 				                <div class="col-sm-2">
 				                    <div class="input-group date">
-				                        <input type="text" value="<?php echo isset($_GET['from_date'])?$_GET['to_date']:null ?>" name="from_date" class="form-control datetimepicker" placeholder="From">
+				                        <input type="text" value="<?php echo isset($_GET['from_date'])?$_GET['from_date']:null ?>" name="from_date" class="form-control datetimepicker" placeholder="From">
 				                        <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-calendar"></span>
 				                    </span>
@@ -113,7 +113,7 @@
 									</tbody>
 									@endif	
 								</table>	
-								@if(isset($_GET['site_id']) || isset($_GET['name']))
+								@if(isset($_GET['site_id']) || isset($_GET['name']) || isset($_GET['from_date']))
 								<div class="col-md-offset-5">
 	                                <button type="submit" class="btn btn-success">Export</button>
 	                            </div>
@@ -124,7 +124,8 @@
 					</div>  
 					<div class="box-footer">
 						<div class="pull-right">
-						@if(isset($guests))
+
+						@if(isset($guests) && empty($_GET))
 							{{ $guests->links('vendor.pagination.bootstrap-4') }}
 						@endif
 						</div>
