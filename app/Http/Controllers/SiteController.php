@@ -71,9 +71,9 @@ class SiteController extends Controller
     {   
         if (Auth::user()->role!=1) {
             $move = TemplateMovement::whereIn('site_id',$this->site_id)->where('template_id',$id)->get();        
-            if ($move->isEmpty()) {
-                return back();
-            }
+            // if ($move->isEmpty()) {
+            //     return back();
+            // }
             $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_name','site_id');
         }else{
 
