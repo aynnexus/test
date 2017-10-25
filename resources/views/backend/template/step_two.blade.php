@@ -31,7 +31,7 @@
 												<input type="radio" {{($field_1!=null && $field_1->fb==1)?'checked':''}} value="1" name="fb"> Yes
 												
 												<input type="radio" value="0" {{($field_1!=null && $field_1->fb==0)?'checked':''}} name="fb"> No
-												{{Form::select('provider',$facebook,null,['class'=>'form-control','placeholder'=>'select one'])}}
+												{{--{{Form::select('provider',$facebook,null,['class'=>'form-control','placeholder'=>'select one'])}}--}}
 											</div>
 											{{-- <div class="col-md-2">
 												<label><input type="checkbox" {{($field_1!=null && $field_1->fb_req==1)?'checked':''}} value="1" name="fb_require"> Require</label>
@@ -46,7 +46,7 @@
 												<input type="radio" {{($field_1!=null && $field_1->gmail==1)?'checked':''}} value="1" name="gmail"> Yes
 												
 												<input type="radio" value="0" {{($field_1!=null && $field_1->gmail==0)?'checked':''}} name="gmail"> No
-												{{Form::select('provider',$google,null,['class'=>'form-control','placeholder'=>'select one'])}}
+												{{--{{Form::select('provider',$google,null,['class'=>'form-control','placeholder'=>'select one'])}}--}}
 											</div>
 											{{-- <div class="col-md-2">
 												<label><input type="checkbox" {{($field_1!=null && $field_1->g_req==1)?'checked':''}} value="1" name="gmail_require"> Require</label>
