@@ -40,7 +40,7 @@
                         <td>{{ ($value->status==1)?'Active':'Inactive'}}</td>  
                         <td>    
                           <a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$value->id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                          <a href="{{url('dashboard/admin/remove/'.$value->id)}}" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+                          <a href="{{url('dashboard/admin/remove/'.$value->id)}}" onclick="return confirm('Are you want to sure delete?')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 
                         </td>  
                       </tr>

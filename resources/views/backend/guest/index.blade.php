@@ -104,7 +104,7 @@
 											</td>
 											<td>
 												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
-												<a href="{{url('/dashboard/guests/remove/'.$row->guest_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+												<a href="#" onclick="targetButton({{$row->guest_id}},'guests')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 											<input type="hidden" name="id[]" value="{{$row->guest_id}}">
 										</tr>

@@ -148,5 +148,22 @@ class SettingController extends Controller
         $service->save();
         return back();
     }
+
+    public function removeServey($type,$id)
+    {
+        if ($type=='questions') {
+            $ans = Answer::where('question_id',$id)->first();
+            if ($ans!=null) {
+                Flash::warning('This data used in another section');
+                return back();
+            }
+            Question::destroy($id);
+        }else{
+            Answer::find($id);
+        }
+        Flash::success('Success your removing');
+
+        return back();
+    }
 }
 

@@ -34,7 +34,7 @@ class HomeController extends Controller
         
         $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();
 
-        if (Auth::user()->role==1) {   
+        if (Auth::user()->role==1) {  
             $data['active'] = Guest::whereBetween('created_at',[$timein,$timeout])->count();       
             $data['guests'] = Guest::count();
             $data['sites'] = Site::pluck('site_name','site_id');
@@ -145,7 +145,7 @@ class HomeController extends Controller
                    ->groupby('os')
                    ->get();
         }
-       
+        
         return view('backend.index',compact('data'));
     }
 

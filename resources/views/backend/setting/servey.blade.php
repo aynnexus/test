@@ -62,9 +62,9 @@
 												<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewDetailPopUp{{$type=='questions'?$row->question_id:$row->answer_id}}"><i class="fa fa-edit"></i> Edit</button>
 												
 												@if($type=='questions')
-													<a href="{{url('/dashboard/settings/serveys/questions/remove/'.$row->question_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+													<a href="{{url('/dashboard/settings/serveys/questions/remove/'.$row->question_id)}}" onclick="return confirm('Are you want to sure delete?')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 												@else
-													<a href="{{url('/dashboard/settings/serveys/answers/remove/'.$row->answer_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+													<a href="{{url('/dashboard/settings/serveys/answers/remove/'.$row->answer_id)}}" onclick="return confirm('Are you want to sure delete?')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 												@endif
 											</td>
 										</tr>
