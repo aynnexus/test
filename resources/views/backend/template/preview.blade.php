@@ -14,7 +14,7 @@
 						<div class="row">
 								
 							<div class="col-md-6 col-md-offset-3">
-								<div style="background-color:{{($template->Profile!=null)?$template->Profile->background_color:'#d2d6de'}};background-image: url(<?php echo ($template->Profile!=null)?'/storage/'.$template->Profile->background_image:''; ?>);" class="preview">
+								<div style="background-position: center;background-repeat: no-repeat;background-color:{{($template->Profile!=null)?$template->Profile->background_color:'#d2d6de'}};background-image: url(<?php echo ($template->Profile!=null)?'/storage/'.$template->Profile->background_image:''; ?>);" class="preview">
 									<div class="preview_header">
 										@if($template->Profile!=null)
 											<img src="{{url('storage/'.$template->Profile->header_image)}}" height="200px" width="100%">
@@ -27,7 +27,7 @@
 												$field = json_decode($template->Field->form_login) ?>
 											<div class="register-box">
 											  <div class="register-logo">
-											    <img src="{{url('/storage/'.$template->Profile->logo_image)}}" class="logo-template" width="100" height="100">
+											    <img style="background-repeat: no-repeat" src="{{url('/storage/'.$template->Profile->logo_image)}}" class="logo-template" width="100" height="100">
 											  </div>
 												<div class="register-box-body" style="background-color: transparent;">
 													<div class="social-auth-links text-center">
@@ -85,7 +85,7 @@
 									</div>
 									<div class="preview_footer">
 										@if($template->Profile!=null)
-											<img src="{{url('storage/'.$template->Profile->footer_image)}}" height="200px" width="100%">
+											<img style="background-repeat: no-repeat" src="{{url('storage/'.$template->Profile->footer_image)}}" height="200px" width="100%">
 										@endif
 									</div>
 								</div>

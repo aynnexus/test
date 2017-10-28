@@ -5,7 +5,6 @@
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12">
-				
 				<div class="box">				
 					<div class="box-body">
 						<div class="dataTables_wrapper form-inline dt-bootstrap">
@@ -61,7 +60,7 @@
 											</td>
 											<td>
 												<a href="{{url('/dashboard/clients/edit/'.$row->client_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-												<a href="{{url('/dashboard/clients/remove/'.$row->client_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+												<a href="#" onclick="targetButton({{$row->client_id}},'clients')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
 										<!-- status Modal -->

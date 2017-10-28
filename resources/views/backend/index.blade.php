@@ -49,9 +49,10 @@
             <div class="inner">
               <h3>
                 @if(count($data['sites'])>=1000)
-                  {{count($data['sites'])/1000}}k
+                  {{isset($_GET['from_date'])?$data['sites']:count($data['sites'])/1000}}k
                 @else
-                  {{count($data['sites'])}}
+
+                  {{isset($_GET['from_date'])?$data['sites']:count($data['sites'])}}
                 @endif
               </h3>
               <p>Sites</p>

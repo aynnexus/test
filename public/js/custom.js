@@ -132,3 +132,18 @@ function convertColor(type)
     }
     return color;
 }
+
+function targetButton(attr,target){
+    if(confirm("Are you want to sure delete?") == true){
+        $.ajax({
+          url: '/dashboard/'+target+'/remove/'+attr,
+          method: 'get',
+          data: {
+              '_token': '{{ csrf_token() }}'
+          },
+          success: function(data){
+              location.reload()
+          }
+        });
+    }
+}   

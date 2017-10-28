@@ -59,7 +59,7 @@
 											</td>
 											<td>
 												<a href="#" data-toggle="modal" data-target="#viewDetailPopUp{{$row->site_id}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-												<a href="{{url('/dashboard/sites/remove/'.$row->site_id)}}" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
+												<a href="#" onclick="targetButton({{$row->site_id}},'sites')" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i> Remove</a>
 											</td>
 										</tr>
 										<!-- edit Modal -->
