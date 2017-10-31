@@ -19,7 +19,7 @@
         <![endif]-->
         {!! Html::style('assets/bootstrap/css/bootstrap.css') !!}
         {!! Html::style('assets/bootstrap/css/font-awesome.min.css') !!}
-        {!! Html::style('assets/adminlte/css/AdminLTE.min.css') !!}
+        {!! Html::style('assets/adminlte/css/AdminLTE.css') !!}
         {!! Html::style('css/custom.css') !!}
         <!-- Scripts -->
         {!! Html::script('assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js') !!}
