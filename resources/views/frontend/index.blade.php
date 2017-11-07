@@ -2,15 +2,15 @@
 
 @section('content')
 
-<body class="hold-transition register-page" style="width:auto; background-position:top center;background-attachment:fixed;background-repeat:no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
+<body class="hold-transition register-page container-fluid" style="width:auto; background-position:top center;background-attachment:fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;">
     <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
-            <div class="register-logo">
+            <div class="register-logo" style="margin-botton:0;">
                 <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 45%;">
             </div>
             <br>
-            <div class="register-box-body" style="border-radius:10px;background: transparent;">
-                <p class="login-box-msg"></p>
+            <div class="register-box-body" style="border-radius:10px;background: transparent;margin-top:10px; padding-top:0;">
+               <p class="login-box-msg"></p>
                 <?php   $social = json_decode($temp->Field->social_login);
                         $form = json_decode($temp->Field->form_login);
                          ?>
@@ -47,7 +47,7 @@
                         @endif
                         @if(isset($form) && $form->phone==1)
                         <div class="form-group has-feedback">
-                            {!! Form::number('phone',null,['class'=>'form-control','placeholder'=>'094354354',($form->p_req==1)?'required':'']) !!}
+                            {!! Form::number('phone',null,['class'=>'form-control','placeholder'=>'Phone no.',($form->p_req==1)?'required':'']) !!}
                             <span class="glyphicon glyphicon-phone-alt form-control-feedback"></span>
                         </div>
                         @endif
@@ -84,9 +84,11 @@
                     {!! Form::close() !!}
                 @endif
             </div>
-            <!-- /.form-box --> 
+       <!-- /.form-box --> 
         </div>
-    <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%">
+	<footer style="position: absolute;botton:0;margin:0;padding:0; right:30%; left:0;text-align:center; width:100%;">
+	    <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:600px;">
+	</footer>
 </body>
 <script type="text/javascript">
     // $('button#login').click(function(){

@@ -100,7 +100,7 @@
 												{{$row->Site['site_name']}}
 											</td>
 											<td>
-												{{date('d M, Y g:i:s',strtotime($row->created_at))}}
+												{{date('d M, Y / g:i a',strtotime($row->created_at))}}
 											</td>
 											<td>
 												<a href="{{url('dashboard/guests/detail/'.$row->guest_id)}}" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Detail</a>
@@ -124,8 +124,7 @@
 					</div>  
 					<div class="box-footer">
 						<div class="pull-right">
-
-						@if(isset($guests) && empty($_GET))
+						@if(isset($guests) || isset($_GET['page']))
 							{{ $guests->links('vendor.pagination.bootstrap-4') }}
 						@endif
 						</div>
