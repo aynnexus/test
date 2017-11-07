@@ -120,7 +120,9 @@
     el = document.getElementById('countdown');
     (function t_minus() {
         'use strict';
-        el.innerHTML = timer--;
+        if (el!=null) {
+            el.innerHTML = timer--;
+        }
         if (timer >= 0) {
             setTimeout(function () {
                 t_minus();
@@ -134,8 +136,9 @@
     function closeVideo() {
         $('div#media').remove();
     }
-    const ID = '<?php echo $temp->Field->iframe_link ?>';
-    const guest_id = '<?php echo $id ?>'
+    var ID = '<?php echo $temp->Field->iframe_link ?>';
+    var guest_id = '<?php echo $id ?>';
+    
     function getUserData() {    
         FB.api(
             "me?fields=age_range",
@@ -166,7 +169,7 @@
                 document.getElementById('loginBtn').style.display = 'none';
                 getUserData();
             } else {
-                //user is not authorized
+                console.log('user is not authorized');
             }
         });
     };

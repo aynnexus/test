@@ -27,6 +27,6 @@
         {!! Html::script('js/ajax.js') !!}
     </head>
     <div id="app">
-            @yield('content')  
-            </div>
+        @yield('content')  
+    </div>
 </html>
