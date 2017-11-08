@@ -124,8 +124,8 @@
 					</div>  
 					<div class="box-footer">
 						<div class="pull-right">
-						@if(isset($guests) || isset($_GET['page']))
-							{{ $guests->links('vendor.pagination.bootstrap-4') }}
+						@if($status==true)
+							{{ $guests->render() }}
 						@endif
 						</div>
 					</div>
