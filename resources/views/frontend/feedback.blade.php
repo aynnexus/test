@@ -1,7 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<body class="hold-transition register-page" style="width:auto; background-position:top center;background-attachment: fixed;background-repeat: no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '2067438900150555'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+ <img height="1" width="1" 
+src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
+&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+<body class="hold-transition register-page container-fluid" style="width:auto; background-position:top center;background-attachment: fixed;background-repeat: no-repeat;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);">
 
         <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
         <div class="register-box" style="margin:0% auto">
@@ -111,7 +130,9 @@
              </div>
             <!-- model end -->
         @endif
-        <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="250px" width="100%">
+	<footer style="position: absolute;botton:0;margin:0;padding:0; right:30%; left:0;text-align:center; width:100%;"> 
+	       <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:600px;">
+	</footer>
 </body>
 
 <script type="text/javascript">
