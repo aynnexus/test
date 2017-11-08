@@ -113,7 +113,7 @@ class GuestController extends Controller
             $sites = Site::active()->pluck('site_id','site_name');
             
             if ($request->get('site_id') || $request->get('name') || $request->get('from_date')) {
-                $guests = Guest::search($request->all())->orderBy($order,'desc')->get();
+                $guests = Guest::search($request->all())->orderBy($order,'desc')->paginate(20);
                 
             }else{
                 if ($type==3) {
@@ -137,7 +137,7 @@ class GuestController extends Controller
                               
             }
         }
-        
+       
         return view('backend.guest.index',compact('guests','sites'));
     }
 
