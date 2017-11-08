@@ -100,6 +100,7 @@ class GuestController extends Controller
 
     public function indexLists(Request $request,$type='register')
     {   
+        $status = true;
         if ($type=='register') {
            $type =1;
         }elseif ($type=='social') {
@@ -113,7 +114,8 @@ class GuestController extends Controller
             $sites = Site::active()->pluck('site_id','site_name');
             
             if ($request->get('site_id') || $request->get('name') || $request->get('from_date')) {
-                $guests = Guest::search($request->all())->orderBy($order,'desc')->paginate(20);
+                $guests = Guest::search($request->all())->orderBy($order,'desc')->get();
+                $status = false;
                 
             }else{
                 if ($type==3) {
@@ -137,8 +139,8 @@ class GuestController extends Controller
                               
             }
         }
-       
-        return view('backend.guest.index',compact('guests','sites'));
+        
+        return view('backend.guest.index',compact('guests','sites','status'));
     }
 
     public function singleDetail($id)
