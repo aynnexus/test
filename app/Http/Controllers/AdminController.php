@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Client;
 use Flash,Validator;
 
 class AdminController extends Controller
@@ -24,6 +25,8 @@ class AdminController extends Controller
     public function remove($id)
     {
     	User::destroy($id);
+        Client::where('user_id',$id)->delete();
+        
     	Flash::success('successfully admin user remove.');
     	return back();
     }
