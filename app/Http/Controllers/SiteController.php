@@ -292,6 +292,7 @@ class SiteController extends Controller
         $feedback_field = [
                     'checkin'=>$request->checkin,
                     'like'=>$request->like,
+                    'like_page'=>$request->like_page,
                     'comment'=>$request->comment,
                     'cbb_require'=>$request->cbb_require,
                     'survey'=>$request->survey,

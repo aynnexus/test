@@ -38,10 +38,10 @@
 											</div>
 											<div class="col-md-1">:</div>
 											<div class="col-md-7">
-												<input type="radio" {{($fdb!=null && $fdb->like==1)?'checked':''}} value="1" name="like"> Yes
+												<input type="radio" id="like_yes" {{($fdb!=null && $fdb->like==1)?'checked':''}} value="1" name="like"> Yes
 												
-												<input type="radio" {{($fdb!=null && $fdb->like==0)?'checked':''}} value="0" name="like"> No
-												
+												<input type="radio" id="like_no" {{($fdb!=null && $fdb->like==0)?'checked':''}} value="0" name="like"> No
+												<input type="text" id="page" name="like_page" class="form-control" {{($fdb!=null && $fdb->like==1)?'':'hide'}} placeholder="mypage" value="{{($fdb!=null && $fdb->like==1)?$fdb->like_page:null}}">	
 											</div>	
 
 										</div>										
@@ -174,13 +174,11 @@
 	 	<!-- model end -->
 	</section>
 <script type="text/javascript">
-	// $('input#Yes').on('click',function(){
-	// 	$('#select_open').show();
-	// 	$('select#rating').attr('required',true);
-	// })
-	// $('input#No').on('click',function(){
-	// 	$('#select_open').hide();
-	// 	$('select#rating').attr('required',false);
-	// })
+	$('input#like_yes').on('click',function(){
+		$('input#page').attr('required',true);
+	})
+	$('input#like_no').on('click',function(){
+		$('input#page').attr('required',false);
+	})
 </script>
 @stop

@@ -2,7 +2,7 @@
 
 @section('content')
 <body class="hold-transition register-page container-fluid" style="width:auto; background-position:top center;background-attachment:fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;">
-    <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%">
+   <header style="text-align:center;"> <img src="{{url('/storage/'.$temp->Profile->header_image)}}" align="center"  height="200px" width="100%" style="max-width:600px;"></header>
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo" style="margin-botton:0;">
                 <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 45%;">

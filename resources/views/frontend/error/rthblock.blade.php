@@ -4,7 +4,7 @@
 <body class="container-fluid" style="width:auto; background-color:black; background-attachment:fixed;">
 <div class="container-fluid" style="position:absolute; margin:0;padding:0; left:0; top:0;"><img src="{{asset('img/rth-bg.jpg')}}" ></div>
  <section class="content" style="position:relative;">
-  <div class="text-center" style="top:0;"><img src="{{asset('img/rth-logo.png')}}" style="width:200px;height:200px;margin:0;padding:0;align:center;"></div>
+  <div class="text-center" style="top:0;"><img src="{{asset('img/rth-logo.png')}}" style="width:400px;height:200px;margin:0;padding:0;align:center;"></div>
   
     <div class="container error-page">
 

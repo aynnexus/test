@@ -92,7 +92,10 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
             <!-- /.form-box --> 
             <div class="row">
                 <div id="fb-root"></div>
-                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="350"  data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+                @if(isset($feedback) && $feedback->like==1)
+                    <?php $space= str_replace(' ', '', $feedback->like_page); ?>
+                    <div class="fb-like" data-href="https://facebook.com/{{strtolower($space)}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true"></div>
+                @endif
                 <button style="display: none;" id="loginBtn">Facebook Login</button>
                 <div id="response"></div>
             </div>            
