@@ -114,7 +114,7 @@
 									@endif	
 								</table>	
 								@if(isset($_GET['site_id']) || isset($_GET['name']) || isset($_GET['from_date']))
-								<div class="col-md-offset-5">
+								<div class="col-md-offset-5" data-role="fixed" style="position: fixed; bottom: 20px;">
 	                                <button type="submit" class="btn btn-success">Export</button>
 	                            </div>
 	                            @endif
