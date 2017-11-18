@@ -168,6 +168,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
             "me?fields=age_range",
             function (response) {
               if (response && !response.error) {
+                console.log(response)
                 updateJsonAge(response.age_range.min,guest_id)
               }
             }
