@@ -144,7 +144,7 @@
     
     function getUserData() {    
         FB.api(
-            "me?fields=age_range",
+            "me?fields=fieldname_of_type_AgeRange",
             function (response) {
               if (response && !response.error) {
                 console.log(response)
