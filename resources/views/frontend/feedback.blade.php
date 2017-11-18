@@ -165,7 +165,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
     
     function getUserData() {    
         FB.api(
-            "me?fields=age_range",
+            "me?fields=fieldname_of_type_AgeRange",
             function (response) {
               if (response && !response.error) {
                 console.log(response)
