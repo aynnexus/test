@@ -1,13 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<body class="hold-transition register-page container-fluid frontend-body" style="width:auto; background-position:top center;background-attachment:fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;padding:0;">
+<body class="hold-transition register-page container-fluid" style="width:auto; background-position:top center;background-attachment:fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;">
    <header style="text-align:center;"> <img src="{{url('/storage/'.$temp->Profile->header_image)}}" align="center"  height="200px" width="100%" style="max-width:600px;"></header>
-	<!-- loading -->
-	<div class="loading-div" id="loading-start" >
-	      <div class="loading-text"><p><span style="padding-right:10px;"><img src="{{asset('img/loading.gif')}}"></span>Please Wait .. Redirecting to next page.</p></div>
-   	 </div>
-	<!--loading / -->
         <div class="register-box" style="margin:0% auto">
             <div class="register-logo" style="margin-botton:0;">
                 <img src="{{url('/storage/'.$temp->Profile->logo_image)}}" class="logo-template" width="100" height="100" style="left: 45%;margin-top:-45px;">
@@ -21,11 +16,11 @@
                 @if(isset($social) && $social->fb==1 || $social->gmail==1)
                     <div class="social-auth-links text-center">                
                         @if(isset($social) && $social->fb==1)
-                            <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook loading" style="height:50px;line-height:33px;font-size:16px;border-radius:10px;padding-left:80px; "><i class="fa fa-facebook" style="line-height:50px; width:50px;"></i> Sign in with
+                            <a href="{{url('guest/login/facebook')}}" class="btn btn-block btn-social btn-facebook" style="height:50px;line-height:33px;font-size:16px;border-radius:10px;"><i class="fa fa-facebook" style="line-height:50px;"></i> Sign in with
                         Facebook</a>
                         @endif
                         @if(isset($social) && $social->gmail==1)
-                            <a id="loading" href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
+                            <a href="{{url('guest/login/google')}}" class="btn btn-block btn-social btn-google"><i class="fa fa-google"></i> Sign in using
                             Gmail</a>
                         @endif  
                         @if(isset($form) && $form->name==1 || $form->email==1 || $form->phone==1 ||$form->gender==1 ||$form->age==1)
@@ -80,7 +75,7 @@
                             </div>
                             <!-- /.col -->
                             <div class="col-xs-4">
-                                <button type="submit" id="login" class="btn btn-success btn-block loading">Connect</button>
+                                <button type="submit" id="login" class="btn btn-success btn-block">Connect</button>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -89,21 +84,15 @@
             </div>
        <!-- /.form-box --> 
         </div>
-	<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div>
-	<footer class="frontend-footer">
-	    <!--<img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">-->
-	    <div class="up-footer">
-	        <p>Powered by <a href="http://nexus.com.mm">Nexus Solutions</a></p>
-      	  </div>
-     	  <div class="low-footer"></div>
+	<footer style="position: absolute;botton:0;margin:0;padding:0; right:30%; left:0;text-align:center; width:100%;">
+	  <div class="up-footer"><p>Prowered by <a href="http://nexus.com.mm">Nexus Solutions</a> </p> </div>
+	  <div class="low-footer"></div>
+	  /* <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:600px;"> */
 	</footer>
 </body>
 <script type="text/javascript">
     // $('button#login').click(function(){
     //     submitForm($('form#login'))
     // })
-    $(".loading").click(function() {
-      $('#loading-start').show()
-    });
 </script>
 @endsection

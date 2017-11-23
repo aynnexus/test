@@ -3242,7 +3242,7 @@ table.text-center th {
   }
 }
 .error-page > .error-content {
-  margin-left: 190px;
+  margin-left: 95px;
   display: block;
 }
 @media (max-width: 991px) {

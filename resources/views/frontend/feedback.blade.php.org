@@ -20,7 +20,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
 &noscript=1"/>
 </noscript>
 <!-- End Facebook Pixel Code -->
-<body class="hold-transition register-page container-fluid frontend-body" style="color:white;width:auto; background-position:top center;background-attachment: fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;padding:0;">
+<body class="hold-transition register-page container-fluid" style="color:white;width:auto; background-position:top center;background-attachment: fixed;background: {{$temp->Profile->background_color}};background-image: url(<?php echo ($temp->Profile!=null)?'/storage/'.$temp->Profile->background_image:''; ?>);background-repeat:no-repeat;padding:0;">
 
 	<header  style="text-align:center;"> <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%" style="max-width:600px;"></header>
         <div class="loading-div" id="loading-start" >
@@ -36,17 +36,6 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
                 <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
                 @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
-			 @if(isset($feedback) && $feedback->survey==1)
-                    @foreach($temp->Surveying as $key=>$surveying)
-                        <div class="form-group has-feedback">
-                            <label>{{$key+1}}. {{$surveying->Question->label}}</label>
-                            @foreach($surveying->Question->Answers as $answer)
-                                <p><input type="radio" required name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
-                            @endforeach
-                        </div>
-                    @endforeach
-                    @endif
-
                     @if(isset($feedback) && $feedback->comment==1)
                     <div class="form-group">
                         <label>Feedback</label>
@@ -78,7 +67,18 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
                     @endforeach
                     @endif
                     <br>
-                       <div class="row">
+                    @if(isset($feedback) && $feedback->survey==1)
+                    @foreach($temp->Surveying as $key=>$surveying)
+                        <div class="form-group has-feedback">
+                            <label>{{$key+1}}. {{$surveying->Question->label}}</label>
+                            @foreach($surveying->Question->Answers as $answer)
+                                <p><input type="radio" required name="answer{{$key}}" value="{{$answer->answer_id}}"> {{$answer->label}}</p>
+                            @endforeach
+                        </div>
+                    @endforeach
+                    @endif
+
+                    <div class="row">
                         <div class="col-xs-8">
                           
                         </div>
@@ -135,9 +135,8 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
              </div>
             <!-- model end -->
         @endif
-	<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div>
-	<footer class="frontend-footer" style="text-align:center;">
-	      <!-- <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">-->
+	<footer class="frontend-footer">
+	       <!--<img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">-->
 		<div class="up-footer">
 	        <p>Powered by <a href="http://nexus.com.mm">Nexus Solutions</a></p>
       	  </div>
