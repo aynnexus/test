@@ -169,6 +169,8 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 			}
 			$question = implode('/', $qus);
 			$answer = implode('/', $ans);
+		}else{
+			$row['surveys'] = null;
 		}
 		
 		$final = array_merge($row,
@@ -184,6 +186,7 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 		unset($final['site_id']);unset($final['gender']);
 		unset($final['age']);unset($final['created_at']);
 		unset($final['rating_key']);unset($final['rating_value']);
+		unset($final['surveys']);
 		fputcsv($output, $final);	
 	}
 	fclose($output);
