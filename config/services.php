@@ -36,10 +36,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
-    'facebook'=> [
-        'client_id'     => '330008387465431',
-        'client_secret' => 'b72439a9a10ee2131b75045c6ce1dab6',
-        'redirect'      => 'http://174.138.16.149/guest/login/facebook/callback'
+    'facebook'=> [        
+        'client_id'     => '294123637587955',
+        'client_secret' => '3c26946cf957bce53e90a3b5a7e68dff',
+        'redirect'      => 'https://panel.nexus.com.mm/guest/login/facebook/callback'
     ],
 
     'google'=> [

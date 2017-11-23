@@ -172,11 +172,11 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
     
     function getUserData() {    
         FB.api(
-            "me?fields=age_range",
+            "me?fields=birthday",
             function (response) {
               if (response && !response.error) {
-                updateJsonAge(response.age_range.min,guest_id)
-              }
+                updateJsonAge(response.birthday,guest_id)
+	          }
             }
         );
     }

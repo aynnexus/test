@@ -74,8 +74,9 @@ function datetime_convert($timestamp,$second)
 	return $result;
 }
 
-function avgAge($age)
+function avgAge($date)
 {	
+	$age = date('Y')-date('Y',strtotime($date));
 	$type_1 = [13,14,15,16,17];
 	$type_2 = [18,19,20,21,22,23,24];
 	$type_3 = [25,26,27,28,29,30,31,32,33,34];
