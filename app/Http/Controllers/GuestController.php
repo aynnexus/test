@@ -387,9 +387,11 @@ class GuestController extends Controller
         //     return back();
         // }
         for ($i=0; $i < count($request->id); $i++) { 
-            $value[] = Guest::where('guest_id',$request->id[$i])->select('name','email','gender','age','phone','site_id','social_id','user_ap','rating_key','rating_value','created_at')->first()->toArray();
+            $value[] = Guest::with(['Surveys'=>function($sur){
+                $sur->select('guest_id','question','answer');
+            }])->where('guest_id',$request->id[$i])->select('guest_id','name','email','gender','age','phone','site_id','social_id','user_ap','rating_key','rating_value','created_at')->first()->toArray();
         }
-        $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Rating Key','Rating Value','Created At'];
+        $key = ['Name','Email','Phone','Social ID','Device Map','Site','Gender','Age','Rating Key','Rating Value','Question','Answer','Created At'];
 
         $headers = array(
             'Content-Type' => 'text/csv',
@@ -397,7 +399,7 @@ class GuestController extends Controller
         $filename = "guest_infos.csv";
         $gender = Lookup::where('title','GENDER')->pluck('value','key');
         $age_group = Lookup::where('title','Age Group')->pluck('value','key');
-        
+       
         convert_csv($filename,$key,$value,$gender,$age_group);
 
         return response()->download('csv/'.$filename, $filename, $headers);

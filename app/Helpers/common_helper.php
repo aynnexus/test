@@ -146,27 +146,40 @@ function detectOS($userAgent) {
 
 function convert_csv($filename,$key,$value,$gend,$age_group)
 {	
-	$rkey=$rvalue= null;
+	$rkey=$rvalue=$question=$answer=null;
 	$output = fopen('csv/'.$filename, 'w+');
 	fputcsv($output, $key); 
 	foreach ($value as $row) { 
+		
+		unset($row['guest_id']);
 		$st = Site::find($row['site_id']);
 		$gender = ($row['gender']!=null)?$gend[$row['gender']]:'-';
 		$age = ($row['age']!=null)?$age_group[$row['age']]:'-';
 		if ($row['rating_key']!=null) {
-
 			$rkey = implode(',', json_decode($row['rating_key']));
 		}
 		if ($row['rating_value']!=null) {
 			$rvalue = implode(',', json_decode($row['rating_value']));
 		}
+		if (count($row['surveys'])!=0) {
+			$ans = []; $qus=[];
+			foreach ($row['surveys'] as $sur) {
+				array_push($ans, $sur['answer']);
+				array_push($qus, $sur['question']);
+			}
+			$question = implode('/', $qus);
+			$answer = implode('/', $ans);
+		}
+		
 		$final = array_merge($row,
 			[	'Site'=>$st['site_name'],
 				'Age'=>$age,
 				'Gender'=>$gender,
 				'Rating Key'=>$rkey,
 				'Rating Value'=>$rvalue,
-				'date'=>date('d M Y G:i:s',strtotime($row['created_at']))
+				'Survay Question'=>$question,
+				'Survay Answer'=>$answer,
+				'date'=>date('d M Y g:i a',strtotime($row['created_at']))
 			]);
 		unset($final['site_id']);unset($final['gender']);
 		unset($final['age']);unset($final['created_at']);
