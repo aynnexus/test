@@ -150,8 +150,7 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 	$rkey=$rvalue=$question=$answer=null;
 	$output = fopen('csv/'.$filename, 'w+');
 	fputcsv($output, $key); 
-	foreach ($value as $row) { 
-		
+	foreach ($value as $row) { 		
 		unset($row['guest_id']);
 		$st = Site::find($row['site_id']);
 		$gender = ($row['gender']!=null)?$gend[$row['gender']]:'-';
@@ -176,18 +175,19 @@ function convert_csv($filename,$key,$value,$gend,$age_group)
 		
 		$final = array_merge($row,
 			[	'Site'=>$st['site_name'],
-				'Age'=>$age,
 				'Gender'=>$gender,
+				'Age'=>$age,
 				'Rating Key'=>$rkey,
 				'Rating Value'=>$rvalue,
 				'Survay Question'=>$question,
 				'Survay Answer'=>$answer,
+				'Comment'=>$row['comment'],
 				'date'=>date('d M Y g:i a',strtotime($row['created_at']))
 			]);
 		unset($final['site_id']);unset($final['gender']);
 		unset($final['age']);unset($final['created_at']);
 		unset($final['rating_key']);unset($final['rating_value']);
-		unset($final['surveys']);
+		unset($final['surveys']);unset($final['comment']);
 		fputcsv($output, $final);	
 	}
 	fclose($output);
