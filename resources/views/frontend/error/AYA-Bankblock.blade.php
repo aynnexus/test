@@ -11,7 +11,7 @@
       <h1 class="alert text-center text-red" style="font-size:80px;margin-left:0;">Sorry!</h1>
 
       <div class="error-content" style="margin-left:0">
-        <p class="text-warning text-justified" style="font-size:20px;" ><i class="fa fa-warning text-red"></i> You have used up your data quota. Please visit again in five(5) hours <i class="fa fa-clock-o" aria-hidden="true" width="30px;"></i>.
+        <p class="text-warning text-justified" style="font-size:20px;" ><i class="fa fa-warning text-red"></i> You have used up your data quota.
         </p>
 
       </div>

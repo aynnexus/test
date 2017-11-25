@@ -5,7 +5,7 @@
    <header style="text-align:center;"> <img src="{{url('/storage/'.$temp->Profile->header_image)}}" align="center"  height="200px" width="100%" style="max-width:600px;"></header>
 	<!-- loading -->
 	<div class="loading-div" id="loading-start" >
-	      <div class="loading-text"><p><span style="padding-right:10px;"><img src="{{asset('img/loading.gif')}}"></span>Please Wait .. Redirecting to next page.</p></div>
+	      <div class="loading-text"><p><span style="padding-right:10px;"><img src="{{asset('img/loading.gif')}}"></span>Please Wait... Connecting...</p></div>
    	 </div>
 	<!--loading / -->
         <div class="register-box" style="margin:0% auto">
@@ -89,13 +89,13 @@
             </div>
        <!-- /.form-box --> 
         </div>
-	<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div>
+	<!--<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div> -->
 	<footer class="frontend-footer">
-	    <!--<img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">-->
-	    <div class="up-footer">
+	    <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:600px;">
+	   <!-- <div class="up-footer">
 	        <p>Powered by <a href="http://nexus.com.mm">Nexus Solutions</a></p>
       	  </div>
-     	  <div class="low-footer"></div>
+     	  <div class="low-footer"></div> -->
 	</footer>
 </body>
 <script type="text/javascript">

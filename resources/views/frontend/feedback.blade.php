@@ -24,7 +24,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
 
 	<header  style="text-align:center;"> <img src="{{url('/storage/'.$temp->Profile->header_image)}}" height="200px" width="100%" style="max-width:600px;"></header>
         <div class="loading-div" id="loading-start" >
-  	  <div class="loading-text"><p><span style="padding-right:10px;"><img src="{{asset('img/loading.gif')}}"></span>Please Wait ... Redirect page loading</p></div>
+  	  <div class="loading-text"><p><span style="padding-right:10px;"><img src="{{asset('img/loading.gif')}}"></span>Please Wait... Connecting...</p></div>
     	</div>
 	<div class="register-box" style="margin:0% auto">
             <div class="register-logo">
@@ -32,7 +32,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
             </div>
 
             <div class="register-box-body custom-box" style="color:white">
-                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thank you for signing in. Please enjoy our free internet access.</p>
+                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thank you for signing in. Please enjoy 100MB of free internet access.</p>
                 <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
                 @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
@@ -84,7 +84,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" id="login" class="btn btn-success btn-block loading">Submit</button>
+                            <button type="submit" id="login" class="btn btn-success btn-block">Submit</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -135,13 +135,13 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
              </div>
             <!-- model end -->
         @endif
-	<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div>
+	<!--<div class="ads-footer"><img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="200px" width="100%" aling="center" style="max-width:500px;margin-bottom:25px;"></div>-->
 	<footer class="frontend-footer" style="text-align:center;">
-	      <!-- <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">-->
-		<div class="up-footer">
+	       <img src="{{url('/storage/'.$temp->Profile->footer_image)}}" height="175px" width="100%" aling="center" style="max-width:600px;">
+		<!--<div class="up-footer">
 	        <p>Powered by <a href="http://nexus.com.mm">Nexus Solutions</a></p>
       	  </div>
-     	  <div class="low-footer"></div>
+     	  <div class="low-footer"></div>-->
 	</footer>
 </body>
 
