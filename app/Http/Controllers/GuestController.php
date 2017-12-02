@@ -119,9 +119,9 @@ class GuestController extends Controller
                 
             }else{
                 if ($type==3) {
-                    $guests = Guest::groupBy($order)->orderBy($order,'desc')->paginate(20);
+                    $guests = Guest::groupBy($order)->orderBy($order,'desc')->get();
                 }else{
-                    $guests = Guest::where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(20);
+                    $guests = Guest::where('type',$type)->groupBy($order)->orderBy($order,'desc')->get();
                 }
             }
             
@@ -129,12 +129,12 @@ class GuestController extends Controller
             $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_id','site_name');
             
             if ($request->get('site_id')) {
-                $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy($order,'desc')->paginate(20);
+                $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy($order,'desc')->get();
             }else{
                 if ($type==3) {
-                    $guests = Guest::whereIn('site_id',$this->site_id)->groupBy($order)->orderBy($order,'desc')->paginate(20);  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->groupBy($order)->orderBy($order,'desc')->get();  
                 }else{
-                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(20);  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->groupBy($order)->orderBy($order,'desc')->get();  
                 }
                               
             }
@@ -260,7 +260,7 @@ class GuestController extends Controller
     public function getSiteInGuest(Request $request,$id)
     {           
         if ($request->get('site_name')) {
-            $guests = Guest::search($request->all())->paginate(10);
+            $guests = Guest::search($request->all())->get();
             $sites = Site::active()->pluck('site_id','site_name');
             return view('backend.guest.index',compact('guests','sites'));
         }

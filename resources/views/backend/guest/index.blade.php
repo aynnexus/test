@@ -125,7 +125,7 @@
 					<div class="box-footer">
 						<div class="pull-right">
 						@if($status==true)
-							{{ $guests->render() }}
+							
 						@endif
 						</div>
 					</div>
