@@ -36,8 +36,8 @@ return [
     ],
 
     'facebook'=> [        
-        'client_id'     => '294123637587955',
-        'client_secret' => '3c26946cf957bce53e90a3b5a7e68dff',
+        'client_id'     => '729919953870709',
+        'client_secret' => '88f13f1eafc9eef03afdbaf978a37405',
         'redirect'      => 'http://192.168.43.181/guest/login/facebook/callback'
     ],
 
