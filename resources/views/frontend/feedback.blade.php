@@ -190,19 +190,25 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
         FB.init({
             appId      : ID,
             xfbml      : true,
-            version    : 'v2.9'
+            version    : 'v2.11'
         });
-
-        //check user session and refresh it
-        FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-                //user is authorized
-                document.getElementById('loginBtn').style.display = 'none';
-                getUserData();
-            } else {
-                console.log('user is not authorized');
-            }
-        });
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    //user just authorized your app
+                    document.getElementById('loginBtn').style.display = 'none';
+                    getUserData();
+                }
+            }, {scope: 'email,public_profile,user_birthday', return_scopes: true});
+            //check user session and refresh it
+            // FB.getLoginStatus(function(response) {
+            //     if (response.status === 'connected') {
+            //         //user is authorized
+            //         document.getElementById('loginBtn').style.display = 'none';
+            //         getUserData();
+            //     } else {
+            //         console.log('user is not authorized');
+            //     }
+            // });
     };
 
     //load the JavaScript SDK
@@ -215,16 +221,20 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
     }(document, 'script', 'facebook-jssdk'));
 
     //add event listener to login button
-    document.getElementById('loginBtn').addEventListener('click', function() {
-        //do the login
-        FB.login(function(response) {
-            if (response.authResponse) {
-                //user just authorized your app
-                document.getElementById('loginBtn').style.display = 'none';
-                getUserData();
-            }
-        }, {scope: 'email,public_profile', return_scopes: true});
-    }, false);
+    // window.onload =  function ()
+    // {   
+    //     document.addEventListener('click', function() { 
+    //     //do the login
+    //         FB.login(function(response) {
+    //             if (response.authResponse) {
+    //                 //user just authorized your app
+    //                 document.getElementById('loginBtn').style.display = 'none';
+    //                 getUserData();
+    //             }
+    //         }, {scope: 'email,public_profile,user_friends,user_birthday', return_scopes: true});
+    //     }, false);  
+    // }
+    
 
     $(".loading").click(function() {
       $('#loading-start').show();
