@@ -117,6 +117,8 @@
 								<div class="col-md-offset-5" data-role="fixed" style="position: fixed; bottom: 20px;">
 	                                <button type="submit" class="btn btn-success">Export</button>
 	                            </div>
+	                            @else
+	                            	<div class="pull-right">{{ $guests->links('vendor.pagination.bootstrap-4') }}</div>
 	                            @endif
 							</div>
 							</form>

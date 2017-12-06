@@ -38,7 +38,7 @@ return [
     'facebook'=> [        
         'client_id'     => '729919953870709',
         'client_secret' => '88f13f1eafc9eef03afdbaf978a37405',
-        'redirect'      => 'https://panel.nexus.com.mm/guest/login/facebook/callback'
+        'redirect'      => 'http://192.168.43.181/guest/login/facebook/callback'
     ],
 
     'google'=> [

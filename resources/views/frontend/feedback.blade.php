@@ -162,25 +162,25 @@
         FB.init({
             appId      : ID,
             xfbml      : true,
-            version    : 'v2.11'
+            version    : 'v2.9'
         });
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    //user just authorized your app
-                    document.getElementById('loginBtn').style.display = 'none';
-                    getUserData();
-                }
-            }, {scope: 'email,public_profile,user_birthday', return_scopes: true});
-            //check user session and refresh it
-            // FB.getLoginStatus(function(response) {
-            //     if (response.status === 'connected') {
-            //         //user is authorized
+            // FB.login(function(response) {
+            //     if (response.authResponse) {
+            //         //user just authorized your app
             //         document.getElementById('loginBtn').style.display = 'none';
             //         getUserData();
-            //     } else {
-            //         console.log('user is not authorized');
             //     }
-            // });
+            // }, {scope: 'email,public_profile,user_friends,user_birthday', return_scopes: true});
+            //check user session and refresh it
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    //user is authorized
+                    document.getElementById('loginBtn').style.display = 'none';
+                    getUserData();
+                } else {
+                    console.log('user is not authorized');
+                }
+            });
     };
 
     //load the JavaScript SDK
