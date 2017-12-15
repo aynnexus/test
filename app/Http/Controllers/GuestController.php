@@ -112,29 +112,27 @@ class GuestController extends Controller
         if(Auth::user()->role==1)
         {   
             $sites = Site::active()->pluck('site_id','site_name');
-            
-            if ($request->get('site_id') || $request->get('name') || $request->get('from_date')) {
+            if (!$request->page && count($request->all())!=0 && $request->get('site_id')==0 || $request->get('name') || $request->get('from_date')) {
                 $guests = Guest::search($request->all())->orderBy($order,'desc')->get();
                 $status = false;
                 
             }else{
                 if ($type==3) {
-                    $guests = Guest::groupBy($order)->orderBy($order,'desc')->get();
+                    $guests = Guest::groupBy($order)->orderBy($order,'desc')->paginate(15);
                 }else{
-                    $guests = Guest::where('type',$type)->groupBy($order)->orderBy($order,'desc')->get();
+                    $guests = Guest::where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(15);
                 }
             }
             
         }else{
             $sites = Site::whereIn('site_id',$this->site_id)->pluck('site_id','site_name');
-            
-            if ($request->get('site_id')) {
+            if (!$request->page && count($request->all())!=0 && $request->get('site_id')==0 || $request->get('name') || $request->get('from_date')) {
                 $guests = Guest::search($request->all())->whereIn('site_id',$this->site_id)->orderBy($order,'desc')->get();
             }else{
                 if ($type==3) {
-                    $guests = Guest::whereIn('site_id',$this->site_id)->groupBy($order)->orderBy($order,'desc')->get();  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->groupBy($order)->orderBy($order,'desc')->paginate(15);  
                 }else{
-                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->groupBy($order)->orderBy($order,'desc')->get();  
+                    $guests = Guest::whereIn('site_id',$this->site_id)->where('type',$type)->groupBy($order)->orderBy($order,'desc')->paginate(15);  
                 }
                               
             }

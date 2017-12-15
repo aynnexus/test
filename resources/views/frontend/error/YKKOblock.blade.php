@@ -16,7 +16,7 @@
 
       <div class="custom-box" >
         
-		<p class="text-warning text-justified login-box-msg" style="font-size:20px; text-align:center;padding:20px;" ><i class="fa fa-warning text-red"></i> You have used up your data quota. Please visit again in five(5) hours <i class="fa fa-clock-o" aria-hidden="true" width="30px;"></i>.
+		<p class="text-warning text-justified login-box-msg" style="font-size:20px; text-align:center;padding:20px;" ><i class="fa fa-warning text-red"></i> You have used up your data quota. Please visit again soon! <i class="fa fa-clock-o" aria-hidden="true" width="30px;"></i>.
         </p>
 	
 

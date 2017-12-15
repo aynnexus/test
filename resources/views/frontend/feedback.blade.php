@@ -32,7 +32,7 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
             </div>
 
             <div class="register-box-body custom-box" style="color:white">
-                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thank you for signing in. Please enjoy 100MB of free internet access.</p>
+                <p class="login-box-msg" style="color: #fffffe;font-size: 15px">Thank you for signing in. Please enjoy free internet access.</p>
                 <?php $feedback = json_decode($temp->Field->feedback_fields); ?>
                 @if(isset($feedback) && $feedback->comment==1 || $feedback->rate==1 || $feedback->survey==1)
                 {!! Form::open(['url'=>'guest/feedback/'.$id,'id'=>'login']) !!}
@@ -190,25 +190,25 @@ src="https://www.facebook.com/tr?id=2067438900150555&ev=PageView
         FB.init({
             appId      : ID,
             xfbml      : true,
-            version    : 'v2.11'
+            version    : 'v2.9'
         });
-            FB.login(function(response) {
-                if (response.authResponse) {
-                    //user just authorized your app
-                    document.getElementById('loginBtn').style.display = 'none';
-                    getUserData();
-                }
-            }, {scope: 'email,public_profile,user_birthday', return_scopes: true});
-            //check user session and refresh it
-            // FB.getLoginStatus(function(response) {
-            //     if (response.status === 'connected') {
-            //         //user is authorized
+            // FB.login(function(response) {
+            //     if (response.authResponse) {
+            //         //user just authorized your app
             //         document.getElementById('loginBtn').style.display = 'none';
             //         getUserData();
-            //     } else {
-            //         console.log('user is not authorized');
             //     }
-            // });
+            // }, {scope: 'email,public_profile,user_friends,user_birthday', return_scopes: true});
+            //check user session and refresh it
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    //user is authorized
+                    document.getElementById('loginBtn').style.display = 'none';
+                    getUserData();
+                } else {
+                    console.log('user is not authorized');
+                }
+            });
     };
 
     //load the JavaScript SDK
